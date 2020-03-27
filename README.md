@@ -1,15 +1,15 @@
 # Spades Server
 
 ## Questions
-  *How do we run this? 
+  * How do we run this? 
 
-  *How do we check it is running correctly?
+  * How do we check it is running correctly?
 
-  *How do we access Heroku?
+  * How do we access Heroku?
 
-  *What programs do we need on your local computers to host the server? 
+  * What programs do we need on your local computers to host the server? 
 
-  *Working on Mac and Windows?
+  * Working on Mac and Windows?
 
 ## Issues
-  *Move views from jade to pug
+  * Move views from jade to pug

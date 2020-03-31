@@ -8,7 +8,7 @@ if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/pages/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/test');
 

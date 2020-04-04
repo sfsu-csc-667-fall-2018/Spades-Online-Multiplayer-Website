@@ -17,5 +17,5 @@
       * you should see activity in your terminal once visited
 
   * How do we access Heroku?
-      *
+      *https://spades-server.herokuapp.com
 

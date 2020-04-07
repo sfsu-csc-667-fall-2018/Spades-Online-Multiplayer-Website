@@ -8,7 +8,7 @@ if(process.env.NODE_ENV === 'development') {
   require("dotenv").config();
 }
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/pages/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/test');
 
@@ -16,7 +16,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());

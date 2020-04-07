@@ -1,8 +1,27 @@
-extends layout
+doctype html
 
-block content
-  h1= title
-  p Welcome to #{title}
+head
+  title= 'Register'
+  include ../partials/head.pug
 
-  a(href = "/") Index#[br]
-  a(href = "/users/login") Login
+
+body
+  h1 Sign up for Spades Server
+
+  div
+    h1
+    form(action='/users/register', method='post')
+
+      include ../error.pug
+
+      div
+        label Username:
+        input(type='Username', name='username')
+      div
+        label Password:
+        input(type='Password', name='password')
+      div
+        label Confirm Password:
+        input(type='Password', name='confirmPassword')
+      div
+        button(type='submit') Register

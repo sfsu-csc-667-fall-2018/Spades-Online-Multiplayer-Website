@@ -25,13 +25,12 @@ router.post('/users/register', (request, response, _) => {
         '${request.body.password}'
       )`
   )
-  .then( results => response.json( results ) )
+  .then( results => {
+    response.json( results )
+  })
   .catch( error => {
     console.log( error )
     response.json({ error })
-  });
-  response.render('index', {
-    title: 'Index'
   });
 });
 

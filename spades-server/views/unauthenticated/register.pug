@@ -15,7 +15,9 @@ body
       include ../error.pug
 
       div.form-group
-        input#name.form-control(type='text', placeholder='first and last' name='name')
+        input#name.form-control(type='text', placeholder='first name' name='first_name')
+      div.form-group
+        input#name.form-control(type='text', placeholder='last name' name='last_name')
       div.form-group
         input#favoriteBook.form-control(type='text', placeholder='username' name='username')
       div.form-group
@@ -23,5 +25,5 @@ body
       div.form-group
         input#pw.form-control(type='password' placeholder='password' name='password')
       div.form-group
-        input#pw2.form-control(type='password' placeholder='confirm password' name='confirmPassword')
+        input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
       button.btn.btn-primary(type='submit') Sign up

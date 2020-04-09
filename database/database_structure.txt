@@ -1,0 +1,19 @@
+//this is not for use in the app, this is for us to keep track of our db structure
+
+users {
+    user_id: INTEGER,
+    username: string,
+    password: string, //may hash later  
+}
+
+//games
+
+//cards
+
+//players in game
+
+//players hand
+
+//cards in book/played
+
+//game spectators

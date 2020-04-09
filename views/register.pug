@@ -2,7 +2,7 @@ doctype html
 
 head
   title= 'Register'
-  include ../partials/head.pug
+  include ./partials/head.pug
 
 
 body
@@ -12,14 +12,14 @@ body
     h1
     form(action='/users/register', method='post')
 
-      include ../error.pug
+      include ./error.pug
 
       div
         label Username:
-        input(type='Username', name='username')
+        input(type='Username', name='username_value')
       div
         label Password:
-        input(type='Password', name='password')
+        input(type='Password', name='password_value')
       div
         label Confirm Password:
         input(type='Password', name='confirmPassword')

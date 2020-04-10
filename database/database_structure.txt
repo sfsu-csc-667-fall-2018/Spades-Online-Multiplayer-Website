@@ -1,7 +1,10 @@
 //this is not for use in the app, this is for us to keep track of our db structure
 
 users {
-    user_id: INTEGER,
+    id: INTEGER,
+    firstname: string,
+    lastname: string,
+    email: string,
     username: string,
     password: string, //may hash later  
 }

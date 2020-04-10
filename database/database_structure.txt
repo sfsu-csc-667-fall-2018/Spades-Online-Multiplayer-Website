@@ -1,0 +1,40 @@
+//this is not for use in the app, this is for us to keep track of our db structure
+
+    'player':
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
+        first_name: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        last_name: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        username: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        password: {
+          type: Sequelize.STRING,
+          allowNull: false
+        }
+
+//games
+
+//cards
+
+//players in game
+
+//players hand
+
+//cards in book/played
+
+//game spectators

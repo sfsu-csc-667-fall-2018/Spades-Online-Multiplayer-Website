@@ -14,14 +14,16 @@ body
 
       include ./error.pug
 
-      div
-        label Username:
-        input(type='Username', name='username_value')
-      div
-        label Password:
-        input(type='Password', name='password_value')
-      div
-        label Confirm Password:
-        input(type='Password', name='confirmPassword')
-      div
-        button(type='submit') Register
+      div.form-group
+        input#name.form-control(type='text', placeholder='first name' name='first_name')
+      div.form-group
+        input#name.form-control(type='text', placeholder='last name' name='last_name')
+      div.form-group
+        input#favoriteBook.form-control(type='text', placeholder='username' name='username')
+      div.form-group
+        input#email.form-control(type='email', placeholder='name@email.com' name='email')
+      div.form-group
+        input#pw.form-control(type='password' placeholder='password' name='password')
+      div.form-group
+        input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
+      button.btn.btn-primary(type='submit') Sign up

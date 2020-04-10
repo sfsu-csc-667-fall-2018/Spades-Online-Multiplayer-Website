@@ -6,6 +6,7 @@ const user = require('../../db/user');
 //for now ensure fields have values
 
 const validator = (request, password) => {
+  // console.log("Password entered: " + password);
   require.checkBody("username_value", "Please enter a username").notEmpty();
   require.checkBody("password_value", "Please Enter a password").notEmpty();
   require.checkBody("confirmPassword", "Passwords must match").notEmpty().equals(password);
@@ -18,14 +19,19 @@ router.get('/', (request, response) => {
 });
 
 router.post('/', (request, response) => {
-  const {username_value: username, password_value: password} = req.body;
-  const errors = validator(request, password);
-
+  // const errors = validator(request, request.body.password);
+  const errors = false;
   if(errors){
     response.render('register', {errors: errors});
   }else {
 
-    user.createUser(username, password)
+    user.createUser(
+        request.body.first_name,
+        request.body.last_name,
+        request.body.username,
+        request.body.email,
+        request.body.password
+      )
       .then(() => {
         response.render('login');        
       })

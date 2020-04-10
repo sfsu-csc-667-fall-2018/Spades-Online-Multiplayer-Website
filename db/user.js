@@ -1,8 +1,14 @@
 const db = require('./index');
 
 //create user in db
-const createUser = (username, password) => {
-    return db.none("INSERT INTO users (username, password) VALUES ($1, $2)", [username, password]);
+const createUser = (first_name, last_name, username, email, password) => {
+    return db.none(`INSERT INTO player (first_name, last_name, username, email, password) VALUES (
+        '${first_name}', 
+        '${last_name}', 
+        '${username}', 
+        '${email}',
+        '${password}'
+      )`);
 };
 
 //find user by username/user id

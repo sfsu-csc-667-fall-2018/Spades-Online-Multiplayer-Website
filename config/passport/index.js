@@ -5,27 +5,31 @@ const user = require('../../db/user');
 //set up database actions for user
 
 passport.serializeUser((user, done) => {
-    done(null, user.user_id);
+    done(null, user.id);
 });
 
-passport.deserializeUser((user_id, done) => {
-
+passport.deserializeUser((id, done) => {
+    user.findUserId(id)
+        .then(({ id, username }) => done(null, { id, username }))
+        .catch(error => done(error));
 });
 
-passport.use(new LocalStrategy((username, password, done) => {
+passport.use(new LocalStrategy((username, pass, done) => {
 
     user.findUsername(username)
-        .then(({user_id, username, password: storedPW}) => {
-            if(password === storedPW){
-                return done(null, {user_id, username});
-            }else {
+        .then(({ id, username, password }) => {
+            if (password == pass) {
+                return done(null, { id, username });
+            } else {
                 return done(null, false, {
                     message: "User Credentials Incorrect"
                 });
             }
         })
-        .catch(error => done(null, false, {error}));
-    })
-);
+        .catch(error => {
+            done(null, false, { error })
+            console.log(error);
+        });
+}));
 
 module.exports = passport;

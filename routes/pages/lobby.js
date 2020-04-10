@@ -5,10 +5,10 @@ const io = require('../../http/socket');
 const lobbyIO = io.of('/lobby');
 
 router.get('/', isAuthenticated, (request, response) => {
-  const {user} = request;
-  const err = request.query.error;
+    const { user } = request;
+    const err = request.query.error;
 
-  response.render('lobby', { user: user, title: "Spades-Server", error: err });
+    response.render('lobby', { user: user, error: err });
 
 });
 

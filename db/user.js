@@ -13,11 +13,11 @@ const createUser = (first_name, last_name, username, email, password) => {
 
 //find user by username/user id
 const findUsername = (username) => {
-    return db.one("SELECT * FROM users WHERE username = $1", [username]);
+    return db.one(`SELECT * FROM player WHERE username = '${username}'`);
 };
 
-const findUserId= (user_id) => {
-    return db.one("SELECT * FROM users WHERE user_id = $1", [user_id]);
+const findUserId = (id) => {
+    return db.one(`SELECT * FROM player WHERE id = '${id}'`);
 };
 
 module.exports = {

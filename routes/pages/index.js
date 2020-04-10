@@ -1,29 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('../../config/passport');
+const db = require('../../db');
 
-/* GET home page. */
-router.get('/', (request, response, next) => {
-  response.render('index', { 
-    title: 'Index' 
-  });
+/* GET login page or go to lobby if auth */
+router.get('/', (request, response) => {
+    if (request.isAuthenticated()) {
+        response.redirect('/lobby');
+    } else {
+        response.render('login');
+    }
 });
 
-router.get('/users/register', (request, response, next) => {
-  response.render('unauthenticated/register', {
-    title: 'Register'
-  })
-});
-
-router.get('/users/login', (request, response, next) => {
-  response.render('unauthenticated/login', {
-    title: 'Login'
-  })
-});
-
-router.get('/users/layout', (request, response, next) => {
-  response.render('unauthenticated/layout', {
-    title: 'Layout'
-  })
-});
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/lobby',
+    failureRedirect: '/'
+}));
 
 module.exports = router;

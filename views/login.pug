@@ -2,7 +2,7 @@ doctype html
 
 head
   title='Login'
-  include ../partials/head.pug
+  include ./partials/head.pug
   
 body
   h1 Welcome to Spades Server
@@ -10,9 +10,7 @@ body
   div
     h1 Login
     
-    form(action='login', method='post')
-
-      include ../error.pug
+    form(action='/login', method='post')
 
       div 
         label Username:
@@ -23,5 +21,5 @@ body
       div 
         button(type='submit') Submit
   div
-    a(href = "/users/register") Register for an account here!
+    a(href = "/register") Register for an account here!
   

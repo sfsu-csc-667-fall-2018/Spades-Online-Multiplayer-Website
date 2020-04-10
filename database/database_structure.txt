@@ -1,6 +1,5 @@
 //this is not for use in the app, this is for us to keep track of our db structure
 
-// user
     'player':
         id: {
           type: Sequelize.INTEGER,

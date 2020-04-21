@@ -1,25 +1,27 @@
 doctype html
-
-head
-  title='Login'
-  include ./partials/head.pug
+html(lang='en')
+  head
+    title='Login'
+    include ./partials/head.pug
   
-body
-  h1 Welcome to Spades Server
+  body
+    h1 Welcome to Spades Server
 
-  div
-    h1 Login
+    div
+      h1 Login
     
-    form(action='/login', method='post')
+      form(action='/login', method='post')
 
-      div 
-        label Username:
-        input(type='Username', name='username')
-      div
-        label Password:
-        input(type='Password', name='password')
-      div 
-        button(type='submit') Submit
-  div
-    a(href = "/register") Register for an account here!
-  
+        div 
+          label Username:
+          input(type='Username', name='username')
+        div
+          label Password:
+          input(type='Password', name='password')
+        div 
+          button(type='submit') Submit
+    div
+      a(href = "/register") Register for an account here!
+
+  script(src='https://code.jquery.com/jquery-3.5.0.min.js'   integrity='sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ='   crossorigin='anonymous')
+  script(src='/socket.io/socket.io.js')  

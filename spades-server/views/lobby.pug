@@ -1,7 +1,28 @@
 doctype html
+html(lang='en')
 head
     include ./partials/head.pug
 body
     h1 Game Lobby
 
     p lobby for waiting to join + chat room
+    p User: #{user.username} Id: #{user.id}
+
+    div(id='chat-room') 
+      h1 Lobby Chat
+      div(id='chat-box')
+        div(id='output')
+        div(id='feedback')
+      input(id='message', type='text', placeholder='Chat with Lobby')
+      input(id='roomNumber', type='hidden')
+      button(id='send') Send      
+
+script. 
+    const username = #{user.username}
+    const id = #{user.id}
+    document.getElementById('roomNumber').value = 0000
+  script(src='https://code.jquery.com/jquery-3.5.0.min.js'   integrity='sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ='   crossorigin='anonymous')
+  script(src='/socket.io/socket.io.js')  
+  //script(src='/scripts/chat.js')
+  
+ 

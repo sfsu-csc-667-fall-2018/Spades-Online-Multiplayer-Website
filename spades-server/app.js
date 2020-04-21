@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const expressValidator = require('express-validator');
 
 if (process.env.NODE_ENV === 'development') {
     require("dotenv").config();
@@ -24,8 +23,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,6 +37,7 @@ app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/lobby', lobbyRouter);
 app.use('/tests', testsRouter);
+app.use('/*', indexRouter);
 
 
 // catch 404 and forward to error handler

@@ -6,3 +6,36 @@ body {
 a {
   color: #00B7FF;
 }
+
+#chat-room {
+  border: 1px solid #000;
+  border-radius: 2px;
+  height: 45vh;
+  min-height: 400px;
+  overflow: auto;
+}
+
+#output p {
+  padding: 10px 0;
+  margin: 0 15px;
+  border-bottom: 1px solid #000;
+}
+
+#feedback p {
+  color: red;
+  padding: 10px 0;
+  margin: 0 15px;
+}
+
+#chat-box {
+  width: 30%;
+  min-width: 200px;
+  margin-right: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: 70vh;
+  min-height: 485px;
+  padding: 20px;
+  display: inline-block;
+  border-radius: 10px;
+}

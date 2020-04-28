@@ -8,7 +8,7 @@ const init = (app, server) => {
   io.on('connection', socket => {
     console.log('connected to socket io');
 
-    socket.on('disconnected', data => {
+    socket.on('disconnect', data => {
         console.log('disconnected from socket io');
     })
 

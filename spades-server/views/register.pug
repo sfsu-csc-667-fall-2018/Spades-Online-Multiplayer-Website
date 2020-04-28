@@ -1,16 +1,11 @@
-doctype html
-html(lang='en')
+extends layout
 
-  head
-    title= 'Register'
-    include ./partials/head.pug
+block content
 
+  h1 Sign up for Spades Server
 
-  body
-    h1 Sign up for Spades Server
-
-    div
-      h1
+  div
+    h1
       form(action='/register', method='post')
 
         div.form-group
@@ -26,6 +21,3 @@ html(lang='en')
         div.form-group
           input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
         button.btn.btn-primary(type='submit') Sign up
-
-script(src='https://code.jquery.com/jquery-3.5.0.min.js'   integrity='sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ='   crossorigin='anonymous')
-script(src='/socket.io/socket.io.js')  

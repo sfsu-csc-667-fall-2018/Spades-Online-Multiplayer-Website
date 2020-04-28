@@ -11,6 +11,9 @@ const init = (app, server) => {
     socket.on('disconnected', data => {
         console.log('disconnected from socket io');
     })
+
+    socket.on( USER_JOINED, data => io.emit( USER_JOINED, data ))
+    socket.on( MESSAGE_SEND, data => io.emit( MESSAGE_SEND, data ))
   });
 }
 

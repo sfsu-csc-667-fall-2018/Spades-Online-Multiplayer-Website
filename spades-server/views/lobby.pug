@@ -6,20 +6,33 @@ block content
   p lobby for waiting to join + chat room
   p User: #{user.username} Id: #{user.id}
 
-  
-  div(id='chat-area')
-    h2 Chat Room
-    div(id='chat-window')
-      div(id='output')
-      div(id='feedback')
-    
-    input(id='room_id', type='hidden', value='0')
-    input(id='message', type='text', placeholder='Message')
-    button.btn.btn-primary(id='send') Send
+  section.section.caht-container
+    .container
+      .columns
+        .box.column.is-8.is-offset-2
+          h2.title Chat box
+          .chat-messages.has-text-left
+            ul#messages
+          form
+            .field.has-addons
+              input(id='room_id', type='hidden', value='0')
+              p.control.is-expanded
+                input(id='message', type='text', class='input' placeholder='Message')
+              p.control
+                input(type='submit', class='button is-success' value='Send')
 
-    script. 
-      username = '#{user.username}'
-      user_id = '#{user.id}'
+    script.
       const socket = io();
-    script(src='/scripts/chat.js')
+      $('form').submit(() => {
+        const message = $('#message').val();
+
+        socket.emit('send message', `${message}`);
+        $('#message').val('');
+        return false;
+      });
+
+      socket.on('send message', (message) => {
+        $('#messages').append($('<li>').text(message));    
+      });
+
       

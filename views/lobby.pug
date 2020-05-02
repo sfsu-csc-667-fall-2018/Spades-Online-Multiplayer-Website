@@ -6,7 +6,7 @@ block content
   p lobby for waiting to join + chat room
   p User: #{user.username} Id: #{user.id}
 
-  section.section.caht-container
+  section.section.chat-container
     .container
       .columns
         .box.column.is-8.is-offset-2
@@ -16,23 +16,12 @@ block content
           form
             .field.has-addons
               input(id='room_id', type='hidden', value='0')
+              input(id='name', type='hidden', value=user.username)
               p.control.is-expanded
                 input(id='message', type='text', class='input' placeholder='Message')
               p.control
                 input(type='submit', class='button is-success' value='Send')
 
-    script.
-      const socket = io();
-      $('form').submit(() => {
-        const message = $('#message').val();
-
-        socket.emit('send message', `${message}`);
-        $('#message').val('');
-        return false;
-      });
-
-      socket.on('send message', (message) => {
-        $('#messages').append($('<li>').text(message));    
-      });
+  script(src='/scripts/chat.js')
 
       

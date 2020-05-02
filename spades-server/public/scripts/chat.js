@@ -23,8 +23,7 @@ btn.addEventListener('click', () => {
     room_id: room.value,
     message: message.value,
     handle: username
-  };)
-
+  });
   message.value = '';
 });
 

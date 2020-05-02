@@ -6,18 +6,20 @@ block content
   p lobby for waiting to join + chat room
   p User: #{user.username} Id: #{user.id}
 
-  #chat-area
-    .row
-      .messages.col-lg-6.well.well-sm
-    .row
-      .col-lg-6
-        .input-group
-          input.form-control(type='text', placeholder='Message...')
-          span.input-group-btn
-            button.btn.btn-default(type='button') Send
+  
+  div(id='chat-area')
+    h2 Chat Room
+    div(id='chat-window')
+      div(id='output')
+      div(id='feedback')
+    
+    input(id='room_id', type='hidden', value='0')
+    input(id='message', type='text', placeholder='Message')
+    button.btn.btn-primary(id='send') Send
 
-  form.form-inline#initial-form
-    .form-group
-      label(for='who-are-you') Who are you?
-      input#who-are-you.form-control(type='text', placeholder='Anonymous')
-      button.btn.btn-primary(type='submit') Start Chatting
+    script. 
+      username = '#{user.username}'
+      user_id = '#{user.id}'
+      const socket = io();
+    script(src='/scripts/chat.js')
+      

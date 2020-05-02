@@ -16,10 +16,12 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
+    "event-stream": "^4.0.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
     "http-errors": "~1.6.3",
+    "moment": "^2.24.0",
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -29,11 +31,12 @@
     "pug": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "save": "^2.4.0",
     "sequelize": "^5.21.5",
     "sequelize-cli": "^5.5.1",
+    "set-value": "^3.0.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0
   }
-}

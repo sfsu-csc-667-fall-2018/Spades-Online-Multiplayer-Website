@@ -1,0 +1,1 @@
+db = require('./index');

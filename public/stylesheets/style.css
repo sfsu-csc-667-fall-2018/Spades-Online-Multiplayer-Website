@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+body {
+  padding-top: 50px;
+}
+
+#chat-messages li {
+	padding: 0.75rem;
+}

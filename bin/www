@@ -4,12 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('spades-server:server');
-var http = require('http');
-
-//socket.io connection
-var io = require("../http/socket");
+const app = require('../app');
+const debug = require('debug')('spades-server:server');
+const http = require('http');
+const socket = require('../socket');
 
 /**
  * Get port from environment and store in Express.
@@ -23,9 +21,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
-//attach socket
-io.attach(server);
+socket.init(app, server);
 
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,27 +1,23 @@
-doctype html
+extends layout
 
-head
-  title= 'Register'
-  include ./partials/head.pug
+block content
 
-
-body
   h1 Sign up for Spades Server
 
   div
     h1
-    form(action='/register', method='post')
+      form(action='/register', method='post')
 
-      div.form-group
-        input#name.form-control(type='text', placeholder='first name' name='first_name')
-      div.form-group
-        input#name.form-control(type='text', placeholder='last name' name='last_name')
-      div.form-group
-        input#favoriteBook.form-control(type='text', placeholder='username' name='username')
-      div.form-group
-        input#email.form-control(type='email', placeholder='name@email.com' name='email')
-      div.form-group
-        input#pw.form-control(type='password' placeholder='password' name='password')
-      div.form-group
-        input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
-      button.btn.btn-primary(type='submit') Sign up
+        div.form-group
+          input#name.form-control(type='text', placeholder='first name' name='first_name')
+        div.form-group
+          input#name.form-control(type='text', placeholder='last name' name='last_name')
+        div.form-group
+          input#favoriteBook.form-control(type='text', placeholder='username' name='username')
+        div.form-group
+          input#email.form-control(type='email', placeholder='name@email.com' name='email')
+        div.form-group
+          input#pw.form-control(type='password' placeholder='password' name='password')
+        div.form-group
+          input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
+        button.btn.btn-primary(type='submit') Sign up

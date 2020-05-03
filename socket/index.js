@@ -1,5 +1,4 @@
 const socketIo = require('socket.io');
-const { ENTERED, ENTRY_MESSAGE, SEND_MESSAGE, CHAT, TYPING, TYPING_MESSAGE } = require('./constants');
 
 const init = (app, server) => { 
 
@@ -16,9 +15,7 @@ const init = (app, server) => {
     socket.on('send message', (message) => {
       io.emit('send message', message)
     });
-    //socket.on( ENTERED, data => io.emit( ENTRY_MESSAGE, data ));
-    //socket.on( CHAT, data => io.emit( SEND_MESSAGE, data ));
-    //socket.on( TYPING, data => socket.broadcast.emit(TYPING_MESSAGE, data) );
+    
   });
 };
 

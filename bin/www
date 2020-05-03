@@ -9,6 +9,9 @@ const debug = require('debug')('spades-server:server');
 const http = require('http');
 const socket = require('../socket');
 
+//socket.io connection
+var io = require("../http/socket");
+
 /**
  * Get port from environment and store in Express.
  */
@@ -22,6 +25,9 @@ app.set('port', port);
 
 var server = http.createServer(app);
 socket.init(app, server);
+
+//attach socket
+io.attach(server);
 
 /**
  * Listen on provided port, on all network interfaces.

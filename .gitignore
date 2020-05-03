@@ -1,5 +1,9 @@
 .env
 node_modules/
+<<<<<<< HEAD
 .DS_Store
 yarn.lock
 
+=======
+.DS_Store
+>>>>>>> 82ea49de4803b3f7c4e47b905c31fd3b66d9dbbd

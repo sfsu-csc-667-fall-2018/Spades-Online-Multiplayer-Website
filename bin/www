@@ -9,11 +9,7 @@ const debug = require('debug')('spades-server:server');
 const http = require('http');
 const socket = require('../socket');
 
-//socket.io connection
-var io = require("../http/socket");
-
-/**
- * Get port from environment and store in Express.
+ /* Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');

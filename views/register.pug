@@ -1,23 +1,11 @@
-<<<<<<< HEAD
 extends layout
 
 block content
 
-=======
-doctype html
-
-head
-  title= 'Register'
-  include ./partials/head.pug
-
-
-body
->>>>>>> 82ea49de4803b3f7c4e47b905c31fd3b66d9dbbd
   h1 Sign up for Spades Server
 
   div
     h1
-<<<<<<< HEAD
       form(action='/register', method='post')
 
         div.form-group
@@ -33,20 +21,3 @@ body
         div.form-group
           input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
         button.btn.btn-primary(type='submit') Sign up
-=======
-    form(action='/register', method='post')
-
-      div.form-group
-        input#name.form-control(type='text', placeholder='first name' name='first_name')
-      div.form-group
-        input#name.form-control(type='text', placeholder='last name' name='last_name')
-      div.form-group
-        input#favoriteBook.form-control(type='text', placeholder='username' name='username')
-      div.form-group
-        input#email.form-control(type='email', placeholder='name@email.com' name='email')
-      div.form-group
-        input#pw.form-control(type='password' placeholder='password' name='password')
-      div.form-group
-        input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
-      button.btn.btn-primary(type='submit') Sign up
->>>>>>> 82ea49de4803b3f7c4e47b905c31fd3b66d9dbbd

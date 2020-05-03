@@ -1,17 +1,13 @@
-doctype html
+extends layout
 
-head
-  title='Login'
-  include ./partials/head.pug
-  
-body
+block content
+
   h1 Welcome to Spades Server
 
   div
     h1 Login
     
     form(action='/login', method='post')
-
       div 
         label Username:
         input(type='Username', name='username')
@@ -20,6 +16,7 @@ body
         input(type='Password', name='password')
       div 
         button(type='submit') Submit
-  div
-    a(href = "/register") Register for an account here!
-  
+    
+    div
+      a(href = "/register") Register for an account here! 
+

@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 Game Lobby
+
+  p lobby for waiting to join + chat room
+  p User: #{user.username} Id: #{user.id}
+
+  section.section.chat-container
+    .container
+      .columns
+        .box.column.is-8.is-offset-2
+          h2.title Chat box
+          .chat-messages.has-text-left
+            ul#messages
+          form
+            .field.has-addons
+              input(id='room_id', type='hidden', value='0')
+              input(id='name', type='hidden', value=user.username)
+              p.control.is-expanded
+                input(id='message', type='text', class='input' placeholder='Message')
+              p.control
+                input(type='submit', class='button is-success' value='Send')
+
+  script(src='/scripts/chat.js')
+
+      

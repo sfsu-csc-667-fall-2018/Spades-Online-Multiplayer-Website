@@ -21,10 +21,6 @@
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
     "http-errors": "~1.6.3",
-<<<<<<< HEAD
-    "moment": "^2.24.0",
-=======
->>>>>>> 82ea49de4803b3f7c4e47b905c31fd3b66d9dbbd
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -34,15 +30,10 @@
     "pug": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-<<<<<<< HEAD
     "save": "^2.4.0",
     "sequelize": "^5.21.5",
     "sequelize-cli": "^5.5.1",
     "set-value": "^3.0.2",
-=======
-    "sequelize": "^5.21.5",
-    "sequelize-cli": "^5.5.1",
->>>>>>> 82ea49de4803b3f7c4e47b905c31fd3b66d9dbbd
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

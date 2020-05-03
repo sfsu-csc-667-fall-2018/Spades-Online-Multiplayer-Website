@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const expressValidator = require('express-validator');
 
 if (process.env.NODE_ENV === 'development') {
     require("dotenv").config();

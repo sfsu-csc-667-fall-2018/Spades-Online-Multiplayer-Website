@@ -130,11 +130,22 @@ const createDeck = () => {
 /* PROMISE */
 /* delete a 'game_deck' from the db based on the deck's 'id' */
 /* returns 'true' if id/row deleted 'error' if no id/row exists */
-const deleteDeck = async (id) => {
-    return db.one(`DELETE FROM decks WHERE id=${ id } RETURNING TRUE`);
+const deleteDeck = ( deck_id ) => {
+    return db.one(`DELETE FROM decks WHERE id=${ deck_id } RETURNING TRUE`);
+}
+/* PROMISE */
+/* get a card from a deck in 'decks' table */
+/* returns the 'card' object at 'index' in the deck associated with 'id' */
+const getCard = ( deck_id, card_index ) => {
+    if(card_index >= 1 && card_index <= 52 ) { 
+        return db.one(`SELECT * FROM cards WHERE id= (SELECT card_${ card_index } FROM decks WHERE id=${ deck_id })`);
+    } else {
+        return undefined;
+    }
 }
 
 module.exports = {
     createDeck,
-    deleteDeck
+    deleteDeck,
+    getCard
 };

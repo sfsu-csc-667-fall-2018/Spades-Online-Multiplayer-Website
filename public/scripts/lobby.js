@@ -17,7 +17,7 @@ lobbySocket.on("Display Games List", currentGame => {
       myGame
     } = currentGame[i];
 
-    game_list_html +=
+    game_list_html += 
     "<div><div class = 'games-list-left'><label>" +
     gameName +
     "</label></div>" +

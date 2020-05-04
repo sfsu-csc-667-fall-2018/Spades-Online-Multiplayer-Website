@@ -9,6 +9,12 @@ router.get('/', isAuthenticated, (request, response) => {
     response.render('lobby', { user: user, error: err });
 });
 
+/*router.post('/creategame', isAuthenticated, (request, response) => {
+    const { user } = request;
+
+
+});*/
+
 router.get('/logout', (request, response) => {
     request.logout();
     response.redirect('/');

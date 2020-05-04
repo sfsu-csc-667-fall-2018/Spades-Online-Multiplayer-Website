@@ -6,6 +6,14 @@ block content
   p lobby for waiting to join + chat room
   p User: #{user.username} Id: #{user.id}
 
+  .container
+    .box
+      h2.title Current Games
+        ul(id='games_list')
+      
+      form(action='/creategame', method='POST')
+        input(type='submit', id='create_game', value='Create Game')
+
   section.section.chat-container
     .container
       .columns

@@ -1,0 +1,103 @@
+.lobby-container {
+  min-width: 765px;
+}
+
+.chat-box {
+  width: 30%;
+  min-width: 200px;
+  margin-right: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: 70vh;
+  min-height: 485px;
+  padding: 20px;
+  display: inline-block;
+  float: right;
+
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* color for CHAT  window */
+
+  background-color: #e9eb89;
+  color: rgb(0, 0, 0);
+}
+
+.lobby-box {
+  width: 55%;
+  min-width: 415px;
+  height: 70vh;
+  margin: 5% 5%;
+  min-height: 485px;
+  display: inline-block;
+  padding: 20px;
+  overflow: auto;
+  float: left;
+
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* color for Current game  window */
+
+  background-color: #e9eb89;
+  color: rgb(0, 0, 0);
+}
+
+.games-list-box {
+  overflow: auto;
+  height: 40vh;
+  min-height: 275px;
+  min-width: 375px;
+  background-color: #b6d7d1;
+
+  /* color for game selection window */
+}
+
+.games-list-left {
+  display: inline-block;
+  width: 40%;
+  min-width: 50px;
+  padding: 5px;
+}
+
+.games-list-center {
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+}
+
+.games-list-right {
+  display: inline-block;
+  min-width: 30px;
+  padding: 5px;
+}
+
+.num-players {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  align: left;
+}
+
+.num-players-left {
+  display: inline;
+  padding-left: 0px;
+  padding-right: 5px;
+  padding-top: 15px;
+  float: left;
+}
+
+.num-players-right {
+  display: inline;
+  margin-top: 15px;
+  align: right;
+}
+
+.create-button {
+  display: inline;
+  margin-top: 10px;
+  float: right;
+}
+
+.create-game {
+  margin-top: 10px;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../db/user');
+const user = require('../../db/player');
 
 //express validator
 //for now ensure fields have values

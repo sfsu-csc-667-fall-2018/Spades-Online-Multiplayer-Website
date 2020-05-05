@@ -1,28 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../../config/passport/isAuthenticated');
-
 const game = require('../../db/game');
-const lobbySocket = io.of('/lobby');
+//const lobbySocket = io.of('/lobby');
 
 router.get('/', isAuthenticated, (request, response) => {
   const { user } = request;
   const err = request.query.error;
+
+  const lobbySocket = request.app.get('io');
+  lobbySocket.on('connection', socket => {
+    lobbySocket.emit('get games');
+  
+    socket.on('games list', () => {
+      displayGames(socket);
+    });
+  });
 
   response.render('lobby', { user: user, error: err });
 });
 
 router.post('/creategame', isAuthenticated, (request, response) => {
   const { user } = request;
-  const { gameName } = request.body.gameName;
+  const  gameName  = request.body.gameName;
+  console.log(user + 'game name: ' + gameName);
 
   game.createGame(gameName)
     .then(results => {
-      const { gameId } = results[0];
-      game.initGamePlayers(gameId, user.id)
+      const game_id  = results.game_id;
+      game.initGamePlayers(game_id, user.id)
         .then(() => {
-          //lobbySocket.emit('get games');
-          response.redirect(`/game/${gameId}`);
+          lobbySocket.emit('get games');
+          response.redirect(`/game/${game_id}`);
         })
         .catch(error => {
           console.log(error);
@@ -62,12 +71,5 @@ const displayGames = (socket) => {
   }
 };
 
-lobbySocket.on('connection', socket => {
-  lobbySocket.emit('get games');
-
-  socket.on('games list', () => {
-    displayGames(socket);
-  });
-});
 
 module.exports = router;

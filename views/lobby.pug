@@ -11,7 +11,8 @@ block content
       h2.title Current Games
         ul(id='games_list')
       
-      form(action='/creategame', method='POST')
+      form(action='/lobby/creategame', method='POST')
+        input(name='gameName', type='text', placeholder='Game Name')
         input(type='submit', id='create_game', value='Create Game')
 
   section.section.chat-container
@@ -21,7 +22,7 @@ block content
           h2.title Chat box
           .chat-messages.has-text-left
             ul#messages
-          form
+          form(id='chat-form')
             .field.has-addons
               input(id='room_id', type='hidden', value='0')
               input(id='name', type='hidden', value=user.username)
@@ -31,5 +32,6 @@ block content
                 input(type='submit', class='button is-success' value='Send')
 
   script(src='/scripts/chat.js')
+  script(src='/scripts/lobby.js')
 
       

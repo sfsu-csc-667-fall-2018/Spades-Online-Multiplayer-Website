@@ -36,7 +36,7 @@ const deleteGame = (gameId) => {
 
 //list games
 const getCurrentGames = () => {
-  return db.any(`SELECT g.game_id, game_name, `);
+  return db.any(`SELECT * FROM games`);
 };
 
 const checkNumPlayers = (gameId) => {
@@ -49,6 +49,14 @@ const checkNumPlayers = (gameId) => {
     });
 };
 
-
+module.exports = { 
+  createGame, 
+  initGamePlayers,
+  joinGame,
+  getCurrentGames,
+  deleteGame,
+  getCurrentGames,
+  checkNumPlayers
+};
 
 

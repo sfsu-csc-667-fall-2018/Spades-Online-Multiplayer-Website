@@ -9,10 +9,16 @@ module.exports = {
           type: Sequelize.INTEGER
         },
         player_id: {
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
+          references: { model: 'player', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         card_id: {
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
+          references: { model: 'cards', key: 'id' },
+          onUpdate: 'CASCADE',
+          onDelete: 'SET NULL'
         },
         card_order: {
           type: Sequelize.INTEGER       

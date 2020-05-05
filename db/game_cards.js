@@ -13,9 +13,8 @@ const shuffledArray = () => {
     return shuffledCards;
 }
 
-/* PROMISE */
 /* uses an array of shuffled indexes to create a shuffled deck in the db */
-/*  */
+/* game_id(FK), player_id(FK), card_id(FK), card_order */
 const createDeck = async (game_room_id, player_id_array) => { 
     var shuffledArr = shuffledArray(); // returns a shuffled array of indexes
     var card_id = 1;
@@ -30,27 +29,50 @@ const createDeck = async (game_room_id, player_id_array) => {
             card_id++;
         }
     } 
-}
+};
 
-/* PROMISE */
-/* delete a 'game_deck' from the db based on the deck's 'id' */
-/* returns 'true' if id/row deleted 'error' if no id/row exists */
+/* delete cards associated with a 'game_room' */
 const deleteDeck = ( game_id ) => {
     return db.none(`DELETE FROM game_cards WHERE game_id=${ game_id }`);
+};
+
+/* delete card associated with 'card_index' or 'card_order' */
+const deleteCard = ( game_id, card_index ) => {
+    return db.none(`DELETE FROM game_cards WHERE game_id=${ game_id } AND card_order=${ card_index }`);
 }
-/* PROMISE */
-/* get a card from a deck in 'decks' table */
-/* returns the 'card' object at 'index' in the deck associated with 'id' */
-const getCard = ( deck_id, card_index ) => {
-    if(card_index >= 1 && card_index <= 52 ) { 
-        return db.one(`SELECT * FROM cards WHERE id= (SELECT card_${ card_index } FROM decks WHERE id=${ deck_id })`);
-    } else {
-        return undefined;
-    }
+
+/* return the 'card' with the given 'card_id' */
+const getCard = ( card_id ) => {
+    return db.one(`SELECT * FROM cards WHERE id=${ card_id }`);
+};
+
+/* returns the 'card' at ('card_index' OR 'card_order') in the deck associated with 'game_id' */
+const getCardAt = ( game_id, card_index ) => {
+    return db.one(`SELECT * FROM game_cards, cards WHERE card_id=cards.id AND game_id=${ game_id } AND card_order=${ card_index }`);
+};
+
+/* returns the next card associated with a 'player' based on card_order low to high */
+const getNextCard = ( game_id, player_id ) => {
+    return db.one(`SELECT * FROM game_cards, cards WHERE card_id = cards.id AND game_id=${ game_id } AND player_id=${ player_id } ORDER BY card_order ASC LIMIT 1`);
 }
+
+/* returns an array of 'cards' from a 'player' in a 'game_room' */
+const getPlayerCards = ( game_id, player_id ) => {
+    return db.manyOrNone(`SELECT * FROM game_cards, cards WHERE card_id=cards.id AND game_id=${ game_id } AND player_id=${ player_id } ORDER BY card_order ASC`);
+};
+
+/* returns an array of 'cards' from a 'game_room' */
+const getGameCards = ( game_id ) => {
+    return db.manyOrNone(`SELECT * FROM game_cards, cards WHERE card_id=cards.id AND game_id=${ game_id } ORDER BY card_order ASC`);
+};
 
 module.exports = {
     createDeck,
     deleteDeck,
-    getCard
+    deleteCard,
+    getCard,
+    getCardAt,
+    getNextCard,
+    getPlayerCards,
+    getGameCards
 };

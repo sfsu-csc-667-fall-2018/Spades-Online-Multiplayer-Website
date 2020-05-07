@@ -1,6 +1,6 @@
 const socket = io();
 
-$('form').submit(() => {
+$('#chat-form').submit(() => {
   const message = $('#message').val();
   const room = $('#room_id').val();
   const user = $('#name').val();

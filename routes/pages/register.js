@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../db/user');
+const user = require('../../db/player');
 
 //express validator
+//const { check, validationResult } = require('express-validator');
 //for now ensure fields have values
 
-const validator = (request, password) => {
+//validator updated, needs fixing
+/*const validator = (request, password) => {
   // console.log("Password entered: " + password);
-  require.checkBody("username_value", "Please enter a username").notEmpty();
-  require.checkBody("password_value", "Please Enter a password").notEmpty();
-  require.checkBody("confirmPassword", "Passwords must match").notEmpty().equals(password);
+  check("username_value", "Please enter a username").notEmpty();
+  check("password_value", "Please Enter a password").notEmpty();
+  check("confirmPassword", "Passwords must match").notEmpty().equals(password);
 
   return request.validatonErrors();
-};
+};*/
 
 router.get('/', (request, response) => {
   response.render('register');

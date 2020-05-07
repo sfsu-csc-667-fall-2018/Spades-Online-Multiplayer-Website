@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const user = require('../../db/user');
+const user = require('../../db/player');
 
 //set up database actions for user
 

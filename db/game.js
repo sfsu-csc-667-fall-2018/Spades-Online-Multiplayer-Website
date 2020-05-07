@@ -1,7 +1,5 @@
 db = require('./index');
 
-//lobby functions lobby --> game room
-
 //add creator to owner id on initial creation to get game_id to populate to be used for other creations
 const createGame = ( gameName ) => {
   return db.one(`INSERT INTO games (game_name, num_players) VALUES ('${gameName}', 1) RETURNING game_id`);
@@ -49,6 +47,12 @@ const checkNumPlayers = (gameId) => {
     });
 };
 
+const getGameRoom = (gameId) => {
+  return db.one(`SELECT * FROM games WHERE game_id = '${gameId}'`);
+};
+
+
+
 module.exports = { 
   createGame, 
   initGamePlayers,
@@ -56,7 +60,8 @@ module.exports = {
   getCurrentGames,
   deleteGame,
   getCurrentGames,
-  checkNumPlayers
+  checkNumPlayers,
+  getGameRoom
 };
 
 

@@ -7,6 +7,9 @@
   * How do we run this? 
       * $ git clone https://github.com/sfsu-csc-667-fall-2018/fall-2019-term-project-zain-phillip-stan-rob.git
       * $ cd fall-2019-term-project-zain-phillip-stan-rob/spades-server/
+      * make a file '.env' with --> DATABASE_URL=postgres://YOUR-USER@localhost:5432/YOUR-DB
+      * $ make init_db
+      * $ make init_seed
       * $ make init
       * $ make run
       

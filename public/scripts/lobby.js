@@ -5,19 +5,14 @@ lobbySocket.on('get games', () => {
 });
 
 lobbySocket.on('display games', currentGames => {
-  
   for(let i = 0; i < currentGames.length; i++){
 
     const { game_id, game_name, scores_id, num_players } = currentGames[i];
 
     if(num_players < 4){
-      $('#games')
-        .append($('<li>'))
-          .text('Name: ' + game_name + ' Players: ' + num_players);
+      $('#games').append('<li><button onclick="myFunction()">' + game_name + ' : ' + num_players + '</button></li>');
     } else {
-      $('#games')
-        .append($('<li>'))
-          .text('Name: ' + game_name + ' Players: ' + num_players + 'Game Full');
+      $('#games').append('<li><button onclick="myFunction()">' + game_name + ' : ' + 'FULL' + '</button></li>');
     }
   }  
 });

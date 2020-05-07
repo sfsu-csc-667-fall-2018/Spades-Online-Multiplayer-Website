@@ -36,7 +36,7 @@ router.post('/creategame', isAuthenticated, (request, response) => {
 
 router.post('/joinGame', (request, response) => {
   const { user } = request;
-  const { joinButton: gameId } = request.body.gameId;
+  const { joinButton: gameId } = request.body;
 
   try {
     game.joinGame(gameId, user.id);

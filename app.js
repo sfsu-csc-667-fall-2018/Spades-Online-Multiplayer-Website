@@ -13,7 +13,8 @@ if (process.env.NODE_ENV === 'development') {
 const indexRouter = require('./routes/pages/index');
 const lobbyRouter = require('./routes/pages/lobby');
 const registerRouter = require('./routes/pages/register');
-const testsRouter = require('./routes/test');
+const gameRouter  = require('./routes/api/game');
+//const testsRouter = require('./routes/test');
 const passport = require('./config/passport');
 
 const app = express();
@@ -36,7 +37,8 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/lobby', lobbyRouter);
-app.use('/tests', testsRouter);
+app.use('/game', gameRouter);
+//app.use('/tests', testsRouter);
 app.use('/*', indexRouter);
 
 

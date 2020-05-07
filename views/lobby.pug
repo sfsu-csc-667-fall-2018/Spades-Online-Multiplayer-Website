@@ -9,7 +9,7 @@ block content
   .container
     .box
       h2.title Current Games
-        ul(id='games_list')
+        ul#games
       
       form(action='/lobby/creategame', method='POST')
         input(name='gameName', type='text', placeholder='Game Name')

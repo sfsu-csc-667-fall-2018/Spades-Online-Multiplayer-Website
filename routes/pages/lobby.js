@@ -2,20 +2,12 @@ const express = require('express');
 const router = express.Router();
 const isAuthenticated = require('../../config/passport/isAuthenticated');
 const game = require('../../db/game');
-//const lobbySocket = io.of('/lobby');
+const io = require('../../socket');
+const lobbySocket = io.of('/lobby'); 
 
 router.get('/', isAuthenticated, (request, response) => {
   const { user } = request;
   const err = request.query.error;
-
-  const lobbySocket = request.app.get('io');
-  lobbySocket.on('connection', socket => {
-    lobbySocket.emit('get games');
-  
-    socket.on('games list', () => {
-      displayGames(socket);
-    });
-  });
 
   response.render('lobby', { user: user, error: err });
 });
@@ -64,12 +56,21 @@ const displayGames = (socket) => {
   if (socket != undefined){
     game.getCurrentGames()
       .then(currentGames => {
-        setTimeout(() => {
-          socket.emit('display games', currentGames);
-        }, 200);    
+        console.log('games: ' + JSON.stringify(currentGames));
+        socket.emit('display games', currentGames);    
       });
   }
 };
+
+lobbySocket.on('connection', socket => {
+
+  console.log('connected to lobby');
+  lobbySocket.emit('get games');
+
+  socket.on('games list', () => {
+    displayGames(socket);
+  });
+});
 
 
 module.exports = router;

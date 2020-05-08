@@ -20,7 +20,8 @@ router.post('/creategame', isAuthenticated, (request, response) => {
 
   game.createGame(gameName)
     .then(results => {
-      playersTable.addPlayer(results.game_id, user.id)
+      const game_id = results.game_id;
+      playersTable.addPlayer(game_id, user.id)
         .then(() => {
           lobbySocket.emit('get games');
           response.redirect(`/game/${game_id}`);
@@ -35,16 +36,15 @@ router.post('/creategame', isAuthenticated, (request, response) => {
 });
 
 router.post('/joinGame', (request, response) => {
-  console.log("JOINED GAME");
-  console.log(request.body.game_id);
-  // const { game_id } = request.params
-  // const { user } = request;
-  // const { joinButton: gameId } = request.body;
+  const { user } = request;
+  const gameId  = request.body.game_id;
+
+  console.log('User: ' + user.username + 'JOINED GAME: ' + gameId);
 
   try {
-  //   game.joinGame(gameId, user.id);
-  //   lobbySocket.emit('get games');
-    response.redirect(`/game/${request.body.game_id}`);
+    playersTable.addPlayer(gameId, user.id);
+    lobbySocket.emit('get games');
+    response.redirect(`/game/${gameId}`);
   }catch(error) {
     console.log(error);
   };  

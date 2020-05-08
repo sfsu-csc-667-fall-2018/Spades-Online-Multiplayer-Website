@@ -11,14 +11,22 @@ lobbySocket.on('display games', currentGames => {
   for(let i = 0; i < currentGames.length; i++){
 
     const { game_id, game_name, scores_id, num_players } = currentGames[i];
+    
+    const str = 'Name: ' + game_name + ' Players: ' + num_players;
 
     if(num_players < 4){
-      $('#games').append(`
-        <form action='/lobby/joingame', method='POST'>
-          <input type="submit" name="game_id" value="${game_id}" />
-        </form>`);
+      const form = $( 
+        `<form method="POST" action="/lobby/joinGame">
+          <label>"${str}"</label>
+          <input type="hidden" name="game_id" value="${game_id}"></input>
+          <input type="submit" value="Join Game">
+        </form>`
+      );
+
+      $('#games').append(form);
+
     } else {
-      $('#games').append('<li><button onclick="myFunction()">' + game_name + ' : ' + 'FULL' + '</button></li>');
+      $('#games').append( $( '<span>' ).text( str + ' Game Full!' ) );
     }
   }  
 });

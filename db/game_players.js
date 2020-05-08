@@ -15,10 +15,12 @@ const getPositions = ( game_id ) => {
 const addPlayer = async ( game_id, player_id ) => {
     var position_arr = await getPositions( game_id );
     var emptyPos = getEmptyPostion( position_arr );
-    return db.none(`INSERT INTO games_players (game_id, player_id, position) VALUES (
+    var team = getTeam(emptyPos);
+    return db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
         ${ game_id },
         ${ player_id },
-        ${ emptyPos }
+        ${ emptyPos },
+        ${ team }
     );`);
 };
 
@@ -26,6 +28,11 @@ const addPlayer = async ( game_id, player_id ) => {
 const checkPlayerExists = (game_id, player_id) => {
     return db.one(`SELECT EXISTS(SELECT * FROM games_players WHERE game_id=${ game_id } AND player_id=${ player_id });`);
 }
+
+const getTeam = (position) => {
+    if(position == 0 || position == 2) return 1; 
+    if(position == 1 || position == 3) return 2;
+};
 
 module.exports = {
     // getPositions,

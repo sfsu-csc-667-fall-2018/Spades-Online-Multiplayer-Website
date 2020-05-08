@@ -8,10 +8,6 @@ module.exports = {
         game_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          references: {
-            model: 'games',
-            key: 'game_id'
-          }
         },
         books_a: {
           type: Sequelize.INTEGER,

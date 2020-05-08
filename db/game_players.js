@@ -22,7 +22,7 @@ const addPlayer = async ( game_id, player_id ) => {
     )`);
 };
 
+
 module.exports = {
-    // getPositions,
     addPlayer
 };

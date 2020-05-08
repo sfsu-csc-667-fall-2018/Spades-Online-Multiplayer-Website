@@ -20,18 +20,17 @@ const getCurrentGames = () => {
 };
 
 const checkNumPlayers = (gameId) => {
-  return db.any(`SELECT COUNT (*) as num_players FROM games_players WHERE game_id = '${gameId}'`)
-    .then(results => {
-      return results[0].num_players;
-    })
-    .catch(error => {
-      console.log(error);    
-    });
+  return db.one(`SELECT COUNT (*) FROM games_players WHERE game_id = '${gameId}'`);
 };
 
 const getGameRoom = (gameId) => {
   return db.one(`SELECT * FROM games WHERE game_id = '${gameId}'`);
 };
+
+const updateNumPlayers = (gameId) => {
+  numPlayers = checkNumPlayers(gameId);
+  return db.one(`UPDATE games SET num_players = '${numPlayers}' WHERE game_id = '${gameId}'`);
+}
 
 
 
@@ -41,7 +40,8 @@ module.exports = {
   deleteGame,
   getCurrentGames,
   checkNumPlayers,
-  getGameRoom
+  getGameRoom,
+  updateNumPlayers
 };
 
 

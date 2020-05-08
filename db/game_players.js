@@ -1,4 +1,5 @@
 const db = require('./index');
+const game = require('./game');
 
 const getEmptyPostion = ( position_arr ) => {
     if(position_arr.length == 0)  return 0;

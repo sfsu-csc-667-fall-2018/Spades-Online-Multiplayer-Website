@@ -44,8 +44,11 @@ router.post('/joinGame', (request, response) => {
   try {
     playersTable.addPlayer(gameId, user.id)
       .catch(error => { console.log(error) });
+    
+    game.updateNumPlayers(gameId);  
     lobbySocket.emit('get games');
     response.redirect(`/game/${gameId}`);
+
   }catch(error) {
     console.log(error);
   };  
@@ -69,6 +72,7 @@ const displayGames = (socket) => {
 lobbySocket.on('connection', socket => {
 
   console.log('connected to lobby');
+  
   lobbySocket.emit('get games');
 
   socket.on('games list', () => {

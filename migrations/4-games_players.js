@@ -8,7 +8,6 @@ module.exports = {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
-          allowNull: false
         },
         game_id: {
           type: Sequelize.INTEGER,

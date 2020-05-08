@@ -42,7 +42,8 @@ router.post('/joinGame', (request, response) => {
   console.log('User: ' + user.username + 'JOINED GAME: ' + gameId);
 
   try {
-    playersTable.addPlayer(gameId, user.id);
+    playersTable.addPlayer(gameId, user.id)
+      .catch(error => { console.log(error) });
     lobbySocket.emit('get games');
     response.redirect(`/game/${gameId}`);
   }catch(error) {

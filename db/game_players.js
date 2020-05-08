@@ -22,8 +22,8 @@ const addPlayer = async ( game_id, player_id ) => {
     );`);
 };
 
+/* returns { exists: true } OR { exists: false } */
 const checkPlayerExists = (game_id, player_id) => {
-    // select exists(select 1 from contact where id=12)
     return db.one(`SELECT EXISTS(SELECT * FROM games_players WHERE game_id=${ game_id } AND player_id=${ player_id });`);
 }
 

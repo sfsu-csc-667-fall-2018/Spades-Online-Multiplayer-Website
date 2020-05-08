@@ -9,7 +9,7 @@ const getEmptyPostion = ( position_arr ) => {
 }
 
 const getPositions = ( game_id ) => {
-    return db.manyOrNone(`SELECT position from games_players WHERE game_id=${ game_id }`);
+    return db.manyOrNone(`SELECT position from games_players WHERE game_id=${ game_id };`);
 };
 
 const addPlayer = async ( game_id, player_id ) => {
@@ -19,10 +19,16 @@ const addPlayer = async ( game_id, player_id ) => {
         ${ game_id },
         ${ player_id },
         ${ emptyPos }
-    )`);
+    );`);
 };
 
+/* returns { exists: true } OR { exists: false } */
+const checkPlayerExists = (game_id, player_id) => {
+    return db.one(`SELECT EXISTS(SELECT * FROM games_players WHERE game_id=${ game_id } AND player_id=${ player_id });`);
+}
 
 module.exports = {
-    addPlayer
+    // getPositions,
+    addPlayer,
+    checkPlayerExists
 };

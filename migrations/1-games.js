@@ -14,9 +14,6 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
         },
-        scores_id: {
-          type: Sequelize.INTEGER 
-        },
         num_players: {
           type: Sequelize.INTEGER,
           allowNull: false  

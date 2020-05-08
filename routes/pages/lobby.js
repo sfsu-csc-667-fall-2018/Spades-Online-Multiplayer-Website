@@ -16,12 +16,11 @@ router.get('/', isAuthenticated, (request, response) => {
 router.post('/creategame', isAuthenticated, (request, response) => {
   const { user } = request;
   const  gameName  = request.body.gameName;
-  console.log(user + 'game name: ' + gameName);
+  console.log('user id: ' + user.id + 'game name: ' + gameName);
 
   game.createGame(gameName)
     .then(results => {
-      const game_id  = results.game_id;
-      playersTable.addPlayer(game_id, user.id)
+      playersTable.addPlayer(results.game_id, user.id)
         .then(() => {
           lobbySocket.emit('get games');
           response.redirect(`/game/${game_id}`);

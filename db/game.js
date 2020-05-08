@@ -6,10 +6,10 @@ const createGame = ( gameName ) => {
 };
 
 //game_players id, player_1: creat gameroom id teams 'a' and 'b' = 1 and 2
-const  initGamePlayers = (gameId, playerId) => {
+/*const  initGamePlayers = (gameId, playerId) => {
   return db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
     '${gameId}', '${playerId}', 1, 1)`);
-};
+};*/
 
 //add additional players
 const joinGame = (gameId, playerId) => {
@@ -55,7 +55,7 @@ const getGameRoom = (gameId) => {
 
 module.exports = { 
   createGame, 
-  initGamePlayers,
+  //initGamePlayers,
   joinGame,
   getCurrentGames,
   deleteGame,

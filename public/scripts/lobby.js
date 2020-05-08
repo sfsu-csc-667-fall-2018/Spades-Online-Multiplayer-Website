@@ -5,6 +5,8 @@ lobbySocket.on('get games', () => {
 });
 
 lobbySocket.on('display games', currentGames => {
+
+  $('#games').empty();
   
   for(let i = 0; i < currentGames.length; i++){
 

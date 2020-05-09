@@ -2,11 +2,11 @@ const db = require('./index');
 const game = require('./game');
 
 const getEmptyPostion = ( position_arr ) => {
-    if(position_arr.length == 0)  return 0;
-    if(!position_arr.some(element => element.position === 0)) return 0;
+    if(position_arr.length == 0)  return 1;
     if(!position_arr.some(element => element.position === 1)) return 1;
     if(!position_arr.some(element => element.position === 2)) return 2;
     if(!position_arr.some(element => element.position === 3)) return 3;
+    if(!position_arr.some(element => element.position === 4)) return 4;
 }
 
 const getPositions = ( game_id ) => {
@@ -31,8 +31,8 @@ const checkPlayerExists = (game_id, player_id) => {
 }
 
 const getTeam = (position) => {
-    if(position == 0 || position == 2) return 1; 
-    if(position == 1 || position == 3) return 2;
+    if(position == 1 || position == 3) return 1; 
+    if(position == 2 || position == 4) return 2;
 };
 
 const checkInGame = (playerId) => {

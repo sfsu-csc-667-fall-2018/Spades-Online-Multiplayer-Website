@@ -33,7 +33,7 @@ const updateNumPlayers = (gameId) => {
 }
 
 const initScores = (gameId) => {
-  return db.one(`INSERT INTO scores (
+  return db.none(`INSERT INTO scores (
     game_id, books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b
     ) VALUES ('${gameId}', 0, 0, 0, 0, 0, 0, 0, 0)`);
 };

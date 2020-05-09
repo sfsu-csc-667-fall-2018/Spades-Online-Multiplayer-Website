@@ -40,6 +40,7 @@ const initScores = (gameId) => {
 
 
 
+
 module.exports = { 
   createGame, 
   getCurrentGames,
@@ -48,7 +49,7 @@ module.exports = {
   checkNumPlayers,
   getGameRoom,
   updateNumPlayers,
-  initScores
+  initScores,
 };
 
 

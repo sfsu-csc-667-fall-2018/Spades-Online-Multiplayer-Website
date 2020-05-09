@@ -1,8 +1,23 @@
 extends layout
 
 block content
-  h1 GameRoom: #{game_id} Player1: #{user.username} 
-  p Game played here + chatroom
+
+  h1 GameRoom: #{game_id} Created by: #{user.username} 
+
+  section.section
+    .container
+      .columns
+        .column.is-1 Team 1 
+        .column.is-1 Score: 0
+        .column.is-1 Bags: 0
+        .column.is-1 Team 2 
+        .column.is-1 Score: 0
+        .column.is-1 Bags: 0
+      .columns
+        .column.is-1.is-offset-1 Bet: 0
+        .column.is-1 Books: 0
+        .column.is-1.is-offset-1 Bet: 0
+        .column.is-1 Books: 0 
 
   section.section.chat-container
     .container

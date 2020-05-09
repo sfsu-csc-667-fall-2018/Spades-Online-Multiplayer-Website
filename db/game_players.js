@@ -35,8 +35,13 @@ const getTeam = (position) => {
     if(position == 1 || position == 3) return 2;
 };
 
+const checkInGame = (playerId) => {
+    return db.any(`Select game_id FROM games_players WHERE player_id = '${playerId}'`);
+  };
+
 module.exports = {
     // getPositions,
     addPlayer,
-    checkPlayerExists
+    checkPlayerExists,
+    checkInGame
 };

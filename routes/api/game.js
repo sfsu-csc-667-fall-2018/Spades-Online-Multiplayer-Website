@@ -4,6 +4,7 @@ const isAuthenticated = require('../../config/passport/isAuthenticated');
 const io = require('../../socket');
 const gameSocket = io.of('/game');
 const game = require('../../db/game');
+const playerTable = require('../../db/game_players');
 
 let user, game_id;
 

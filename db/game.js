@@ -32,6 +32,12 @@ const updateNumPlayers = (gameId) => {
   return db.one(`UPDATE games SET num_players = '${numPlayers}' WHERE game_id = '${gameId}'`);
 }
 
+const initScores = (gameId) => {
+  return db.one(`INSERT INTO scores (
+    game_id, books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b
+    ) VALUES ('${gameId}', 0, 0, 0, 0, 0, 0, 0, 0)`);
+};
+
 
 
 module.exports = { 
@@ -41,7 +47,8 @@ module.exports = {
   getCurrentGames,
   checkNumPlayers,
   getGameRoom,
-  updateNumPlayers
+  updateNumPlayers,
+  initScores
 };
 
 

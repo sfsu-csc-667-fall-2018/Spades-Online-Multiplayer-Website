@@ -1,0 +1,1 @@
+const gameSocket = io('/game');

@@ -66,12 +66,14 @@ gameSocket.on('connection', socket => {
     }
   });
 
-  socket.on('get hand', game_user => {
+  socket.on('get hand', () => {
     /* emit cards to each player */
     cards.deckReady(game_id).then((hasDeck) => {
       if(hasDeck) {
         cards.getGameCards(game_id).then((cards) => {
-          gameSocket.emit('display cards', cards);
+          gameSocket
+            .to(game_id)
+            .emit('display cards', cards);
           console.log('emit: display cards');
         })
       }

@@ -7,7 +7,11 @@ module.exports = {
       {
         game_id: {
           type: Sequelize.INTEGER,
-          allowNull: false,
+          allowNull: false
+        },
+        leading_suit: {
+          type: Sequelize.INTEGER,
+          allowNull: false
         },
         books_a: {
           type: Sequelize.INTEGER,

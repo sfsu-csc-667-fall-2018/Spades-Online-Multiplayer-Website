@@ -3,8 +3,11 @@ const router = express.Router();
 const isAuthenticated = require('../../config/passport/isAuthenticated');
 const io = require('../../socket');
 const gameSocket = io.of('/game');
+const gameLogic = require('./game_logic');
+
 const game = require('../../db/game');
-const playerTable = require('../../db/game_players');
+const cards = require('../../db/game_cards');
+const players = require('../../db/game_players');
 
 let user, game_id;
 
@@ -15,7 +18,6 @@ router.get('/', isAuthenticated, (request, response) => {
 router.get('/:game_id', isAuthenticated, (request, response) => {
   user = request.user;
   game_id = request.params.game_id;
-
   game.getGameRoom(game_id)
     .then(results => {
       if(results === undefined || results.length === 0){
@@ -40,26 +42,39 @@ gameSocket.on('connection', socket => {
   console.log('Connected to game room: ' + game_id);
   socket.join(game_id);
 
-  checkStartCondition(game_id)
-    .then(results => {
-      if (results === true){
-        playerTable.getPlayers(game_id)
-          .then(players => { 
-                
-          }) 
+  //sockets api functions go here
+  /* if game room is full create the deck */
+  gameLogic.gameReady(game_id).then((hasPlayers) => {
+    console.log('hasPlayers? : ' + hasPlayers);
+    if(hasPlayers) {
+      cards.deckReady(game_id).then((hasDeck) => {
+        console.log('hasDeck? : ' + hasDeck);
+        if(!hasDeck) {
+          players.getPlayers(game_id).then((players) => {
+            console.log('***players***');
+            console.log(players);
+            cards.createDeck(game_id, players).then(() => {
+              console.log("Created Deck");
+            });
+          });
+        }
+      });
+    }
+  });
+
+  socket.on('get hand', game_user => {
+    /* emit cards to each player */
+    cards.deckReady(game_id).then((hasDeck) => {
+      if(hasDeck) {
+        cards.getGameCards(game_id).then((cards) => {
+          gameSocket.emit('display cards', cards);
+          console.log('emit: display cards');
+        })
       }
     })
-    .catch(error => {console.log(error)});
+  })
+
 });
 
-//check if game has 4 players
-const checkStartCondition = (gameId) => {
-  return game.checkNumPlayers(gameId)
-    .then(results => {
-      console.log('num players: ' + results.num_players);
-      return Promise.resolve(results.num_players == 4);
-    })
-    .catch(error => { console.log(error) });
-};
 
 module.exports = router;

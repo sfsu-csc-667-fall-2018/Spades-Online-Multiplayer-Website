@@ -22,9 +22,9 @@ const createDeck = async (game_room_id, player_id_array) => {
         for(let j = 0; j < 13; j++) {
             await db.none(`INSERT INTO game_cards (game_id, player_id, card_id, card_order) VALUES (
                 ${ game_room_id },
-                ${ player_id_array[i] },
-                ${ card_id },
-                ${ shuffledArr[card_id - 1] }
+                ${ player_id_array[i].player_id },
+                ${ shuffledArr[card_id - 1] },
+                ${ card_id }
               )`);
             card_id++;
         }
@@ -66,6 +66,11 @@ const getGameCards = ( game_id ) => {
     return db.manyOrNone(`SELECT * FROM game_cards, cards WHERE card_id=cards.id AND game_id=${ game_id } ORDER BY card_order ASC`);
 };
 
+const deckReady = async (game_id) => {
+    result = await db.one(`SELECT EXISTS(SELECT * FROM game_cards WHERE game_id=${ game_id })`);
+    return result.exists;
+}
+
 module.exports = {
     createDeck,
     deleteDeck,
@@ -74,5 +79,6 @@ module.exports = {
     getCardAt,
     getNextCard,
     getPlayerCards,
-    getGameCards
+    getGameCards,
+    deckReady
 };

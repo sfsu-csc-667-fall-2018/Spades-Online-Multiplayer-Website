@@ -24,11 +24,17 @@ const playCard = () => {
 };
 
 //score related stuff
-getTotalScores = (gameId) => {};
+getTotalScores = (gameId) => {
 
-getTotalBags = (gameId) => {};
+};
 
-updateScores = () => {};
+getTotalBags = (gameId) => {
+
+};
+
+updateScores = () => {
+    
+};
 
 module.exports = {
     gameReady,

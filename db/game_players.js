@@ -43,10 +43,15 @@ const getNumPlayers = (gameId) => {
     return db.one(`SELECT COUNT(*) FROM games_players WHERE game_id=${ gameId };`);
 };
 
+const getPlayers = (gameId) => {
+    return db.many(`SELECT player_id FROM games_players WHERE game_id=${ gameId };`);
+};
+
 module.exports = {
     // getPositions,
     addPlayer,
     checkPlayerExists,
     checkInGame,
-    getNumPlayers
+    getNumPlayers,
+    getPlayers
 };

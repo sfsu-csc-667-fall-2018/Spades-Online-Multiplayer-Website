@@ -66,15 +66,20 @@ gameSocket.on('connection', socket => {
     }
   });
 
-  /* emit cards to each player */
-  cards.deckReady(game_id).then((hasDeck) => {
-    if(hasDeck) {
-      cards.getPlayerCards(game_id, user.id).then((cards) => {
-        gameSocket.emit('display cards', cards);
-        console.log('emit: display cards');
-      })
-    }
+  socket.on('get hand', game_user => {
+    /* emit cards to each player */
+    cards.deckReady(game_id).then((hasDeck) => {
+      if(hasDeck) {
+        cards.getGameCards(game_id).then((cards) => {
+          gameSocket.emit('display cards', cards);
+          console.log('emit: display cards');
+        })
+      }
+    })
   })
+
 });
+
+
 
 module.exports = router;

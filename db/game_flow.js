@@ -1,8 +1,9 @@
 const db = require('./index');
 
-const setFlow = (game_id, leading_suit, trick_pos, round_pos) => {
-    return db.none(`INSERT INTO game_flow (game_id, leading_suit, trick_pos, round_pos) VALUES (
+const setFlow = (game_id, current_pos, leading_suit, trick_pos, round_pos) => {
+    return db.none(`INSERT INTO game_flow (game_id, current_pos, leading_suit, trick_pos, round_pos) VALUES (
         ${ game_id },
+        ${ current_pos }, 
         ${ leading_suit },
         ${ trick_pos },
         ${ round_pos }
@@ -10,7 +11,11 @@ const setFlow = (game_id, leading_suit, trick_pos, round_pos) => {
 }
 
 const initFlow = (game_id) => {
-    return setFlow(game_id, -1, 1, 1);
+    return setFlow(game_id, 2, -1, 1, 1);
+}
+
+const setCurrentPos = (game_id, current_pos) => {
+    return db.none(`UPDATE game_flow SET current_pos=${ current_pos } WHERE game_id=${ game_id };`);
 }
 
 const setLeadingSuit = (game_id, leading_suit) => {
@@ -27,6 +32,10 @@ const setRoundPos = (game_id, round_pos) => {
 
 const getFlow = (game_id) => {
     return db.one(`SELECT * FROM game_flow WHERE game_id=${ game_id };`);
+}
+
+const getCurrentPos = (game_id) => {
+    return db.one(`SELECT current_pos FROM game_flow WHERE game_id=${ game_id };`);
 }
 
 const getLeadingSuit = (game_id) => {
@@ -48,10 +57,12 @@ const deleteFlow = (game_id) => {
 module.exports = {
     initFlow,
     setFlow,
+    setCurrentPos,
     setLeadingSuit,
     setTrickPos,
     setRoundPos,
     getFlow,
+    getCurrentPos,
     getLeadingSuit,
     getTrickPos,
     getRoundPos,

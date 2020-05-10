@@ -9,6 +9,10 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false
         },
+        current_pos: {
+          type: Sequelize.INTEGER,
+          allowNull: false
+        },
         leading_suit: {
           type: Sequelize.INTEGER,
           allowNull: false

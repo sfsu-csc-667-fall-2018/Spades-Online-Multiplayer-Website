@@ -3,7 +3,7 @@ const gameSocket = io('/game');
 let id;
 
 $(window).on('load', () => {
-  id = $('#user_id').val()
+  id = $('#user_id').val();
   console.log('trying to load cards');
   gameSocket.emit('get hand');
 });
@@ -19,5 +19,21 @@ gameSocket.on('display cards', cards => {
         $('#cards').append(`<li>${cards[i].image}</li>`);
       }
     }
+});
 
+gameSocket.on('init score' , data => {
+
+  console.log('client displaying score');
+
+  const { books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b } = data;
+
+  $('#team1-books').text(books_a);
+  $('#team1-bags').text(bags_a);
+  $('#team1-bets').text(bets_a);
+  $('#team1-score').text(points_a);
+  $('#team2-books').text(books_b);
+  $('#team2-bags').text(bags_b);
+  $('#team2-bets').text(bets_b);
+  $('#team2-score').text(points_b);
+  
 });

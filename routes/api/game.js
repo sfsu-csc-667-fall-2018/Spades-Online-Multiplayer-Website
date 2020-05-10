@@ -4,7 +4,7 @@ const isAuthenticated = require('../../config/passport/isAuthenticated');
 const io = require('../../socket');
 const gameSocket = io.of('/game');
 const gameLogic = require('./game_logic');
-
+const scoresTable = require('../../db/scores');
 const game = require('../../db/game');
 const cards = require('../../db/game_cards');
 const players = require('../../db/game_players');
@@ -62,9 +62,13 @@ gameSocket.on('connection', socket => {
     }
   });
 
-  socket.on(' scores', (game_id) => {
-
-  });
+  scoresTable
+    .getScoreBoard(game_id)
+    .then( results => {
+    console.log('scores: ' + JSON.stringify(results[0]));
+    gameSocket.to(game_id).emit('init score' , results[0] );
+    })
+    .catch(error => { console.log(error) });   
 
   socket.on('get hand', () => {
     /* emit cards to each player */

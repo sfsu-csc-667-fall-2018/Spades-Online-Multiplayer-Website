@@ -27,7 +27,7 @@ const addScore = (gameId, team) => {};
 const getTeam = (gameId, playerId) => {};
 
 const getScoreBoard = (gameId) => {
-  return db.any(`SELECT bags_a, bags_b, points_a, points_b FROM scores WHERE game_id = '${gameId}'`);
+  return db.any(`SELECT * FROM scores WHERE game_id = '${gameId}'`);
 };
 
 module.exports = {

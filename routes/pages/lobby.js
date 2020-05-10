@@ -3,6 +3,7 @@ const router = express.Router();
 const isAuthenticated = require('../../config/passport/isAuthenticated');
 const game = require('../../db/game');
 const playersTable = require('../../db/game_players');
+const scoresTable = require('../../db/scores');
 const io = require('../../socket');
 const lobbySocket = io.of('/lobby');
 
@@ -32,6 +33,13 @@ router.post('/creategame', isAuthenticated, (request, response) => {
       playersTable.addPlayer(game_id, user.id)
         .then(() => {
           game.initScores(game_id)
+            .then(() => {
+              scoresTable.getScores(game_id)
+              .then( results => {
+                console.log('scores: ' + results);
+                //lobbySocket.emit()
+              })
+            })
             .catch(error => {
               console.log(error);
             })

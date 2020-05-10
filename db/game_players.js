@@ -45,7 +45,7 @@ const getNumPlayers = (gameId) => {
 };
 
 const getPlayers = (gameId) => {
-    return db.many(`SELECT player_id FROM games_players WHERE game_id=${ gameId };`);
+    return db.many(`SELECT * FROM games_players WHERE game_id=${ gameId };`);
 };
 
 

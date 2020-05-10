@@ -55,7 +55,6 @@ gameSocket.on('connection', socket => {
             console.log(players);
             cards.createDeck(game_id, players).then(() => {
               console.log("Created Deck");
-              
             });
           });
         }

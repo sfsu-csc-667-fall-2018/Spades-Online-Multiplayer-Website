@@ -36,12 +36,18 @@ const getTeam = (position) => {
 };
 
 const checkInGame = (playerId) => {
-    return db.any(`Select game_id FROM games_players WHERE player_id = '${playerId}'`);
+    return db.any(`SELECT game_id FROM games_players WHERE player_id = '${playerId}'`);
   };
+
+const getPlayers = (gameId) => {
+    return db.one(`SELECT player_id FROM games_players WHERE game_id = '${gameId}'`);
+};  
 
 module.exports = {
     // getPositions,
     addPlayer,
     checkPlayerExists,
-    checkInGame
+    checkInGame,
+    getPlayers,
+    getTeam
 };

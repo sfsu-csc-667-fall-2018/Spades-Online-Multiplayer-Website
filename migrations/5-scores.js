@@ -9,10 +9,6 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false
         },
-        leading_suit: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
         books_a: {
           type: Sequelize.INTEGER,
           allowNull: false

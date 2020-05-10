@@ -9,8 +9,8 @@ const cards = require('../../db/game_cards');
 
 //check for 4 players after every join
 const gameReady = async (gameId) => {
-    var numPlayers = players.getNumPlayers(gameId);
-    return (numPlayers == 4);
+    var numPlayers = await players.getNumPlayers(gameId);
+    return (numPlayers.count == 4);
 };
 
 //start game

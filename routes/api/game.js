@@ -41,11 +41,12 @@ gameSocket.on('connection', socket => {
   }
   
   console.log('Connected to game room: ' + game_id);
+  console.log('Connected to userID   : ' + user.id);
+  console.log('Connected to username : ' + user.username);
 
   socket.join(game_id);
 
   //sockets api functions go here
-
   /* if game room is full create the deck */
   gameLogic.gameReady(game_id).then((hasPlayers) => {
     console.log('hasPlayers? : ' + hasPlayers);
@@ -64,6 +65,16 @@ gameSocket.on('connection', socket => {
       });
     }
   });
+
+  /* emit cards to each player */
+  cards.deckReady(game_id).then((hasDeck) => {
+    if(hasDeck) {
+      cards.getPlayerCards(game_id, user.id).then((cards) => {
+        gameSocket.emit('display cards', cards);
+        console.log('emit: display cards');
+      })
+    }
+  })
 });
 
 module.exports = router;

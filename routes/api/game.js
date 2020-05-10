@@ -8,6 +8,7 @@ const gameLogic = require('./game_logic');
 const game = require('../../db/game');
 const cards = require('../../db/game_cards');
 const players = require('../../db/game_players');
+const flow = require('../../db/game_flow');
 
 let user, game_id;
 
@@ -34,6 +35,16 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
     });
 });
 
+router.post('/:game_id/playCard', (request,response) => {
+  var gameId = request.params.game_id;
+  var cardId = request.body.card_id;
+  cards.getPlayer(gameId, cardId).then((playerId) => {
+    gameLogic.isValidPosition(gameId, playerId).then((isValid) => {
+      console.log(isValid);
+    });
+  });
+});
+
 gameSocket.on('connection', socket => {
   if(game_id == null){
     return;
@@ -45,16 +56,19 @@ gameSocket.on('connection', socket => {
   //sockets api functions go here
   /* if game room is full create the deck */
   gameLogic.gameReady(game_id).then((hasPlayers) => {
-    console.log('hasPlayers? : ' + hasPlayers);
+    console.log('\thasPlayers? : ' + hasPlayers);
     if(hasPlayers) {
       cards.deckReady(game_id).then((hasDeck) => {
-        console.log('hasDeck? : ' + hasDeck);
+        console.log('\thasDeck? : ' + hasDeck);
         if(!hasDeck) {
           players.getPlayers(game_id).then((players) => {
-            console.log('***players***');
+            console.log('\t***players***');
             console.log(players);
             cards.createDeck(game_id, players).then(() => {
-              console.log("Created Deck");
+              console.log("\tCreated Deck");
+              flow.initFlow(game_id).then(() => {
+                console.log("\tInitialized Flow");
+              });
             });
           });
         }
@@ -64,13 +78,14 @@ gameSocket.on('connection', socket => {
 
   socket.on('get hand', () => {
     /* emit cards to each player */
+    console.log("Im a Race Condition!!!");
     cards.deckReady(game_id).then((hasDeck) => {
       if(hasDeck) {
         cards.getGameCards(game_id).then((cards) => {
           gameSocket
             .to(game_id)
             .emit('display cards', cards);
-          console.log('emit: display cards');
+          console.log('\t\temit: display cards');
         })
       }
     })

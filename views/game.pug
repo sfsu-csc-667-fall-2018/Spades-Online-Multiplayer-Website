@@ -23,7 +23,8 @@ block content
     .box
       input(id='user_id', type='hidden', value=user.id)
       h2.title Cards
-        ul#cards
+        form(action='/game/' + game_id + '/playCard', method='POST')
+          ul#cards
 
   section.section.chat-container
     .container

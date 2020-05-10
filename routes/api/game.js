@@ -34,16 +34,12 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
     });
 });
 
-//game socket actions
 gameSocket.on('connection', socket => {
   if(game_id == null){
     return;
   }
-  
-  console.log('Connected to game room: ' + game_id);
-  console.log('Connected to userID   : ' + user.id);
-  console.log('Connected to username : ' + user.username);
 
+  console.log('Connected to game room: ' + game_id);
   socket.join(game_id);
 
   //sockets api functions go here
@@ -79,7 +75,6 @@ gameSocket.on('connection', socket => {
   })
 
 });
-
 
 
 module.exports = router;

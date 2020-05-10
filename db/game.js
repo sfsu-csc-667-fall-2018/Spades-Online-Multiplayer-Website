@@ -20,7 +20,7 @@ const getCurrentGames = () => {
 };
 
 const checkNumPlayers = (gameId) => {
-  return db.one(`SELECT COUNT (*) FROM games_players WHERE game_id = '${gameId}'`);
+  return db.one(`SELECT COUNT (*) as num_players FROM games_players WHERE game_id = '${gameId}'`);
 };
 
 const getGameRoom = (gameId) => {

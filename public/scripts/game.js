@@ -19,4 +19,5 @@ gameSocket.on('display cards', cards => {
         $('#cards').append(`<li>${cards[i].image}</li>`);
       }
     }
+
 });

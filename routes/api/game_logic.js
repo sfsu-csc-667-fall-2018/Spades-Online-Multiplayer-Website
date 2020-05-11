@@ -12,26 +12,49 @@ const flows = require('../../db/game_flow');
 
 //check for 4 players after every join
 const gameReady = async (gameId) => {
-    var numPlayers = await players.getNumPlayers(gameId);
-    return (numPlayers.count == 4);
+  var numPlayers = await players.getNumPlayers(gameId);
+  return (numPlayers.count == 4);
 };
 
 //start game
 const dealCards = (gameId, playerArray) => {
-    return gameCards.createDeck(gameId, playerArray);
+  return gameCards.createDeck(gameId, playerArray);
 };
 
 //card related stuff
 const playCard = (gameId, cardId) => {
-    return gameCards.setToTable(gameId, cardId);
+  // return gameCards.setToTable(gameId, cardId);
+  return new Promise(function(resolve, reject) { 
+    gameCards.getPlayer(gameId, cardId).then((playerId) => {
+      isValidPosition(gameId, playerId).then((isValid_pos) => {
+        console.log('\tValidPos? : ' + isValidPos);
+        if(isValid_pos) {
+          isValidCard(gameId, playerId, cardId).then((isValid_card) => {
+            console.log('\tValidCard? : ' + isValid_card);
+            if(isValid_card) {
+              /* put card in table --> set card order = -1 */
+              gameCards.setToGameTable(gameId, cardId).then(() => {
+                console.log("Played Card");
+                resolve('done');
+              });
+            } else {
+              resolve('invalid card');
+            }
+          });
+        } else {
+          resolve('invalid pos');
+        }
+      });
+    });
+  });
 };
 
 const getNextPos = (pos) => {
-    if(pos > 0 && pos < 4) { // pos = 1, 2, 3
-        return (pos + 1);
-    } else { // pos = 4
-        return 1;
-    }
+  if(pos > 0 && pos < 4) { // pos = 1, 2, 3
+    return (pos + 1);
+  } else { // pos = 4
+    return 1;
+  }
 }
 const isValidPosition = (gameId, playerId) => {
   return new Promise(function(resolve, reject) { 

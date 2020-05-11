@@ -9,6 +9,7 @@ const game = require('../../db/game');
 const cards = require('../../db/game_cards');
 const players = require('../../db/game_players');
 const flow = require('../../db/game_flow');
+const scores = require('../../db/scores');
 
 let user, game_id;
 
@@ -38,9 +39,27 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
 router.post('/:game_id/playCard', (request,response) => {
   var gameId = request.params.game_id;
   var cardId = request.body.card_id;
+  // gameLogic.playCard(gameId, cardId).then((wasPlayed) => {
+  //   if(wasPlayed) {
+  //     console.log('Played Card');
+  //   } else {
+  //     console.log('Illegal Move');
+  //   }
+  // });
   cards.getPlayer(gameId, cardId).then((playerId) => {
-    gameLogic.isValidPosition(gameId, playerId).then((isValid) => {
-      console.log(isValid);
+    gameLogic.isValidPosition(gameId, playerId).then((isValid_pos) => {
+      console.log('\tValidPos? : ' + isValidPos);
+      if(isValid_pos) {
+        gameLogic.isValidCard(gameId, playerId, cardId).then((isValid_card) => {
+          console.log('\tValidCard? : ' + isValid_card);
+          if(isValid_card) {
+            /* put card in table --> set card order = -1 */
+            gameLogic.playCard(gameId, cardId).then(() => {
+              console.log("Played Card");
+            });
+          }
+        });
+      }
     });
   });
 });
@@ -65,9 +84,12 @@ gameSocket.on('connection', socket => {
             console.log('\t***players***');
             console.log(players);
             cards.createDeck(game_id, players).then(() => {
-              console.log("\tCreated Deck");
+              console.log("\t\tCreated Deck");
               flow.initFlow(game_id).then(() => {
-                console.log("\tInitialized Flow");
+                console.log("\t\treated Flow");
+                scores.initScore(game_id).then(() => {
+                  console.log("\t\tCreated Scores");
+                });
               });
             });
           });

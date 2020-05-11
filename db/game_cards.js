@@ -75,6 +75,10 @@ const getPlayer = (game_id, card_id) => {
     return db.one(`SELECT player_id FROM game_cards WHERE game_id=${ game_id } AND card_id=${ card_id };`);
 };
 
+const setToTable = (game_id, card_id) => {
+    return db.none(`UPDATE game_cards SET card_order=-1 WHERE game_id=${ game_id } AND card_id=${ card_id };`);
+}
+
 module.exports = {
     createDeck,
     deleteDeck,
@@ -85,5 +89,6 @@ module.exports = {
     getPlayerCards,
     getGameCards,
     deckReady,
-    getPlayer
+    getPlayer,
+    setToTable
 };

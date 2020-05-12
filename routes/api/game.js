@@ -62,11 +62,11 @@ gameSocket.on('connection', socket => {
   })
   .then(() => {
     game.getGameData(game_id)
-      .then(username => {
-        console.log('username: ' + username[0].username + ' positions: ' + username[1].position);
+      .then(users=> {
+        console.log('user 1: ' + JSON.stringify(users[0]) + ' user 2: ' + JSON.stringify(users[1]));
         gameSocket
           .to(game_id)
-          .emit('update players', { games_players: username });
+          .emit('update players', { games_players: users });
       })
       .catch(error => { console.log(error) });
   });
@@ -75,7 +75,7 @@ gameSocket.on('connection', socket => {
     .getScoreBoard(game_id)
     .then( results => {
     console.log('scores: ' + JSON.stringify(results[0]));
-    gameSocket.to(game_id).emit('init score' , results[0] );
+    gameSocket.to(game_id).emit('update score' , results[0] );
     })
     .catch(error => { console.log(error) });   
 

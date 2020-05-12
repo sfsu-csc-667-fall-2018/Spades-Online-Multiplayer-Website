@@ -1,7 +1,8 @@
 const gameSocket = io('/game');
 
-let id, playerNames, num_players, playerBot, playerTop, playerLeft, playerRight;
-let orderBot, orderTop, order
+let id, playerNames, num_players, playerBot, playerTop, playerLeft, playerRight,
+orderBot, orderTop, orderLeft, orderRight, currentPlayer, currentTurn, selectCard = false, selectedCard = '0';
+
 
 $(window).on('load', () => {
   id = $('#user_id').val();
@@ -22,7 +23,7 @@ gameSocket.on('display cards', cards => {
     }
 });
 
-gameSocket.on('init score' , data => {
+gameSocket.on('update score' , data => {
 
   console.log('client displaying score');
 
@@ -41,9 +42,22 @@ gameSocket.on('init score' , data => {
 
 gameSocket.on('update players', data => {
   
-  playerIds = data.games_players;
-  num_players = playerIds.length;
+  const players = data.games_players;
+  const num_players = players.length;
 
+  for (let i = 0; i < num_players; i++){
+    if( $('#name').val() == players[i].username ){
+      orderBot = i;
+    }
+
+    break;
+  };
+
+  
+  orderLeft = (orderBot + 1) % 4;
+  orderTop = (orderBot + 2) % 4;
+  orderRight = (orderBot + 3) % 4;
 
   
 });
+

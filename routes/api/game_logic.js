@@ -79,7 +79,7 @@ const isValidCard = (gameId, playerId, cardId) => {
         // console.log(flow);
         if(flow.leading_suit == -1) {
           /* first card of round --> set leading suit*/
-          flows.setLeadingSuit(card.suit).then(() => {
+          flows.setLeadingSuit(gameId, card.suit).then(() => {
             resolve(true);
           });
         }

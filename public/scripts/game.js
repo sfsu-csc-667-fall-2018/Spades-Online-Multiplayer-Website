@@ -1,6 +1,7 @@
 const gameSocket = io('/game');
 
-let id;
+let id, playerNames, num_players, playerBot, playerTop, playerLeft, playerRight;
+let orderBot, orderTop, order
 
 $(window).on('load', () => {
   id = $('#user_id').val();
@@ -35,5 +36,14 @@ gameSocket.on('init score' , data => {
   $('#team2-bags').text(bags_b);
   $('#team2-bets').text(bets_b);
   $('#team2-score').text(points_b);
+  
+});
+
+gameSocket.on('update players', data => {
+  
+  playerIds = data.games_players;
+  num_players = playerIds.length;
+
+
   
 });

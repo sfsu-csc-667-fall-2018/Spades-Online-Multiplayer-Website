@@ -38,7 +38,11 @@ const initScores = (gameId) => {
     ) VALUES ('${gameId}', 0, 0, 0, 0, 0, 0, 0, 0, 0)`);
 };
 
-
+const getGameData = (gameId) => {
+  return db.any(`SELECT username, position FROM player, games_players 
+    WHERE player.id = games_players.player_id AND games_players.game_id = '${gameId}'
+    ORDER BY position`);
+};
 
 
 module.exports = { 
@@ -50,6 +54,7 @@ module.exports = {
   getGameRoom,
   updateNumPlayers,
   initScores,
+  getGameData
 };
 
 

@@ -42,8 +42,7 @@ gameSocket.on('connection', socket => {
   console.log('Connected to game room: ' + game_id);
   socket.join(game_id);
 
-  //sockets api functions go here
-  /* if game room is full create the deck */
+
   gameLogic.gameReady(game_id).then((hasPlayers) => {
     console.log('hasPlayers? : ' + hasPlayers);
     if(hasPlayers) {
@@ -60,6 +59,16 @@ gameSocket.on('connection', socket => {
         }
       });
     }
+  })
+  .then(() => {
+    game.getGameData(game_id)
+      .then(username => {
+        console.log('username: ' + username[0].username + ' positions: ' + username[1].position);
+        gameSocket
+          .to(game_id)
+          .emit('update players', { games_players: username });
+      })
+      .catch(error => { console.log(error) });
   });
 
   scoresTable

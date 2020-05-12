@@ -67,6 +67,7 @@ gameSocket.on('update players', data => {
   orderTop = (orderBot + 2) % 4;
   orderRight = (orderBot + 3) % 4;
 
-  
 });
+
+gameSocket.on('get bets', () => {});
 

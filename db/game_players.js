@@ -48,6 +48,10 @@ const getPlayers = (gameId) => {
     return db.many(`SELECT * FROM games_players WHERE game_id=${ gameId };`);
 };
 
+const checkTeam = (playerId) => {
+    return db.one(`SELECT team FROM games_players WHERE player_id = ${playerId}`);
+};
+
 
 module.exports = {
     // getPositions,
@@ -56,6 +60,7 @@ module.exports = {
     checkInGame,
     getNumPlayers,
     getPlayers,
-    getTeam
+    getTeam,
+    checkTeam
 
 };

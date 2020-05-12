@@ -43,6 +43,9 @@ router.post('/:game_id/playCard', (request,response) => {
   gameLogic.playCard(gameId, playerId, cardId).then((result) => {
     if(result === 'done') {
       console.log('Played Card');
+      gameLogic.endTurn(gameId).then(() => {
+        console.log('Ended turn');
+      });
     } else if(result === 'invalid pos') {
       console.log('Illegal Position');
     } else if(result === 'invalid pos') {

@@ -21,7 +21,8 @@ const dealCards = (gameId, playerArray) => {
   return gameCards.createDeck(gameId, playerArray);
 };
 
-//card related stuff
+/* PUBLIC */
+/* Done for now */
 const playCard = (gameId, playerId, cardId) => {
   // return gameCards.setToTable(gameId, cardId);
   return new Promise(function(resolve, reject) { 
@@ -49,13 +50,6 @@ const playCard = (gameId, playerId, cardId) => {
   });
 };
 
-const getNextPos = (pos) => {
-  if(pos > 0 && pos < 4) { // pos = 1, 2, 3
-    return (pos + 1);
-  } else { // pos = 4
-    return 1;
-  }
-}
 const isValidPosition = (gameId, playerId) => {
   return new Promise(function(resolve, reject) { 
     players.getPlayerPos(gameId, playerId).then((playerPos) => {
@@ -104,6 +98,24 @@ const isValidCard = (gameId, playerId, cardId) => {
   });
 };
 
+/* PUBLIC */
+const endTurn = (gameId) => {
+  return new Promise(function(resolve, reject) { 
+    flows.getCurrentPos(gameId).then((currentPos) => {
+      console.log(currentPos);
+      // flows.setCurrentPos(gameId, getNextPos())
+    });
+  });
+};
+
+const getNextPos = (pos) => {
+  if(pos > 0 && pos < 4) { // pos = 1, 2, 3
+    return (pos + 1);
+  } else { // pos = 4
+    return 1;
+  }
+};
+
 //score related stuff
 getTotalScores = (gameId) => {};
 
@@ -116,6 +128,5 @@ module.exports = {
     dealCards,
     getNextPos,
     playCard,
-    isValidCard,
-    isValidPosition
+    endTurn
 }

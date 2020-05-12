@@ -18,11 +18,15 @@ block content
         .column.is-1 Books: 0
         .column.is-1.is-offset-1 Bet: 0
         .column.is-1 Books: 0 
-  
+  .container
+    .box
+      h3.title <em>Table Cards</em>
+        ul#table
+
   .container
     .box
       input(id='user_id', type='hidden', value=user.id)
-      h2.title Cards
+      h3.title <em>Player Cards</em>
         form(action='/game/' + game_id + '/playCard', method='POST')
           ul#cards
 

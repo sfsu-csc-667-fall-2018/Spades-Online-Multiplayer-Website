@@ -69,5 +69,21 @@ gameSocket.on('update players', data => {
 
 });
 
-gameSocket.on('get bets', () => {});
+//gameSocket.on('get bets', () => {});
+
+//helpers
+const getBet = () => {
+  let bet;
+  var gameBox = $('#game-box');
+  var betPrompt = $('<input>');
+  var submit = $('<input>', {type: 'button'}).on('click', { bet = betPrompt.val() })
+  while (!Number.isInteger(bet) && bet > 13 && bet < 0){
+    gameBox.empty().append(
+      $('<p>').append('Bet: ', betPrompt),
+      submit);
+  };
+
+  return bet;
+  
+}; 
 

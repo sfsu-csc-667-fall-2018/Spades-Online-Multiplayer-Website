@@ -76,8 +76,15 @@ const isValidCard = (gameId, playerId, cardId) => {
   return new Promise(function(resolve, reject) { 
     cards.getCard(cardId).then((card) => {
       flows.getFlow(gameId).then((flow) => {
-        if(flow.leading_suit == card.suit) {
-          /* is valid */
+        // console.log(flow);
+        if(flow.leading_suit == -1) {
+          /* first card of round --> set leading suit*/
+          flows.setLeadingSuit(card.suit).then(() => {
+            resolve(true);
+          });
+        }
+        else if(flow.leading_suit == card.suit) {
+          /* is valid card */
           resolve(true);
         } else {
           /* need to check hand for leading suit */

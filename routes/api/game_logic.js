@@ -22,29 +22,29 @@ const dealCards = (gameId, playerArray) => {
 };
 
 //card related stuff
-const playCard = (gameId, cardId) => {
+const playCard = (gameId, playerId, cardId) => {
   // return gameCards.setToTable(gameId, cardId);
   return new Promise(function(resolve, reject) { 
-    gameCards.getPlayer(gameId, cardId).then((playerId) => {
-      isValidPosition(gameId, playerId).then((isValid_pos) => {
-        console.log('\tValidPos? : ' + isValidPos);
-        if(isValid_pos) {
-          isValidCard(gameId, playerId, cardId).then((isValid_card) => {
-            console.log('\tValidCard? : ' + isValid_card);
-            if(isValid_card) {
-              /* put card in table --> set card order = -1 */
-              gameCards.setToGameTable(gameId, cardId).then(() => {
-                console.log("Played Card");
-                resolve('done');
-              });
-            } else {
-              resolve('invalid card');
-            }
-          });
-        } else {
-          resolve('invalid pos');
-        }
-      });
+    // console.log(gameId);
+    // console.log(playerId);
+    // console.log(cardId);
+    isValidPosition(gameId, playerId).then((isValid_pos) => {
+      // console.log('\tValidPos? : ' + isValid_pos);
+      if(isValid_pos) {
+        isValidCard(gameId, playerId, cardId).then((isValid_card) => {
+          // console.log('\tValidCard? : ' + isValid_card);
+          if(isValid_card) {
+            /* put card in table --> set card order = -1 */
+            gameCards.setCardToGameTable(gameId, cardId).then(() => {
+              resolve('done');
+            });
+          } else {
+            resolve('invalid card');
+          }
+        });
+      } else {
+        resolve('invalid pos');
+      }
     });
   });
 };
@@ -58,8 +58,10 @@ const getNextPos = (pos) => {
 }
 const isValidPosition = (gameId, playerId) => {
   return new Promise(function(resolve, reject) { 
-    players.getPlayerPos(gameId, playerId.player_id).then((playerPos) => {
+    players.getPlayerPos(gameId, playerId).then((playerPos) => {
+      // console.log(playerPos);
       flows.getCurrentPos(gameId).then((currentPos) => {
+        // console.log(currentPos);
         if(playerPos.position == currentPos.current_pos) {
           resolve(true);
         } else {

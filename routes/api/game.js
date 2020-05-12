@@ -39,29 +39,22 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
 router.post('/:game_id/playCard', (request,response) => {
   var gameId = request.params.game_id;
   var cardId = request.body.card_id;
-  gameLogic.playCard(gameId, cardId).then((wasPlayed) => {
-    if(wasPlayed) {
+  var playerId = request.user.id;
+  gameLogic.playCard(gameId, playerId, cardId).then((result) => {
+    if(result === 'done') {
       console.log('Played Card');
+    } else if(result === 'invalid pos') {
+      console.log('Illegal Position');
+    } else if(result === 'invalid pos') {
+      console.log('Illegal Card')
     } else {
-      console.log('Illegal Move');
+      console.log('something went wrong in router.post(\'/:game_id/playCard\'');
     }
+    response.render('game', {
+      user: user,
+      game_id: game_id
+    });
   });
-  // cards.getPlayer(gameId, cardId).then((playerId) => {
-  //   gameLogic.isValidPosition(gameId, playerId).then((isValid_pos) => {
-  //     console.log('\tValidPos? : ' + isValidPos);
-  //     if(isValid_pos) {
-  //       gameLogic.isValidCard(gameId, playerId, cardId).then((isValid_card) => {
-  //         console.log('\tValidCard? : ' + isValid_card);
-  //         if(isValid_card) {
-  //           /* put card in table --> set card order = -1 */
-  //           gameLogic.playCard(gameId, cardId).then(() => {
-  //             console.log("Played Card");
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-  // });
 });
 
 gameSocket.on('connection', socket => {
@@ -86,7 +79,7 @@ gameSocket.on('connection', socket => {
             cards.createDeck(game_id, players).then(() => {
               console.log("\t\tCreated Deck");
               flow.initFlow(game_id).then(() => {
-                console.log("\t\treated Flow");
+                console.log("\t\tCreated Flow");
                 scores.initScore(game_id).then(() => {
                   console.log("\t\tCreated Scores");
                 });

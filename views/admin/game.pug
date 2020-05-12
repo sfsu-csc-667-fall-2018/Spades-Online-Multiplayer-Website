@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  input#pageGameId(type='hidden' value=gameId)
+
+  h3 Game #{gameId}, Player #{username} (#{playerId})
+
+  h4 Cards
+  div.cards
+    each card in cards
+      a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+
+  h4 Players
+  ul
+    each player in players
+      li= JSON.stringify(player)
+
+  h4 Error
+    if error
+      p#error= error
+
+  h4 Game State
+  #game-state-listing
+    p= JSON.stringify(gameState)
+
+  script(src='/scripts/admin.js')

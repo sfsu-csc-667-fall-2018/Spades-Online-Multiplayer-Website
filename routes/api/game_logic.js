@@ -1,5 +1,5 @@
 // const games = require('../../db/game');
-// const scores = require('../../db/scores');
+const scores = require('../../db/scores');
 const players = require('../../db/game_players');
 // const player = require('../../db/player');
 const cards = require('../../db/game_cards');
@@ -18,22 +18,14 @@ const dealCards = (gameId, playerArray) => {
     return cards.createDeck(gameId, playerArray);
 };
 
-//card related stuff
-const playCard = () => {
-
-};
-
-//score related stuff
-getTotalScores = (gameId) => {
-
-};
-
-getTotalBags = (gameId) => {
-
-};
-
-updateScores = () => {
+const setBet = (gameId, val) => {
     
+};
+
+const startGame = (gameId) => {
+    //get player at pos 1
+
+    //set current player
 };
 
 module.exports = {

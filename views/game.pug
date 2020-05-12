@@ -6,16 +6,27 @@ block content
 
   section.section
     .container
-      p Team 1
-      #team1-books
-      #team1-bags
-      #team1-bets
-      #team1-score
-      p Team 2
-      #team2-books
-      #team2-bags
-      #team2-bets
-      #team2-score
+      .columns
+        .column.is-1
+          p Team 1
+        .column.is-1
+          #team1-books
+        .column.is-1
+          #team1-bags
+        .column.is-1
+          #team1-bets
+        .column.is-1
+          #team1-score
+        .column.is-1
+          p Team 2
+        .column.is-1
+          #team2-books
+        .column.is-1
+          #team2-bags
+        .column.is-1
+          #team2-bets
+        .column.is-1
+          #team2-score
   .container
     .box
       input(id='user_id', type='hidden', value=user.id)

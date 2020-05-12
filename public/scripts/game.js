@@ -27,16 +27,25 @@ gameSocket.on('update score' , data => {
 
   console.log('client displaying score');
 
+  $('#team1-books').empty();
+  $('#team1-bags').empty();
+  $('#team1-bets').empty();
+  $('#team1-score').empty();
+  $('#team2-books').empty();
+  $('#team2-bags').empty();
+  $('#team2-bets').empty();
+  $('#team2-score').empty();
+
   const { books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b } = data;
 
-  $('#team1-books').text(books_a);
-  $('#team1-bags').text(bags_a);
-  $('#team1-bets').text(bets_a);
-  $('#team1-score').text(points_a);
-  $('#team2-books').text(books_b);
-  $('#team2-bags').text(bags_b);
-  $('#team2-bets').text(bets_b);
-  $('#team2-score').text(points_b);
+  $('#team1-books').text('Books: ' + books_a);
+  $('#team1-bags').text('Bags: ' + bags_a);
+  $('#team1-bets').text('Bet: ' + bets_a);
+  $('#team1-score').text('Score:' + points_a);
+  $('#team2-books').text('Books: ' + books_b);
+  $('#team2-bags').text('Bags: ' + bags_b);
+  $('#team2-bets').text('Bet: '+ bets_b);
+  $('#team2-score').text('Score: ' + points_b);
   
 });
 

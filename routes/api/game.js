@@ -67,48 +67,66 @@ router.post('/:game_id/card', (request, response) => {
   const { game_id: gameId } = request.params;
   const { cardId } = request.body
 
-  // Get "game flow" (leading_suit, current_pos)
   Promise.all([
     jrob.getGameState(gameId),
     jrob.getPlayerState(gameId, userId),
     jrob.getCardInfo(cardId)
   ])
     .then(([gameState, playerState, cardInfo]) => {
-      // Check that it is this users turn (user's position == current_pos)
-      console.log(gameState, playerState)
+      /* Check that it is this users turn (user's position == current_pos) */
       if (gameState.current_pos !== playerState.position) {
+        /* Player trying to play card out of turn GOTO .catch */
         return Promise.reject("Not this player's turn.")
       } else {
+        /* is Player's turn */
         return Promise.resolve([gameState, playerState, cardInfo])
       }
     })
     .then(([gameState, playerState, cardInfo]) => {
-      // If user has card of suit leading suit, and card played is
-      // not of leading suit, error
+      /* check if leading suit has been set */
       if (gameState.leading_suit === -1) {
-        // TODO update gameState with leading_suit to be cardInfo.suit
+        /* set leading suit to played card */
         return Promise.all([
           jrob.setLeadingSuit(cardInfo.suit, gameId),
           playerState,
           cardInfo
         ])
       } else {
-        // Check that player does not have card of leading suit
+        /* Check that player does not have card of leading suit */
         const hasCardOfLeadingSuit = playerState.cards.reduce((memo, card) =>
           memo || card.suit === gameState.leading_suit
           , false)
 
         if (hasCardOfLeadingSuit && cardInfo.suit !== gameState.leading_suit) {
+          /* player making illegal move GOTO .catch */
           return Promise.reject("Player must play card of leading suit if in hand.")
         } else {
+          /* player making legal move */
           return Promise.resolve([gameState, playerState, cardInfo])
         }
       }
     })
     .then(([gameState, playerState, cardInfo]) => {
-      // Can play any card
-      //   1. Card order set to 0
-      //   2. current_pos incremented % 4
+      /* set card on table AND set current_pos to next postion */
+      return Promise.all([  
+        gameState,
+        playerState,
+        cardInfo,
+        cards.setCardToGameTable(gameState.game_id, cardInfo.id),
+        flow.setCurrentPos(gameState.game_id, gameLogic.getNextPos(gameState.current_pos))
+      ])
+    })
+    .then(([gameState, playerState, cardInfo]) => {
+      /* get the new game state */
+      return Promise.all([
+        jrob.getGameState(gameState.game_id),
+        playerState,
+        cardInfo
+      ])
+    })
+    .then(([gameState, playerState, cardInfo]) => {
+      /* send response to client */
+      console.log("played card");
       response.json({ gameState, playerState, cardInfo })
     })
     .catch(error => {

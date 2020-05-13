@@ -1,22 +1,21 @@
 extends layout
 
 block content
-
-  h1 Welcome to Spades Server
-
-  div
-    h1 Login
-    
-    form(action='/login', method='post')
-      div 
-        label Username:
-        input(type='Username', name='username')
-      div
-        label Password:
-        input(type='Password', name='password')
-      div 
-        button(type='submit') Submit
-    
-    div
-      a(href = '/register') Register for an account here! 
+  body(class='general-body')
+  h1(class='banner') Welcome to Spades Server
+  div(class='login-box')
+     h1(class= 'title') Login
+      
+     form(action='/login', method='post')
+       div(class='textbox')
+         label(class='subtitle') Username:
+         input(type='Username', name='username')
+       div(class='textbox')
+         label(class='subtitle') Password:
+         input(type='Password', name='password')
+       div(class='textbox')
+         button(class= 'login-button' type='submit') Submit
+     
+     div
+       a(class='reg-text' href = '/register') Register for an account here! 
 

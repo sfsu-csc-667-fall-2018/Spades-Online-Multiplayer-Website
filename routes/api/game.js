@@ -19,26 +19,28 @@ router.get('/', isAuthenticated, (request, response) => {
   response.render(game);
 });
 
-router.get('/:game_id', isAuthenticated, (request, response) => {
-  user = request.user;
-  game_id = request.params.game_id;
-  game.getGameRoom(game_id)
-    .then(results => {
-      if (results === undefined || results.length === 0) {
-        response.redirect('/');
-      } else {
-        response.render('game', {
-          user: user,
-          game_id: game_id
-        });
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
+// router.get('/:game_id', isAuthenticated, (request, response) => {
+//   user = request.user;
+//   game_id = request.params.game_id;
+//   game.getGameRoom(game_id)
+//     .then(results => {
+//       if (results === undefined || results.length === 0) {
+//         response.redirect('/');
+//       } else {
+//         response.render('game', {
+//           user: user,
+//           game_id: game_id
+//         });
+//       }
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// });
 
-router.get('/admin/:game_id', isAuthenticated, (request, response) => {
+router.get('/:game_id', isAuthenticated, (request, response) => {
+  // console.log(request.params);
+  // console.log(request.user);
   const { game_id: gameId } = request.params;
   const { id: playerId, username } = request.user
   // games_players
@@ -50,14 +52,17 @@ router.get('/admin/:game_id', isAuthenticated, (request, response) => {
     jrob.getCards(gameId)
   ])
     .then(([gameState, players, cards]) => {
-      response.render('admin/game', { gameId, gameState, players, cards, playerId, username });
+      response.render('game', { gameId, gameState, players, cards, playerId, username });
     })
     .catch(error => {
-      response.render('admin/game', { error, gameId, gameState: {}, players: [], cards: [], playerId: 'Error', username: 'Error' })
+      response.render('game', { error, gameId, gameState: {}, players: [], cards: [], playerId: 'Error', username: 'Error' })
     })
 });
 
 router.post('/:game_id/card', (request, response) => {
+  // console.log(request.user);
+  // console.log(request.params);
+  // console.log(request.body);
   const { id: userId } = request.user
   const { game_id: gameId } = request.params;
   const { cardId } = request.body
@@ -112,29 +117,29 @@ router.post('/:game_id/card', (request, response) => {
     })
 });
 
-router.post('/:game_id/playCard', (request, response) => {
-  var gameId = request.params.game_id;
-  var cardId = request.body.card_id;
-  var playerId = request.user.id;
-  gameLogic.playCard(gameId, playerId, cardId).then((result) => {
-    if (result === 'done') {
-      console.log('Played Card');
-      gameLogic.endTurn(gameId).then(() => {
-        console.log('Ended turn');
-      });
-    } else if(result === 'invalid pos') {
-      console.log('Illegal Position');
-    } else if (result === 'invalid pos') {
-      console.log('Illegal Card')
-    } else {
-      console.log('something went wrong in router.post(\'/:game_id/playCard\'');
-    }
-    response.render('game', {
-      user: user,
-      game_id: game_id
-    });
-  });
-});
+// router.post('/:game_id/playCard', (request, response) => {
+//   var gameId = request.params.game_id;
+//   var cardId = request.body.card_id;
+//   var playerId = request.user.id;
+//   gameLogic.playCard(gameId, playerId, cardId).then((result) => {
+//     if (result === 'done') {
+//       console.log('Played Card');
+//       gameLogic.endTurn(gameId).then(() => {
+//         console.log('Ended turn');
+//       });
+//     } else if(result === 'invalid pos') {
+//       console.log('Illegal Position');
+//     } else if (result === 'invalid pos') {
+//       console.log('Illegal Card')
+//     } else {
+//       console.log('something went wrong in router.post(\'/:game_id/playCard\'');
+//     }
+//     response.render('game', {
+//       user: user,
+//       game_id: game_id
+//     });
+//   });
+// });
 
 gameSocket.on('connection', socket => {
   if (game_id == null) {

@@ -73,14 +73,15 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
   Promise.all([
     jrob.getGameState(gameId),
     jrob.getPlayers(gameId),
-    jrob.getCards(gameId)
+    // jrob.getCards(gameId)
+    jrob.getPlayerState(gameId, playerId)
   ])
-    .then(([gameState, players, cards]) => {
-      response.render('game', { gameId, gameState, players, cards, playerId, username });
-    })
-    .catch(error => {
-      response.render('game', { error, gameId, gameState: {}, players: [], cards: [], playerId: 'Error', username: 'Error' })
-    })
+  .then(([gameState, players, player]) => {
+    response.render('game', { gameId, gameState, players, player, playerId, username });
+  })
+  .catch(error => {
+    response.render('game', { error, gameId, gameState: {}, players: [], player: [], playerId: 'Error', username: 'Error' })
+  })
 });
 
 /* jrobs */

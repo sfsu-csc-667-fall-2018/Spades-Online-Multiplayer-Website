@@ -1,5 +1,5 @@
 // const games = require('../../db/game');
-// const scores = require('../../db/scores');
+const scores = require('../../db/scores');
 const players = require('../../db/game_players');
 // const player = require('../../db/player');
 const gameCards = require('../../db/game_cards');
@@ -8,13 +8,6 @@ const cards = require('../../db/cards');
 // const db = require('../../db/index');
 const flows = require('../../db/game_flow');
 
-//helpers for game logic 
-
-//check for 4 players after every join
-const gameReady = async (gameId) => {
-  var numPlayers = await players.getNumPlayers(gameId);
-  return (numPlayers.count == 4);
-};
 
 //start game
 const dealCards = (gameId, playerArray) => {
@@ -123,10 +116,45 @@ getTotalBags = (gameId) => {};
 
 updateScores = () => {};
 
+/******************2.0***************** */
+/* game room */
+const readyGame = (gameId) => {
+  return new Promise(function(resolve, reject) { 
+    players.getNumPlayers(gameId).then((numPlayers) => {
+      if (numPlayers.count == 4) {
+        gameCards.deckReady(gameId).then((hasDeck) => {
+          if (!hasDeck) {
+            players.getPlayers(gameId).then((players) => {
+              Promise.all([
+                gameCards.createDeck(gameId, players),
+                flows.initFlow(gameId),
+                scores.initScore(gameId)
+              ]).then(_ => {
+                resolve('initialized game tables')
+              })              
+            })
+          } else {
+            resolve('game tables already initialized')
+          }
+        })
+      } else {
+        resolve('not enough players')
+      }
+    })
+  })
+}
+/* game room */
+
+
+/* play card */
+
+/* play card */
+/******************2.0***************** */
+
 module.exports = {
-    gameReady,
     dealCards,
     getNextPos,
     playCard,
-    endTurn
+    endTurn,
+    readyGame
 }

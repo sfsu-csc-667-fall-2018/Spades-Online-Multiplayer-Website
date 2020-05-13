@@ -46,42 +46,22 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
   const { game_id: gameId } = request.params;
   const { id: playerId, username } = request.user
 
-  gameLogic.gameReady(gameId).then((hasPlayers) => {
-    console.log('\thasPlayers? : ' + hasPlayers);
-    if (hasPlayers) {
-      cards.deckReady(gameId).then((hasDeck) => {
-        console.log('\thasDeck? : ' + hasDeck);
-        if (!hasDeck) {
-          players.getPlayers(gameId).then((players) => {
-            console.log('\t***players***');
-            console.log(players);
-            cards.createDeck(gameId, players).then(() => {
-              console.log("\t\tCreated Deck");
-              flow.initFlow(gameId).then(() => {
-                console.log("\t\tCreated Flow");
-                scores.initScore(gameId).then(() => {
-                  console.log("\t\tCreated Scores");
-                });
-              });
-            });
-          });
-        }
-      });
-    }
-  });
-
-  Promise.all([
-    jrob.getGameState(gameId),
-    jrob.getPlayers(gameId),
-    // jrob.getCards(gameId)
-    jrob.getPlayerState(gameId, playerId),
-    jrob.getInPlayCards(gameId) 
-  ])
-  .then(([gameState, players, player, inPlayCards]) => {
-    response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });
-  })
-  .catch(error => {
-    response.render('game', { error, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId: 'Error', username: 'Error' })
+  gameLogic.readyGame(gameId)
+  .then((result) => {
+    console.log(result)
+    Promise.all([
+      jrob.getGameState(gameId),
+      jrob.getPlayers(gameId),
+      // jrob.getCards(gameId)
+      jrob.getPlayerState(gameId, playerId),
+      jrob.getInPlayCards(gameId) 
+    ])
+    .then(([gameState, players, player, inPlayCards]) => {
+      response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });
+    })
+    .catch(error => {
+      response.render('game', { error, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId: 'Error', username: 'Error' })
+    })
   })
 });
 

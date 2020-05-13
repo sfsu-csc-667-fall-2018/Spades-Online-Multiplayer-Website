@@ -2,22 +2,24 @@ extends layout
 
 block content
 
-  h1 Sign up for Spades Server
+  body(class= 'general-body')
 
-  div
-    h1
-      form(action='/register', method='post')
+    h1(class='banner') Sign up for SPADES below:
 
-        div.form-group
+    div(class='reg-box')
+      h1(class= 'reg-text') Registration
+      form(action='/register', method='post') 
+
+        div.form-group(class='reg-text1')
           input#name.form-control(type='text', placeholder='first name' name='first_name')
-        div.form-group
+        div.form-group(class='reg-text1')
           input#name.form-control(type='text', placeholder='last name' name='last_name')
-        div.form-group
-          input#favoriteBook.form-control(type='text', placeholder='username' name='username')
-        div.form-group
+        div.form-group(class='reg-text1')
+          input#favoriteBook.form-control( type='text', placeholder='username' name='username')
+        div.form-group(class='reg-text1')
           input#email.form-control(type='email', placeholder='name@email.com' name='email')
-        div.form-group
-          input#pw.form-control(type='password' placeholder='password' name='password')
-        div.form-group
+        div.form-group(class='reg-text1')
+          input#pw.form-control( type='password' placeholder='password' name='password')
+        div.form-group(class='reg-text1')
           input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
-        button.btn.btn-primary(type='submit') Sign up
+        button.btn.btn-primary(class='button' type='submit') Sign up

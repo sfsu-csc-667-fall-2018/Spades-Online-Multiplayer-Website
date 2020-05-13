@@ -15,6 +15,9 @@ const PLAYER_STATE =
 const PLAYER_CARDS =
   "SELECT * FROM game_cards, cards WHERE game_id=$1 AND player_id=$2 AND card_id=id AND card_order <> 0"
 
+const IN_PLAY_CARDS =
+  "SELECT * FROM game_cards, cards WHERE game_id=$1 AND card_order=0 AND card_id=id"
+
 const CARD_INFO = "SELECT * FROM cards WHERE id=$1"
 
 const SET_LEADING_SUIT = "UPDATE game_flow SET leading_suit=$1 WHERE game_id=$2 RETURNING *"
@@ -46,11 +49,15 @@ const getCardInfo = cardId =>
 const setLeadingSuit = (suit, gameId) =>
   db.one(SET_LEADING_SUIT, [suit, gameId])
 
+const getInPlayCards = (gameId) => 
+  db.manyOrNone(IN_PLAY_CARDS, [gameId])
+
 module.exports = {
   getPlayers,
   getCards,
   getGameState,
   getPlayerState,
   getCardInfo,
-  setLeadingSuit
+  setLeadingSuit,
+  getInPlayCards
 }

@@ -17,7 +17,7 @@ const PLAYER_CARDS =
 
 const CARD_INFO = "SELECT * FROM cards WHERE id=$1"
 
-const SET_LEADING_SUIT = "UPDATE game_flow SET leading_suit=$1 WHERE game_id=$2"
+const SET_LEADING_SUIT = "UPDATE game_flow SET leading_suit=$1 WHERE game_id=$2 RETURNING *"
 
 const getPlayers = gameId =>
   db.many(PLAYERS_FOR_GAME, [gameId])
@@ -44,7 +44,7 @@ const getCardInfo = cardId =>
   db.one(CARD_INFO, [cardId])
 
 const setLeadingSuit = (suit, gameId) =>
-  db.any(SET_LEADING_SUIT, [suit, gameId])
+  db.one(SET_LEADING_SUIT, [suit, gameId])
 
 module.exports = {
   getPlayers,

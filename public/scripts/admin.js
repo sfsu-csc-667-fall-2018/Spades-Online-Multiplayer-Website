@@ -1,3 +1,4 @@
+
 const gameId = document.querySelector('#pageGameId').value
 
 const gameStateListing = document.querySelector('#game-state-listing')

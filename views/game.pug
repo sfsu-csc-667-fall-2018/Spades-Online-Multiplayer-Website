@@ -26,7 +26,7 @@ block content
     h3 Game #{gameId}, Player #{username} (#{playerId})
 
     h4 Cards on Table
-    div.cards
+    div.in_play_cards
       each card in inPlayCards
         a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 

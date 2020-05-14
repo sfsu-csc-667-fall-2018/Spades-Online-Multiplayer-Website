@@ -72,7 +72,6 @@ const deckReady = async (game_id) => {
 };
 
 const setCardToInPlay = (game_id, card_id) => {
-    console.log(game_id, card_id)
     return db.none(`UPDATE game_cards SET card_order=0 WHERE game_id=${ game_id } AND card_id=${ card_id };`);
 }
 

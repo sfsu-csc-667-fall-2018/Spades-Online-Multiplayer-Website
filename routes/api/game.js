@@ -52,12 +52,10 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
     Promise.all([
       jrob.getGameState(gameId),
       jrob.getPlayers(gameId),
-      // jrob.getCards(gameId)
       jrob.getPlayerState(gameId, playerId),
       jrob.getInPlayCards(gameId) 
     ])
     .then(([gameState, players, player, inPlayCards]) => {
-      console.log(inPlayCards)
       response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });
     })
     .catch(error => {

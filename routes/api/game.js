@@ -46,6 +46,9 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
   const { game_id: gameId } = request.params;
   const { id: playerId, username } = request.user
 
+  // console.log()
+  game_id = gameId;
+
   gameLogic.readyGame(gameId)
   .then((result) => {
     console.log('***', result, '***')
@@ -57,6 +60,7 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
     ])
     .then(([gameState, players, player, inPlayCards]) => {
       response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });
+      
     })
     .catch(error => {
       response.render('game', { error, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId: 'Error', username: 'Error' })
@@ -121,53 +125,34 @@ router.post('/:game_id/card', (request, response) => {
 // });
 
 gameSocket.on('connection', socket => {
-  if (game_id == null) {
-    return;
-  }
+  // console.log(game_id)
+  // if (game_id == null) {
+  //   console.log('undefined game_id')
+  //   return;
+  // }
 
   console.log('Connected to game room: ' + game_id);
-  socket.join(game_id);
+  // socket.join(game_id);
+  
+  socket.on('update', (data) => {
+    console.log('update')
+    console.log(data)
+  });
 
-  //sockets api functions go here
-  /* if game room is full create the deck */
-  // gameLogic.gameReady(game_id).then((hasPlayers) => {
-  //   console.log('\thasPlayers? : ' + hasPlayers);
-  //   if (hasPlayers) {
-  //     cards.deckReady(game_id).then((hasDeck) => {
-  //       console.log('\thasDeck? : ' + hasDeck);
-  //       if (!hasDeck) {
-  //         players.getPlayers(game_id).then((players) => {
-  //           console.log('\t***players***');
-  //           console.log(players);
-  //           cards.createDeck(game_id, players).then(() => {
-  //             console.log("\t\tCreated Deck");
-  //             flow.initFlow(game_id).then(() => {
-  //               console.log("\t\tCreated Flow");
-  //               scores.initScore(game_id).then(() => {
-  //                 console.log("\t\tCreated Scores");
-  //               });
-  //             });
-  //           });
-  //         });
-  //       }
-  //     });
-  //   }
-  // });
-
-  socket.on('get hand', () => {
-    /* emit cards to each player */
-    console.log("Im a Race Condition!!!");
-    cards.deckReady(game_id).then((hasDeck) => {
-      if (hasDeck) {
-        cards.getGameCards(game_id).then((cards) => {
-          gameSocket
-            .to(game_id)
-            .emit('display cards', cards);
-          console.log('\t\temit: display cards');
-        })
-      }
-    })
-  })
+  // socket.on('get hand', () => {
+  //   /* emit cards to each player */
+  //   console.log("Im a Race Condition!!!");
+  //   cards.deckReady(game_id).then((hasDeck) => {
+  //     if (hasDeck) {
+  //       cards.getGameCards(game_id).then((cards) => {
+  //         gameSocket
+  //           .to(game_id)
+  //           .emit('display cards', cards);
+  //         console.log('\t\temit: display cards');
+  //       })
+  //     }
+  //   })
+  // })
 
 });
 

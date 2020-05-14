@@ -17,6 +17,13 @@ document.querySelector('.cards').addEventListener('click', event => {
     .then(({ gameState, playerState }) => {
       console.log(gameState, playerState)
 
+      if((gameState !== undefined) && (playerState !== undefined)) {
+        gameSocket.emit('update', {
+          game: gameState, 
+          player: playerState
+        });
+      }
+
       const p = document.createElement('p')
       p.innerText = JSON.stringify(gameState)
 

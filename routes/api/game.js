@@ -48,7 +48,7 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
 
   gameLogic.readyGame(gameId)
   .then((result) => {
-    console.log(result)
+    console.log('***', result, '***')
     Promise.all([
       jrob.getGameState(gameId),
       jrob.getPlayers(gameId),
@@ -67,7 +67,7 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
 
 /* jrobs */
 router.post('/:game_id/card', (request, response) => {
-  console.log(request.user, request.params, request.body);
+  // console.log(request.user, request.params, request.body);
 
   const { id: userId } = request.user
   const { game_id: gameId } = request.params;
@@ -85,7 +85,7 @@ router.post('/:game_id/card', (request, response) => {
       response.json({ gameState, playerState, cardInfo })
     })
     .catch(error => {
-      console.log(error)
+      console.log('***', error, '***')
       response.json({ error })
     })
 });

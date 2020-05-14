@@ -1,13 +1,12 @@
 // const games = require('../../db/game');
+// const player = require('../../db/player');
+// const db = require('../../db/index');
 const scores = require('../../db/scores');
 const players = require('../../db/game_players');
-// const player = require('../../db/player');
 const gameCards = require('../../db/game_cards');
 const cards = require('../../db/cards');
-
-// const db = require('../../db/index');
 const flows = require('../../db/game_flow');
-
+const jrob = require('../../db/jrob');
 
 //start game
 const dealCards = (gameId, playerArray) => {
@@ -162,7 +161,7 @@ const checkIfCardsLegal = ([gameState, playerState, cardInfo]) => {
     // set leading suit to played card
     console.log('set leading suit')
     return Promise.all([
-      jrob.setLeadingSuit(cardInfo.suit, gameId),
+      jrob.setLeadingSuit(cardInfo.suit, gameState.game_id),
       // gameState,
       playerState,
       cardInfo

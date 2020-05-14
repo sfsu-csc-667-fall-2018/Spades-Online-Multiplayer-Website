@@ -57,6 +57,7 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
       jrob.getInPlayCards(gameId) 
     ])
     .then(([gameState, players, player, inPlayCards]) => {
+      console.log(inPlayCards)
       response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });
     })
     .catch(error => {
@@ -80,8 +81,14 @@ router.post('/:game_id/card', (request, response) => {
   ])
     .then(gameLogic.checkIfPlayersTurn)
     .then(gameLogic.checkIfCardsLegal)
+    .then(gameLogic.putCardInPlay)
     .then(gameLogic.endTurn)
     .then(([gameState, playerState, cardInfo]) => {
+      /*************PHIL******************************** */
+      // gameSocket
+      // .to(game_id)
+      // .emit('update', gameState, playerState, cardInfo);      
+      /*************PHIL******************************** */
       response.json({ gameState, playerState, cardInfo })
     })
     .catch(error => {

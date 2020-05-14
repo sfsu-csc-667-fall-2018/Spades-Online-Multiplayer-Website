@@ -188,7 +188,7 @@ const putCardInPlay = ([gameState, playerState, cardInfo]) => {
     gameState,
     playerState,
     cardInfo,
-    gameCards.setCardToGameTable(gameState.game_id, cardInfo.id),
+    gameCards.setCardToInPlay(gameState.game_id, cardInfo.id),
   ])
 }
 

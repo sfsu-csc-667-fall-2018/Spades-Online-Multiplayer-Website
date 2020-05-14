@@ -2,6 +2,13 @@ const gameSocket = io('/game');
 
 let id;
 
+/*************PHIL******************************** */
+gameSocket.on('update', (gameState, playerState, cardInfo) => {
+  /* rerender window */
+})
+/*************PHIL******************************** */
+
+
 $(window).on('load', () => {
   id = $('#user_id').val();
   gameSocket.emit('get hand');

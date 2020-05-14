@@ -18,17 +18,22 @@ block content
 
   block content
     input#pageGameId(type='hidden' value=gameId)
+    input#pagePlayerId(type='hidden' value=playerId)
+    input#pagePlayerName(type='hidden' value=username)
+
 
     h3 Game #{gameId}, Player #{username} (#{playerId})
 
-    h3 TEST
-    ul.foo
+    div.current_turn
 
+    div.leading_suit
 
     h4 Cards on Table
     div.in_play_cards
       each card in inPlayCards
         a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+
+    div.player_message
 
     h4 Cards
     div.cards

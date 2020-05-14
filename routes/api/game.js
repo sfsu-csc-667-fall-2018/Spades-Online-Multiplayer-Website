@@ -6,6 +6,7 @@ const gameSocket = io.of('/game');
 const gameLogic = require('./game_logic');
 const game = require('../../db/game');
 const jrob = require('../../db/jrob');
+const gamePlayers = require('../../db/game_players');
 
 let user, game_id;
 
@@ -66,6 +67,7 @@ gameSocket.on('connection', socket => {
   
   socket.on('update', (state) => {
     console.log('update')
+    console.log(state)
     jrob.getInPlayCards(game_id).then((inPlayCards) => {
       gameSocket
         .to(game_id)
@@ -75,6 +77,27 @@ gameSocket.on('connection', socket => {
         }) 
     })
   });
+
+  socket.on('ready', () => {
+    Promise.all([
+      jrob.getGameState(game_id),
+      jrob.getScores(game_id),
+      jrob.getPlayers(game_id)
+    ])
+    .then(([gameState, gameScore, gamePlayers]) => {
+      let gameStateForClient = {
+        leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
+        currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
+      }
+      gameSocket
+        .to(game_id)
+        .emit('game state', gameStateForClient)
+      
+      gameSocket
+        .to(game_id)
+        .emit('game score', gameScore)
+    })
+  })
 });
 
 

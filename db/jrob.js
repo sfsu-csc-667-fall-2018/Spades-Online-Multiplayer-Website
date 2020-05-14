@@ -1,7 +1,7 @@
 const db = require('./index')
 
 const PLAYERS_FOR_GAME =
-  "SELECT id, team, username, email FROM games_players, player WHERE game_id=$1 AND player_id=player.id"
+  "SELECT id, team, position, username, email FROM games_players, player WHERE game_id=$1 AND player_id=player.id"
 
 const CARDS_FOR_GAME =
   "SELECT id, card_order, suit, value, name, image FROM game_cards, cards WHERE game_id=$1 and card_id=id"
@@ -21,6 +21,8 @@ const IN_PLAY_CARDS =
 const CARD_INFO = "SELECT * FROM cards WHERE id=$1"
 
 const SET_LEADING_SUIT = "UPDATE game_flow SET leading_suit=$1 WHERE game_id=$2 RETURNING *"
+
+const GAME_SCORE = "SELECT * FROM scores WHERE game_id=$1"
 
 const getPlayers = gameId =>
   db.many(PLAYERS_FOR_GAME, [gameId])
@@ -52,6 +54,9 @@ const setLeadingSuit = (suit, gameId) =>
 const getInPlayCards = (gameId) => 
   db.manyOrNone(IN_PLAY_CARDS, [gameId])
 
+const getScores = (gameId) => 
+  db.one(GAME_SCORE, [gameId])
+
 module.exports = {
   getPlayers,
   getCards,
@@ -59,5 +64,6 @@ module.exports = {
   getPlayerState,
   getCardInfo,
   setLeadingSuit,
-  getInPlayCards
+  getInPlayCards,
+  getScores
 }

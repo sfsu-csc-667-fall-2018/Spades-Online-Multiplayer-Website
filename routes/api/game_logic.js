@@ -193,13 +193,33 @@ const putCardInPlay = ([gameState, playerState, cardInfo]) => {
 }
 
 const endTurn = ([gameState, playerState, cardInfo]) => {
+  console.log('playerState', playerState)
   return Promise.all([
     flows.setCurrentPos(gameState.game_id, getNextPos(gameState.current_pos)),
-    playerState,
+    jrob.getPlayerState(gameState.game_id, playerState.id),
     cardInfo
   ])
 }
 /* play card */
+
+/* helpers */
+const getSuitName = (suitValue) => {
+    if(suitValue == 1) return 'Spades'
+    else if(suitValue == 2) return 'Diamonds'
+    else if(suitValue == 3) return 'Clubs'
+    else return'Hearts'
+}
+
+const getCurrentTurnPlayerUsername = (gameState, gamePlayers) => {
+  console.log(gameState)
+  for(let i = 0; i < gamePlayers.length; i++) {
+    if(gamePlayers[i].position == gameState.current_pos) {
+      // console.log('hello')
+      return gamePlayers[i].username
+    }
+  }
+}
+/* helpers */
 /******************2.0***************** */
 
 module.exports = {
@@ -210,5 +230,7 @@ module.exports = {
     checkIfPlayersTurn,
     checkIfCardsLegal,
     putCardInPlay,
-    endTurn
+    endTurn,
+    getSuitName,
+    getCurrentTurnPlayerUsername
 }

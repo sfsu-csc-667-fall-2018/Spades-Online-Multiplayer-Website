@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-  h1 GameRoom: #{game_id} Created by: #{user.username} 
+  h1 GameRoom: #{game_id} Created by: #{user.username}
 
   section.section
     .container
@@ -26,7 +26,8 @@ block content
         .column.is-1
           #team2-bets
         .column.is-1
-          #team2-score
+          #team2-score 
+
   .container
     .box
       h3 Game Box
@@ -55,4 +56,4 @@ block content
                 input(type='submit', class='button is-success' value='Send')
 
   script(src='/scripts/chat.js')
-  script(src='/scripts/game.js')
+  script(src='/scripts/game.js') 

@@ -68,16 +68,18 @@ gameSocket.on('connection', socket => {
           .to(game_id)
           .emit('update players', { games_players: users });
       })
-      .catch(error => { console.log(error) });
-  });
-
-  scoresTable
-    .getScoreBoard(game_id)
-    .then( results => {
-    console.log('scores: ' + JSON.stringify(results[0]));
-    gameSocket.to(game_id).emit('update score' , results[0] );
-    })
-    .catch(error => { console.log(error) });   
+      .catch(error => { console.log(error); });
+  })
+  .then(() => {
+    scoresTable
+      .getScoreBoard(game_id)
+      .then( results => {
+      console.log('scores: ' + JSON.stringify(results[0]));
+      gameSocket.to(game_id).emit('update score' , results[0] );
+      })
+      .catch(error => { console.log(error) });   
+  })
+  .catch(error => { console.log(error); });
 
   socket.on('get hand', () => {
     /* emit cards to each player */
@@ -85,8 +87,8 @@ gameSocket.on('connection', socket => {
       if(hasDeck) {
         cards.getGameCards(game_id).then((cards) => {
           gameSocket
-          .to(game_id)
-          .emit('display cards', cards);
+            .to(game_id)
+            .emit('display cards', cards);
           console.log('emit: display cards');
         })
       }

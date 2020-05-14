@@ -27,14 +27,14 @@ gameSocket.on('update score' , data => {
 
   console.log('client displaying score');
 
-  $('#team1-books').empty();
-  $('#team1-bags').empty();
-  $('#team1-bets').empty();
-  $('#team1-score').empty();
-  $('#team2-books').empty();
-  $('#team2-bags').empty();
-  $('#team2-bets').empty();
-  $('#team2-score').empty();
+  //$('#team1-books').empty();
+  //$('#team1-bags').empty();
+  //$('#team1-bets').empty();
+  //$('#team1-score').empty();
+  //$('#team2-books').empty();
+  //$('#team2-bags').empty();
+  //$('#team2-bets').empty();
+  //$('#team2-score').empty();
 
   const { books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b } = data;
 

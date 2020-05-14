@@ -15,7 +15,7 @@ const initFlow = (game_id) => {
 }
 
 const setCurrentPos = (game_id, current_pos) => {
-    return db.none(`UPDATE game_flow SET current_pos=${ current_pos } WHERE game_id=${ game_id };`);
+    return db.one(`UPDATE game_flow SET current_pos=${ current_pos } WHERE game_id=${ game_id } RETURNING *`);
 }
 
 const setLeadingSuit = (game_id, leading_suit) => {

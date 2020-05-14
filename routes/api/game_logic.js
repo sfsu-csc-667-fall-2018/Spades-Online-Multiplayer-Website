@@ -92,14 +92,14 @@ const isValidCard = (gameId, playerId, cardId) => {
 };
 
 /* PUBLIC */
-const endTurn = (gameId) => {
-  return new Promise(function(resolve, reject) { 
-    flows.getCurrentPos(gameId).then((currentPos) => {
-      console.log(currentPos);
-      // flows.setCurrentPos(gameId, getNextPos())
-    });
-  });
-};
+// const endTurn = (gameId) => {
+//   return new Promise(function(resolve, reject) { 
+//     flows.getCurrentPos(gameId).then((currentPos) => {
+//       console.log(currentPos);
+//       // flows.setCurrentPos(gameId, getNextPos())
+//     });
+//   });
+// };
 
 const getNextPos = (pos) => {
   if(pos > 0 && pos < 4) { // pos = 1, 2, 3
@@ -143,18 +143,73 @@ const readyGame = (gameId) => {
     })
   })
 }
-/* game room */
-
 
 /* play card */
+const checkIfPlayersTurn = ([gameState, playerState, cardInfo]) => {
+  /* Check that it is this users turn (user's position == current_pos) */
+  if (gameState.current_pos !== playerState.position) {
+    // Player trying to play card out of turn GOTO .catch
+    return Promise.reject("Not this player's turn.")
+  } else {
+    // is Player's turn
+    return Promise.resolve([gameState, playerState, cardInfo])
+  }
+}
 
+const checkIfCardsLegal = ([gameState, playerState, cardInfo]) => {
+  /* check if leading suit has been set */
+  if (gameState.leading_suit === -1) {
+    // set leading suit to played card
+    console.log('set leading suit')
+    return Promise.all([
+      jrob.setLeadingSuit(cardInfo.suit, gameId),
+      // gameState,
+      playerState,
+      cardInfo
+    ])
+  } else {
+    /* Check that player does not have card of leading suit */
+    const hasCardOfLeadingSuit = playerState.cards.reduce((memo, card) =>
+      memo || card.suit === gameState.leading_suit
+      , false)
+
+    if (hasCardOfLeadingSuit && cardInfo.suit !== gameState.leading_suit) {
+      // player making illegal move GOTO .catch
+      return Promise.reject("Player must play card of leading suit if in hand.")
+    } else {
+      // player making legal move
+      console.log('card is legal');
+      return Promise.resolve([gameState, playerState, cardInfo])
+    }
+  }
+}
+
+const putCardInPlay = ([gameState, playerState, cardInfo]) => {
+  return Promise.all([  
+    gameState,
+    playerState,
+    cardInfo,
+    gameCards.setCardToGameTable(gameState.game_id, cardInfo.id),
+  ])
+}
+
+const endTurn = ([gameState, playerState, cardInfo]) => {
+  return Promise.all([
+    flows.setCurrentPos(gameState.game_id, getNextPos(gameState.current_pos)),
+    playerState,
+    cardInfo
+  ])
+}
 /* play card */
 /******************2.0***************** */
 
 module.exports = {
     dealCards,
-    getNextPos,
     playCard,
-    endTurn,
-    readyGame
+    /* version 2 */
+    readyGame,
+    checkIfPlayersTurn,
+    checkIfCardsLegal,
+    putCardInPlay,
+    endTurn
 }

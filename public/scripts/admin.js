@@ -16,7 +16,6 @@ document.querySelector('.cards').addEventListener('click', event => {
     .then(response => response.json())
     .then(({ gameState, playerState }) => {
       // console.log(gameState, playerState)
-
       if((gameState !== undefined) && (playerState !== undefined)) {
         gameSocket.emit('update', {
           game: gameState, 
@@ -35,26 +34,23 @@ document.querySelector('.cards').addEventListener('click', event => {
     })
 })
 
-// a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
-
-gameSocket.on('update game', (inPlayCards) => {
+gameSocket.on('update game', (data) => {
   console.log('update game')
-
-  // const { inPlayCards, playerGameCards } = data;
+  // console.log(data);
+  const {state, inPlayCards} = data
 
   /* redraw game table */
   $('.in_play_cards').empty()
   inPlayCards.forEach(gameCard => {
     $('.in_play_cards')
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
-      // .append(`hello ${gameCard.suit}`)
-      console.log(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
   /* redraw players hand */
+  $('.cards').empty()
+  state.player.cards.forEach(gameCard => {
+    $('.cards')
+      .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
+  });
 
-  // $('.in_play_cards')
-  // foreach(card, inPlayCards) {
-  //   $('.cards').append(card)
-  // }
 });

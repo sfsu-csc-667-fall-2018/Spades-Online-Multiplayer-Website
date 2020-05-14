@@ -132,11 +132,17 @@ gameSocket.on('connection', socket => {
   // }
 
   console.log('Connected to game room: ' + game_id);
-  // socket.join(game_id);
+  
+  socket.join(game_id);
   
   socket.on('update', (data) => {
     console.log('update')
-    console.log(data)
+    jrob.getInPlayCards(game_id).then((inPlayCards) => {
+      console.log(inPlayCards);
+      gameSocket
+        .to(game_id)
+        .emit('update game', inPlayCards) 
+    })
   });
 
   // socket.on('get hand', () => {

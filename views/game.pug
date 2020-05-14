@@ -1,21 +1,6 @@
 extends layout
 
 block content
-  section.section
-    .container
-      .columns
-        .column.is-1 Team 1 
-        .column.is-1 Score: 0
-        .column.is-1 Bags: 0
-        .column.is-1 Team 2 
-        .column.is-1 Score: 0
-        .column.is-1 Bags: 0
-      .columns
-        .column.is-1.is-offset-1 Bet: 0
-        .column.is-1 Books: 0
-        .column.is-1.is-offset-1 Bet: 0
-        .column.is-1 Books: 0 
-
   block content
     input#pageGameId(type='hidden' value=gameId)
     input#pagePlayerId(type='hidden' value=playerId)
@@ -23,6 +8,14 @@ block content
 
 
     h3 Game #{gameId}, Player #{username} (#{playerId})
+
+  
+    .container
+      .columns
+        .column Team 1
+          div.team1
+        .column Team 2
+          div.team2
 
     div.current_turn
 

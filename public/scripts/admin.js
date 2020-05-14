@@ -38,6 +38,7 @@ $(window).on('load', () => {
     gameSocket.emit('ready');
 });
 
+/* display leading suit & current player's turn */
 gameSocket.on('game state', (gameState) => {
     console.log('gameState: ', gameState)
     /* Leading Suit */
@@ -50,11 +51,28 @@ gameSocket.on('game state', (gameState) => {
 
 })
 
+/* display scores info */
 gameSocket.on('game score', (score) => {
   console.log('score: ', score)
+
+  /* team 1 */
+  $('.team1').empty()
+  $('.team1').append(`<li>Score: ${score.points_a}</li>`)
+  $('.team1').append(`<li>Bags:  ${score.bags_a}  </li>`)
+  $('.team1').append(`<li>Books: ${score.books_a} </li>`)
+  $('.team1').append(`<li>Bets:  ${score.bets_a}  </li>`)
+
+
+  /* team 2 */
+  $('.team2').empty()
+  $('.team2').append(`<li>Score: ${score.points_b}</li>`)
+  $('.team2').append(`<li>Bags:  ${score.bags_b}  </li>`)
+  $('.team2').append(`<li>Books: ${score.books_b} </li>`)
+  $('.team2').append(`<li>Bets:  ${score.bets_b}  </li>`)
 })
 
 
+/* update cards on table and in players hand THEN 'ready' game table */
 gameSocket.on('update game', (data) => {
   console.log('update game')
   console.log(data);

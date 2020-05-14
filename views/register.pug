@@ -1,23 +1,37 @@
 extends layout
 
 block content
+  body(class='background')
+    div(class='row')
+      div(class='col s12 m4 offset-m4')
 
-  h1 Sign up for Spades Server
+    div(class='row')
+      div(class='col s12 m4 offset-m4')
+      form(action='/login', method='post')
+        div(class='card')
+          div(class='card-panel teal lighten-3')
+            h3(class="") Register below:
 
-  div
-    h1
-      form(action='/register', method='post')
+          div(class='card-content')
 
-        div.form-group
-          input#name.form-control(type='text', placeholder='first name' name='first_name')
-        div.form-group
-          input#name.form-control(type='text', placeholder='last name' name='last_name')
-        div.form-group
-          input#favoriteBook.form-control(type='text', placeholder='username' name='username')
-        div.form-group
-          input#email.form-control(type='email', placeholder='name@email.com' name='email')
-        div.form-group
-          input#pw.form-control(type='password' placeholder='password' name='password')
-        div.form-group
-          input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
-        button.btn.btn-primary(type='submit') Sign up
+            div.form-group
+              input#name.form-control(type='text', placeholder='first name' name='first_name')
+            div.form-group
+              input#name.form-control(type='text', placeholder='last name' name='last_name')
+            div.form-group
+              input#favoriteBook.form-control(type='text', placeholder='username' name='username')
+            div.form-group
+              input#email.form-control(type='email', placeholder='name@email.com' name='email')
+            div.form-group
+              input#pw.form-control(type='password' placeholder='password' name='password')
+            div.form-group
+              input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
+            
+          
+            div(class='reg-link')
+              div(class='form-field')
+                a(href= '/login') 
+                  h6 Back to login...
+            
+            
+            button(class='btn-large waves-effect waves-dark' type='submit') Submit

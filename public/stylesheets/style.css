@@ -14,3 +14,17 @@ body {
 #chat-messages li {
 	padding: 0.75rem;
 }
+
+.login-button {
+margin-left: 20px;
+}
+
+.reg-link {
+  margin-top: 40px;
+  margin-left: 0px;
+}
+
+
+.background{
+  background: url(images/test-spades.jpg);
+}

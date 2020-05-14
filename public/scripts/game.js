@@ -10,18 +10,18 @@ $(window).on('load', () => {
    gameSocket.emit('get hand');
 });
 
-// gameSocket.on('display cards', cards => {
-//     console.log(cards);
-//     $('#cards').empty();
-//     console.log(id);
+gameSocket.on('display cards', cards => {
+    console.log(cards);
+    $('#cards').empty();
+    console.log(id);
 
-//     for(let i = 0; i < cards.length; i++) {
-//       console.log(cards[i].player_id)
-//       if(cards[i].player_id == id) {
-//         $('#cards').append(`<li>${cards[i].image}</li>`);
-//       }
-//     }
-// });
+    for(let i = 0; i < cards.length; i++) {
+      console.log(cards[i].player_id)
+      if(cards[i].player_id == id) {
+        $('#cards').append(`<li>${cards[i].image}</li>`);
+      }
+    }
+});
 
 gameSocket.on('update score', data => {
 
@@ -49,25 +49,25 @@ gameSocket.on('update score', data => {
 
 });
 
-// gameSocket.on('update players', data => {
+gameSocket.on('update players', data => {
   
-//   const players = data.games_players;
-//   const num_players = players.length;
+  const players = data.games_players;
+  const num_players = players.length;
 
-//   for (let i = 0; i < num_players; i++){
-//     if( $('#name').val() == players[i].username ){
-//       orderBot = i;
-//     }
+  for (let i = 0; i < num_players; i++){
+    if( $('#name').val() == players[i].username ){
+      orderBot = i;
+    }
 
-//     break;
-//   };
+    break;
+  };
 
   
-//   orderLeft = (orderBot + 1) % 4;
-//   orderTop = (orderBot + 2) % 4;
-//   orderRight = (orderBot + 3) % 4;
+  orderLeft = (orderBot + 1) % 4;
+  orderTop = (orderBot + 2) % 4;
+  orderRight = (orderBot + 3) % 4;
 
-// });
+});
 
 // //gameSocket.on('get bets', () => {});
 

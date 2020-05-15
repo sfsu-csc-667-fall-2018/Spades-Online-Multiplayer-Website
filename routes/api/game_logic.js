@@ -193,7 +193,6 @@ const putCardInPlay = ([gameState, playerState, cardInfo]) => {
 }
 
 const endTurn = ([gameState, playerState, cardInfo]) => {
-  console.log('playerState', playerState)
   return Promise.all([
     flows.setCurrentPos(gameState.game_id, getNextPos(gameState.current_pos)),
     jrob.getPlayerState(gameState.game_id, playerState.id),
@@ -211,7 +210,7 @@ const getSuitName = (suitValue) => {
 }
 
 const getCurrentTurnPlayerUsername = (gameState, gamePlayers) => {
-  console.log(gameState)
+  // console.log(gameState)
   for(let i = 0; i < gamePlayers.length; i++) {
     if(gamePlayers[i].position == gameState.current_pos) {
       // console.log('hello')

@@ -65,9 +65,35 @@ gameSocket.on('connection', socket => {
   console.log('Connected to game room: ' + game_id);
   socket.join(game_id);
   
+  socket.on('play card', (data) => {
+    const { gameId, playerId, cardId } = data 
+
+    Promise.all([
+      jrob.getGameState(gameId),
+      jrob.getPlayerState(gameId, playerId),
+      jrob.getCardInfo(cardId)
+    ])
+      .then(gameLogic.checkIfPlayersTurn)
+      .then(gameLogic.checkIfCardsLegal)
+      .then(gameLogic.putCardInPlay)
+      .then(gameLogic.endTurn)
+      .then(([gameState, playerState, cardInfo]) => {
+        const newData = {
+          gameState: gameState,
+          playerState: playerState,
+          cardInfo: cardInfo
+        }
+        gameSocket
+        .to(game_id)
+        .emit('card played', newData)
+      })
+      .catch(error => {
+        console.log('***', error, '***')
+      })
+  })
+
   socket.on('update', (state) => {
     console.log('update')
-    console.log(state)
     jrob.getInPlayCards(game_id).then((inPlayCards) => {
       gameSocket
         .to(game_id)

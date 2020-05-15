@@ -52,7 +52,16 @@ router.post('/:game_id/card', (request, response) => {
     .then(gameLogic.checkIfCardsLegal)
     .then(gameLogic.putCardInPlay)
     .then(gameLogic.endTurn)
-    .then(([gameState, playerState, cardInfo]) => {
+    .then(([gameState, playerState, cardInfo /*, inPlayCards */]) => {
+      const io = request.app.get('io')
+      const data = {
+        gameState: gameState,
+        playerState: playerState,
+        cardInfo: cardInfo
+        /* inPlayCards: inPlayCards */
+      }
+      /* io.emit('update game state', data) */
+      /* response.json({ ok: true }) */
       response.json({ gameState, playerState, cardInfo })
     })
     .catch(error => {

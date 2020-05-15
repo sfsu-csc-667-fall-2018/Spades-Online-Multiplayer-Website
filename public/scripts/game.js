@@ -21,7 +21,7 @@ document.querySelector('.cards').addEventListener('click', event => {
 })
 
 $(window).on('load', () => {
-  gameSocket.emit('ready'); // 
+  gameSocket.emit('ready', gameId); // 
 });
 
 /* display leading suit & current player's turn */
@@ -75,6 +75,6 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
-  gameSocket.emit('ready');
+  gameSocket.emit('ready', gameId);
 
 });

@@ -117,6 +117,8 @@ updateScores = () => {};
 
 /******************2.0***************** */
 /* game room */
+
+//handle rejection on create new game
 const readyGame = (gameId) => {
   return new Promise(function(resolve, reject) { 
     players.getNumPlayers(gameId).then((numPlayers) => {

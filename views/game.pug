@@ -23,15 +23,17 @@ block content
 
     h4 Cards on Table
     div.in_play_cards
-      each card in inPlayCards
-        a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+      if inPlayCards
+        each card in inPlayCards
+          a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 
     div.player_message
 
     h4 Cards
     div.cards
-      each card in player.cards
-        a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+      if player.cards
+        each card in player.cards
+          a.card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 
     h4 Players
     ul

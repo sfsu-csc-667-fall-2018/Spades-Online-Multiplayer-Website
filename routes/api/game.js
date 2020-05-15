@@ -93,7 +93,7 @@ gameSocket.on('connection', socket => {
       
       gameSocket
         .to(gameId)
-        .emit('game score', gameScore)
+        .emit('game score', gameScore)    
     })
   })
 });

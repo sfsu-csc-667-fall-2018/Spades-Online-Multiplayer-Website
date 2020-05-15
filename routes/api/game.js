@@ -18,7 +18,7 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
   const { game_id: gameId } = request.params;
   const { id: playerId, username } = request.user
 
-  game_id = gameId; /* NEED THIS FOR CONNECTION */
+  // game_id = gameId; /* NEED THIS FOR CONNECTION */
 
   gameLogic.readyGame(gameId)
   .then((result) => {
@@ -72,14 +72,15 @@ router.post('/:game_id/card', (request, response) => {
 
 gameSocket.on('connection', socket => {
   console.log('Connected to game room: ' + game_id);
-  socket.join(game_id);
+  // socket.join(game_id);
   
   socket.on('update', (state) => {
     console.log('update')
-    console.log(state)
-    jrob.getInPlayCards(game_id).then((inPlayCards) => {
+    // console.log(state)
+    socket.join(state.game.game_id);
+    jrob.getInPlayCards(state.game.game_id).then((inPlayCards) => {
       gameSocket
-        .to(game_id)
+        .to(state.game.game_id)
         .emit('update game', {
           state,
           inPlayCards
@@ -87,11 +88,12 @@ gameSocket.on('connection', socket => {
     })
   });
 
-  socket.on('ready', () => {
+  socket.on('ready', (data) => {
+    socket.join(data.gameId);
     Promise.all([
-      jrob.getGameState(game_id),
-      jrob.getScores(game_id),
-      jrob.getPlayers(game_id)
+      jrob.getGameState(data.gameId),
+      jrob.getScores(data.gameId),
+      jrob.getPlayers(data.gameId)
     ])
     .then(([gameState, gameScore, gamePlayers]) => {
       let gameStateForClient = {
@@ -99,11 +101,11 @@ gameSocket.on('connection', socket => {
         currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
       }
       gameSocket
-        .to(game_id)
+        .to(data.gameId)
         .emit('game state', gameStateForClient)
       
       gameSocket
-        .to(game_id)
+        .to(data.gameId)
         .emit('game score', gameScore)
     })
   })

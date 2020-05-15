@@ -38,12 +38,15 @@ document.querySelector('.cards').addEventListener('click', event => {
 })
 
 $(window).on('load', () => {
-    gameSocket.emit('ready');
+    const data = {
+      gameId: gameId
+    }
+    gameSocket.emit('ready', data);
 });
 
 /* display leading suit & current player's turn */
 gameSocket.on('game state', (gameState) => {
-    console.log('gameState: ', gameState)
+    console.log('FOO gameState: ', gameState)
     /* Leading Suit */
     $('.leading_suit').empty()
     $('.leading_suit').append(`<h3>Leading Suit: ${gameState.leadingSuit}</h3>`)  
@@ -56,7 +59,7 @@ gameSocket.on('game state', (gameState) => {
 
 /* display scores info */
 gameSocket.on('game score', (score) => {
-  console.log('score: ', score)
+  console.log('FOO score: ', score)
 
   /* team 1 */
   $('.team1').empty()
@@ -95,6 +98,10 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
-  gameSocket.emit('ready');
+  const readyData = {
+    gameId: gameId
+  }
+
+  gameSocket.emit('ready', readyData);
 
 });

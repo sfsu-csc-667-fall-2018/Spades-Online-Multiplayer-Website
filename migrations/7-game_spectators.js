@@ -3,25 +3,26 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'games', 
+      'game_spectators', 
       {
-        game_id: {
+        id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
-          autoIncrement: true
-        },
-        game_name: {
-          type: Sequelize.STRING,
           allowNull: false
         },
-        num_players: {
+        game_id: {
           type: Sequelize.INTEGER,
-          allowNull: false  
+          allowNull: false
+        },
+        player_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false 
         }
       }
-    ); 
-  },    
+    );
+  },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('decks');
+    return queryInterface.dropTable('game_spectators');
   }
 };

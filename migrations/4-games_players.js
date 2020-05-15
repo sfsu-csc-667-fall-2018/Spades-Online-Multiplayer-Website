@@ -7,18 +7,12 @@ module.exports = {
       {
         game_id: {
           type: Sequelize.INTEGER,
-          primaryKey: true,
-          references: {
-            model: 'games',
-            key: 'game_id'
-          }
+          allowNull: false,
+          autoIncrement: false
         },
         player_id: {
           type: Sequelize.INTEGER,
-          references: {
-            model: 'player',
-            key: 'id'
-          }  
+          allowNull: false 
         },
         position: {
           type: Sequelize.INTEGER,

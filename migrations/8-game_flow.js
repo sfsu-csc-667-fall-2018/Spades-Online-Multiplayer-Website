@@ -3,41 +3,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'scores', 
+      'game_flow', 
       {
         game_id: {
           type: Sequelize.INTEGER,
           allowNull: false
         },
-        books_a: {
+        current_pos: {
           type: Sequelize.INTEGER,
           allowNull: false
         },
-        books_b: {
+        leading_suit: {
           type: Sequelize.INTEGER,
           allowNull: false
         },
-        bags_a: {
+        trick_pos: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false 
         },
-        bags_b: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
-        bets_a: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
-        bets_b: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
-        points_a: {
-          type: Sequelize.INTEGER,
-          allowNull: false
-        },
-        points_b: {
+        round_pos: {
           type: Sequelize.INTEGER,
           allowNull: false
         }
@@ -46,6 +30,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('scores');
+    return queryInterface.dropTable('game_flow');
   }
 };

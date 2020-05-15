@@ -21,21 +21,12 @@ document.querySelector('.cards').addEventListener('click', event => {
 })
 
 $(window).on('load', () => {
-  gameSocket.emit('ready');
+  gameSocket.emit('ready'); // 
 });
-
-gameSocket.on('card played', (data) => {
-  console.log(data);
-  const {gameState, playerState, cardInfo } = data
-  gameSocket.emit('update', {
-    game: gameState, 
-    player: playerState
-  });
-})
 
 /* display leading suit & current player's turn */
 gameSocket.on('game state', (gameState) => {
-  console.log('gameState: ', gameState)
+  console.log('ready --> game state: ', gameState)
   /* Leading Suit */
   $('.leading_suit').empty()
   $('.leading_suit').append(`<h3>Leading Suit: ${gameState.leadingSuit}</h3>`)  
@@ -46,7 +37,7 @@ gameSocket.on('game state', (gameState) => {
 
 /* display scores info */
 gameSocket.on('game score', (score) => {
-  console.log('score: ', score)
+  console.log('ready --> game score: ', score)
 
   /* team 1 */
   $('.team1').empty()
@@ -67,9 +58,8 @@ gameSocket.on('game score', (score) => {
 
 /* update cards on table and in players hand THEN 'ready' game table */
 gameSocket.on('update game', (data) => {
-  console.log('update game')
-  console.log(data);
-  const {state, inPlayCards} = data
+  console.log('update game: ', data)
+  const {states, inPlayCards} = data
 
   /* redraw game table */
   $('.in_play_cards').empty()
@@ -80,7 +70,7 @@ gameSocket.on('update game', (data) => {
 
   /* redraw players hand */
   $('.cards').empty()
-  state.player.cards.forEach(gameCard => {
+  states.playerState.cards.forEach(gameCard => {
     $('.cards')
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });

@@ -78,31 +78,25 @@ gameSocket.on('connection', socket => {
       .then(gameLogic.putCardInPlay)
       .then(gameLogic.endTurn)
       .then(([gameState, playerState, cardInfo]) => {
-        const newData = {
+        const states = {
           gameState: gameState,
           playerState: playerState,
-          cardInfo: cardInfo
         }
-        gameSocket
-        .to(game_id)
-        .emit('card played', newData)
+
+        jrob.getInPlayCards(gameId)
+          .then((inPlayCards) => {
+            gameSocket
+              .to(gameId)
+              .emit('update game', {
+                states,
+                inPlayCards
+              }) 
+          })
       })
       .catch(error => {
         console.log('***', error, '***')
       })
   })
-
-  socket.on('update', (state) => {
-    console.log('update')
-    jrob.getInPlayCards(game_id).then((inPlayCards) => {
-      gameSocket
-        .to(game_id)
-        .emit('update game', {
-          state,
-          inPlayCards
-        }) 
-    })
-  });
 
   socket.on('ready', () => {
     Promise.all([

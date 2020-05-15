@@ -206,7 +206,8 @@ const getSuitName = (suitValue) => {
     if(suitValue == 1) return 'Spades'
     else if(suitValue == 2) return 'Diamonds'
     else if(suitValue == 3) return 'Clubs'
-    else return'Hearts'
+    else if(suitValue == 4) return'Hearts'
+    else return 'No Leading Suit Set Yet'
 }
 
 const getCurrentTurnPlayerUsername = (gameState, gamePlayers) => {

@@ -8,7 +8,7 @@ const getScores = (gameId) => {
         team1: results.points_a,
         team2: results.points_b
       }
-      console.log(scores);
+      // console.log(scores);
       return scores;
     })
     .catch(error => { console.log(error) }); 

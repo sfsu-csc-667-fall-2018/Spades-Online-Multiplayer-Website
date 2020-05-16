@@ -1,6 +1,9 @@
 const db = require('./index');
 const playerTable = require('./game_players');
 
+const INIT_SCORE = 
+  "INSERT INTO scores (game_id, books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)"
+
 const getScores = (gameId) => { 
   db.one(`SELECT points_a, points_b FROM socres WHERE game_id = '${gameId}'`)
     .then(results => {
@@ -26,17 +29,17 @@ const addScore = (gameId, team) => {};
 
 const getTeam = (gameId, playerId) => {};
 
-const getScoreBoard = (gameId) => {
-  return db.one(`SELECT * FROM scores WHERE game_id = '${gameId}'`);
+const getScoreBoard = async (gameId) => {
+  result = await db.any(`SELECT * FROM scores WHERE game_id = ${gameId}`);
+
+  return result.exists;
 };
 
 const initScore = (game_id) => {
-  return db.none(`INSERT INTO scores (game_id, books_a, books_b, bags_a, bags_b, bets_a, bets_b, points_a, points_b) VALUES (
-    ${game_id},
-    0, 0, 0, 0, 0, 0, 0, 0
-  );`)
+  return db.none(INIT_SCORE, [game_id, 0, 0, 0, 0, 0, 0, 0, 0]);  
 }
 
 module.exports = {
-  initScore
+  initScore,
+  getScoreBoard
 }

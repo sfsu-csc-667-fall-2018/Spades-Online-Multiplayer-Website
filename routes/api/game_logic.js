@@ -109,18 +109,27 @@ const getNextPos = (pos) => {
 };
 
 //score related stuff
-getTotalScores = (gameId) => {};
+const scoreBook = ([gameState, inPlayCards]) => {
+  //cases: 
+  //no spades all leading suit => highest value wins
+  //only one spade => spade wins
+  //multiple spades => highest spade wins
+  console.log(inPlayCards);
+  const leadingSuit = gameState.leading_suit;
 
-getTotalBags = (gameId) => {};
+  inPlayCards.forEach(card => {
+    gameCards.setCardToUsed(gameState.game_id, card.card_id);
+  });
+}
 
-updateScores = () => {};
+const updateScores = () => {};
 
 /******************2.0***************** */
 /* game room */
 
 //handle rejection on create new game
 const readyGame = (gameId) => {
-  return new Promise(function(resolve, reject) { 
+  return new Promise(function(resolve, reject) {
     players.getNumPlayers(gameId).then((numPlayers) => {
       if (numPlayers.count == 4) {
         gameCards.deckReady(gameId).then((hasDeck) => {
@@ -195,6 +204,18 @@ const putCardInPlay = ([gameState, playerState, cardInfo]) => {
 }
 
 const endTurn = ([gameState, playerState, cardInfo]) => {
+  //check if 4 cards in play => book end => add book to team of winning player
+  //set current pos to book winner
+  /********************************/
+  //console.log('States: ', gameState, playerState, cardInfo);
+  jrob.getInPlayCards(gameState.game_id)
+    .then(inPlayCards => {
+      if(inPlayCards.length == 4){
+        console.log('***book end***');
+        scoreBook([gameState, inPlayCards ]);
+      }
+    })
+
   return Promise.all([
     flows.setCurrentPos(gameState.game_id, getNextPos(gameState.current_pos)),
     jrob.getPlayerState(gameState.game_id, playerState.id),

@@ -19,18 +19,23 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
   gameLogic.readyGame(gameId)
   .then((result) => {
     console.log('***', result, '***')
-    Promise.all([
-      jrob.getGameState(gameId),
-      jrob.getPlayers(gameId),
-      jrob.getPlayerState(gameId, playerId),
-      jrob.getInPlayCards(gameId) 
-    ])
-    .then(([gameState, players, player, inPlayCards]) => {
-      response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });      
-    })
-    .catch(error => {
-      response.render('game', { error, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId: 'Error', username: 'Error' })
-    })
+    if(result !== "not enough players") {
+      Promise.all([
+        jrob.getGameState(gameId),
+        jrob.getPlayers(gameId),
+        jrob.getPlayerState(gameId, playerId),
+        jrob.getInPlayCards(gameId) 
+      ])
+      .then(([gameState, players, player, inPlayCards]) => {
+        response.render('game', { gameId, gameState, players, player, inPlayCards, playerId, username });      
+      })
+      .catch(error => {
+        response.render('game', { error, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId: 'Error', username: 'Error' })
+      })
+    } else {
+      response.render('game', { result, gameId, gameState: {}, players: [], player: [], inPlayCards: [], playerId, username })
+    }
+    
   })
 });
 
@@ -78,31 +83,38 @@ gameSocket.on('connection', socket => {
     socket.join(gameId);
 
     jrob.getPlayers(gameId)
-      .then(gamePlayers => {
-        if(gamePlayers.length == 4){
+    .then((gamePlayers) => {
+      if(gamePlayers.length == 4) {
+        Promise.all([
+          jrob.getGameState(gameId),
+          jrob.getScores(gameId),
+          gamePlayers
+        ])
+        .then(([gameState, gameScore, gamePlayers]) => {
+          let gameStateForClient = {
+            leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
+            currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
+          }
+          gameSocket
+            .to(gameId)
+            .emit('game state', gameStateForClient)
+          
+          gameSocket
+            .to(gameId)
+            .emit('game score', gameScore)    
+        })
+      } else {
+        let gameStateForClient = {
+          leadingSuit: "WAITING FOR GAME TO START",
+          currentTurnPlayerUsername: "WAITING FOR GAME TO START"
+        }
 
-          Promise.all([
-            jrob.getGameState(gameId),
-            jrob.getScores(gameId),
-            jrob.getPlayers(gameId)
-          ])
-          .then(([gameState, gameScore, gamePlayers]) => {
-            let gameStateForClient = {
-              leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
-              currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
-            }
-            gameSocket
-              .to(gameId)
-              .emit('game state', gameStateForClient)
-            
-            gameSocket
-              .to(gameId)
-              .emit('game score', gameScore)    
-          })
-        }  
-      })
-      .catch(error => { console.log(error) });   
-  })  
+        gameSocket
+          .to(gameId)
+          .emit('game state', gameStateForClient)
+      }
+    })
+  })
 });
 
 

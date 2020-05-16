@@ -28,8 +28,20 @@ const getGameRoom = (gameId) => {
 };
 
 const updateNumPlayers = (gameId) => {
-  numPlayers = checkNumPlayers(gameId);
-  return db.one(`UPDATE games SET num_players = '${numPlayers}' WHERE game_id = '${gameId}'`);
+  return new Promise(function(resolve, reject) { 
+    checkNumPlayers(gameId).then((players) => {
+      db.none(`UPDATE games SET num_players = '${players.num_players}' WHERE game_id = '${gameId}'`)
+      .then(() => {
+        resolve(true);
+      })
+      .catch((error) => {
+        reject("updateNumPlayers: ", error)
+      })
+    })
+    .catch((error) => {
+      reject("updateNumPlayers: ", error)
+    })
+  })
 }
 
 const initScores = (gameId) => {

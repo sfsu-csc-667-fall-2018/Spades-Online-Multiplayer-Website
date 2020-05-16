@@ -5,10 +5,16 @@ module.exports = {
     return queryInterface.createTable(
       'games_players', 
       {
+        id: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          autoIncrement: true
+        },
         game_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          autoIncrement: false
+          autoIncrement: false,
+          primaryKey: false
         },
         player_id: {
           type: Sequelize.INTEGER,

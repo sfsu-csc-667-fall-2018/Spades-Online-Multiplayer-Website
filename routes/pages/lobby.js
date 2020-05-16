@@ -55,16 +55,16 @@ router.post('/joinGame', isAuthenticated, (request, response) => {
 
   console.log('User: ' + user.username + 'JOINED GAME: ' + gameId);
 
-  //Promise.all([
-    playersTable.addPlayer(gameId, user.id),
-    game.updateNumPlayers(gameId)
-  //])
-  //.catch(error => { 
-    //console.log(error) 
-  //})
 
-  lobbySocket.emit('get games');
-  response.redirect(`/game/${gameId}`);
+  playersTable.addPlayer(gameId, user.id)
+    .then(() => {
+      console.log('calling update num players')
+      game.updateNumPlayers(gameId)
+
+      lobbySocket.emit('get games');
+      response.redirect(`/game/${gameId}`);
+    })
+    .catch(error => { console.log(error) });
 });
 
 router.get('/logout', (request, response) => {

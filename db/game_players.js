@@ -31,7 +31,7 @@ const addPlayer = ( game_id, player_id ) => {
                     ${ player_id },
                     ${ emptyPos },
                     ${ team }
-                );`)
+                )`)
                 .then(() => {
                     resolve(true);
                 })

@@ -11,6 +11,8 @@ lobbySocket.on('display games', currentGames => {
   for(let i = 0; i < currentGames.length; i++){
 
     const { game_id, game_name, num_players } = currentGames[i];
+
+    console.log("NUMPLAYERS: ", num_players)
     
     const str = 'Name: ' + game_name + ' Players: ' + num_players;
 

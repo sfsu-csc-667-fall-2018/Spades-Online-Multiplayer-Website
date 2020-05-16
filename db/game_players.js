@@ -2,11 +2,12 @@ const db = require('./index');
 const game = require('./game');
 
 const getEmptyPostion = ( position_arr ) => {
-    if(position_arr.length == 0)  return 1;
-    if(!position_arr.some(element => element.position === 1)) return 1;
-    if(!position_arr.some(element => element.position === 2)) return 2;
-    if(!position_arr.some(element => element.position === 3)) return 3;
-    if(!position_arr.some(element => element.position === 4)) return 4;
+    if( position_arr.length < 4 ) {
+        return position_arr.length + 1
+    } else {
+        return null;
+    }
+    
 }
 
 const getPositions = ( game_id ) => {
@@ -17,20 +18,30 @@ const addPlayer = ( game_id, player_id ) => {
     return new Promise(function(resolve, reject) { 
         getPositions( game_id )
         .then((positions) => {
+            console.log("POSITIONS: ", positions)
             var emptyPos = getEmptyPostion( positions );
-            var team = getTeam(emptyPos);
-            db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
-                ${ game_id },
-                ${ player_id },
-                ${ emptyPos },
-                ${ team }
-            );`)
-            .then(() => {
-                resolve(true);
-            })
-            .catch((error) => {
-                reject("Failed to add player to games_players")
-            })
+            if(emptyPos != null) {
+                var team = getTeam(emptyPos);
+                console.log("game_id: ", game_id)
+                console.log("player: ", player_id)
+                console.log("emptyPos: ", emptyPos)
+                console.log("team: ", team)
+                db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
+                    ${ parseInt(game_id )},
+                    ${ parseInt(player_id)},
+                    ${ parseInt(emptyPos )},
+                    ${ parseInt(team) }
+                )`)
+                .then(() => {
+                    resolve(true);
+                })
+                .catch((error) => {
+                    reject("Failed to add player to games_players")
+                })
+            } else {
+                reject("GAME ALREADY FULL")
+            }
+            
         })
         .catch((error) => {
             reject("Failed to get positions")

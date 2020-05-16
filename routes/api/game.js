@@ -77,25 +77,32 @@ gameSocket.on('connection', socket => {
 
     socket.join(gameId);
 
-    Promise.all([
-      jrob.getGameState(gameId),
-      jrob.getScores(gameId),
-      jrob.getPlayers(gameId)
-    ])
-    .then(([gameState, gameScore, gamePlayers]) => {
-      let gameStateForClient = {
-        leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
-        currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
-      }
-      gameSocket
-        .to(gameId)
-        .emit('game state', gameStateForClient)
-      
-      gameSocket
-        .to(gameId)
-        .emit('game score', gameScore)    
-    })
-  })
+    jrob.getPlayers(gameId)
+      .then(gamePlayers => {
+        if(gamePlayers.length == 4){
+
+          Promise.all([
+            jrob.getGameState(gameId),
+            jrob.getScores(gameId),
+            jrob.getPlayers(gameId)
+          ])
+          .then(([gameState, gameScore, gamePlayers]) => {
+            let gameStateForClient = {
+              leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
+              currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
+            }
+            gameSocket
+              .to(gameId)
+              .emit('game state', gameStateForClient)
+            
+            gameSocket
+              .to(gameId)
+              .emit('game score', gameScore)    
+          })
+        }  
+      })
+      .catch(error => { console.log(error) });   
+  })  
 });
 
 

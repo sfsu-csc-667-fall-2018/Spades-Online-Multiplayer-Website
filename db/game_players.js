@@ -22,6 +22,8 @@ const addPlayer = ( game_id, player_id ) => {
             var emptyPos = getEmptyPostion( positions );
             if(emptyPos != null) {
                 var team = getTeam(emptyPos);
+                console.log("emptyPos: ", emptyPos)
+                console.log("team: ", team)
                 db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
                     ${ game_id },
                     ${ player_id },

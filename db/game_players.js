@@ -32,6 +32,9 @@ const addPlayer = (game_id, player_id) => {
           .then(() => {
             game.updateNumPlayers(game_id)
           })
+          .then(() => {
+            resolve(true)
+          })
         }
       })
       .catch((error) => {

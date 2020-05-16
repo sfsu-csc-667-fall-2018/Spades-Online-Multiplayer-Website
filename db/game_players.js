@@ -13,16 +13,29 @@ const getPositions = ( game_id ) => {
     return db.manyOrNone(`SELECT position from games_players WHERE game_id=${ game_id };`);
 };
 
-const addPlayer = async ( game_id, player_id ) => {
-    var position_arr = await getPositions( game_id );
-    var emptyPos = getEmptyPostion( position_arr );
-    var team = getTeam(emptyPos);
-    return db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
-        ${ game_id },
-        ${ player_id },
-        ${ emptyPos },
-        ${ team }
-    );`);
+const addPlayer = ( game_id, player_id ) => {
+    return new Promise(function(resolve, reject) { 
+        getPositions( game_id )
+        .then((positions) => {
+            var emptyPos = getEmptyPostion( positions );
+            var team = getTeam(emptyPos);
+            db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
+                ${ game_id },
+                ${ player_id },
+                ${ emptyPos },
+                ${ team }
+            );`)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((error) => {
+                reject("Failed to add player to games_players")
+            })
+        })
+        .catch((error) => {
+            reject("Failed to get positions")
+        })
+    })  
 };
 
 /* returns { exists: true } OR { exists: false } */

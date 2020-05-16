@@ -29,8 +29,8 @@ const getGameRoom = (gameId) => {
 
 const updateNumPlayers = (gameId) => {
   return new Promise(function(resolve, reject) { 
-    checkNumPlayers(gameId).then((players) => {
-      db.none(`UPDATE games SET num_players = '${players.num_players}' WHERE game_id = '${gameId}'`)
+    checkNumPlayers(gameId).then((result) => {
+      db.none(`UPDATE games SET num_players=${parseInt(result.num_players)} WHERE game_id=${gameId}`)
       .then(() => {
         resolve(true);
       })

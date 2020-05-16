@@ -29,7 +29,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'ssssh', resave: true, saveUninitialized: true }));
+app.use(session({ 
+    store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: 'ssssh', 
+    resave: true, 
+    saveUninitialized: true 
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

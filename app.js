@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MemoryStore = require('memorystore')(session);
+
 
 if (process.env.NODE_ENV === 'development') {
     require("dotenv").config();
@@ -31,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({ 
     store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
+    checkPeriod: 86400000 
     }),
     secret: 'ssssh', 
     resave: true, 

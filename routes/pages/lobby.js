@@ -49,23 +49,23 @@ router.post('/creategame', isAuthenticated, (request, response) => {
     });
 });
 
-router.post('/joinGame', (request, response) => {
+router.post('/joinGame', isAuthenticated, (request, response) => {
   const { user } = request;
   const gameId = request.body.game_id;
 
   console.log('User: ' + user.username + 'JOINED GAME: ' + gameId);
 
-  // Promise.all([
-    playersTable.addPlayer(gameId, user.id)
+  Promise.all([
+    playersTable.addPlayer(gameId, user.id),
     game.updateNumPlayers(gameId)
-  // ])
-  // .then(([isAdded, isUpdated]) => {
-    // lobbySocket.emit('get games');
+  ])
+  .then(([isAdded, isUpdated]) => {
+    lobbySocket.emit('get games');
     response.redirect(`/game/${gameId}`);
-  // })
-  // .catch(error => { 
-  //   console.log(error) 
-  // })
+  })
+  .catch(error => { 
+    console.log(error) 
+  })
 });
 
 router.get('/logout', (request, response) => {

@@ -5,11 +5,6 @@ module.exports = {
     return queryInterface.createTable(
       'game_flow', 
       {
-        id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: true  
-        },
         game_id: {
           type: Sequelize.INTEGER,
           allowNull: false,

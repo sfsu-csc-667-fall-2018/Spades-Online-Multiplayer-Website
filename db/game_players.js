@@ -27,10 +27,10 @@ const addPlayer = ( game_id, player_id ) => {
                 console.log("emptyPos: ", emptyPos)
                 console.log("team: ", team)
                 db.none(`INSERT INTO games_players (game_id, player_id, position, team) VALUES (
-                    ${ game_id },
-                    ${ player_id },
-                    ${ emptyPos },
-                    ${ team }
+                    ${ parseInt(game_id )},
+                    ${ parseInt(player_id)},
+                    ${ parseInt(emptyPos )},
+                    ${ parseInt(team) }
                 )`)
                 .then(() => {
                     resolve(true);

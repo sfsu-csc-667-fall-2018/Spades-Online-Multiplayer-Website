@@ -58,9 +58,6 @@ router.post('/joinGame', isAuthenticated, (request, response) => {
 
   playersTable.addPlayer(gameId, user.id)
     .then(() => {
-      console.log('calling update num players')
-      game.updateNumPlayers(gameId)
-
       lobbySocket.emit('get games');
       response.redirect(`/game/${gameId}`);
     })

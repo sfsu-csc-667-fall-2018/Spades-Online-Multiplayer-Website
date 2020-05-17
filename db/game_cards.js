@@ -74,6 +74,11 @@ const deckReady = async (game_id) => {
 const setCardToInPlay = (game_id, card_id) => {
     return db.none(`UPDATE game_cards SET card_order=0 WHERE game_id=${ game_id } AND card_id=${ card_id };`);
 }
+/******************2.0********************** */
+const deleteInPlayCards = (gameId) => {
+    return db.none(`DELETE FROM game_cards WHERE game_id=${gameId} AND card_order=0`)
+}
+/******************2.0********************** */
 
 module.exports = {
     createDeck,
@@ -85,5 +90,6 @@ module.exports = {
     getPlayerCards,
     getGameCards,
     deckReady,
-    setCardToInPlay
+    setCardToInPlay,
+    deleteInPlayCards
 };

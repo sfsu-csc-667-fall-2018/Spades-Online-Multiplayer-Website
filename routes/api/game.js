@@ -57,6 +57,7 @@ gameSocket.on('connection', socket => {
       .then(gameLogic.checkIfCardsLegal)
       .then(gameLogic.putCardInPlay)
       .then(gameLogic.endTurn)
+      // .then(gameLogic.scoreGame)
       .then(([gameState, playerState, cardInfo]) => {
         const states = {
           gameState: gameState,
@@ -115,6 +116,33 @@ gameSocket.on('connection', socket => {
       }
     })
   })
+
+  socket.on('score game', (data) => {
+    const gameId = data.gameId
+    socket.join(gameId);
+    Promise.all([
+      jrob.getInPlayCards(gameId),
+      jrob.getGameState(gameId)
+    ])
+    /* need to add check here for 4 cards inPlay */    
+    .then(gameLogic.scoreGame)
+    .then(gameLogic.setNewPosition)
+    .then(gameLogic.deleteInPlayCards)
+    .then(gameLogic.resetLeadingCard)
+    // .then(gameLogic.)
+    .then(([inPlayCards, gameState, currentWinningCard]) => {
+    //   console.log('inPlayCards :', inPlayCards)
+    //   console.log('gameState :', gameState)  
+      gameSocket
+        .to(gameId)
+        .emit('game scored', gameId)
+    })
+    .catch((error) => {
+      console.log('socket.on(\'score game\') : ', error)
+    })
+
+  })
+
 });
 
 

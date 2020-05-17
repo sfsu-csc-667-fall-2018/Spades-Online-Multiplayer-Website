@@ -1,5 +1,5 @@
 // const games = require('../../db/game');
-// const player = require('../../db/player');
+const player = require('../../db/player');
 // const db = require('../../db/index');
 const scores = require('../../db/scores');
 const players = require('../../db/game_players');
@@ -221,6 +221,71 @@ const getCurrentTurnPlayerUsername = (gameState, gamePlayers) => {
     }
   }
 }
+
+/*************** Score **************** */
+/* need to implement spades logic */
+const scoreGame = ([inPlayCards, gameState]) => {
+  let currentWinningCard = {
+    suit: 0,
+    value: 0
+  };
+  let checkCard;
+  
+  for(let i = 0; i < inPlayCards.length; i++) {
+    checkCard = inPlayCards[i];
+    if(checkCard.suit == gameState.leading_suit) {
+      if(checkCard.value > currentWinningCard.value) {
+        currentWinningCard = checkCard;
+      }
+    }
+  }
+  console.log('winning card  : ', currentWinningCard.name)
+  console.log('winning player: ', currentWinningCard.player_id)
+
+  return Promise.all([  
+    inPlayCards,
+    gameState,
+    currentWinningCard,
+    scores.addBook(gameState.game_id, currentWinningCard.player_id),
+  ])
+}
+
+const setNewPosition = ([inPlayCards, gameState, currentWinningCard]) => {
+  return new Promise(function(resolve, reject) { 
+    players.getPlayer(gameState.game_id, currentWinningCard.player_id)
+    .then((winningPlayer) => {
+      Promise.all([
+        flows.setTrickPos(gameState.game_id, winningPlayer.position),
+        flows.setCurrentPos(gameState.game_id, winningPlayer.position)
+      ])
+      .then(() => {
+        resolve([inPlayCards, gameState, currentWinningCard])
+      })
+      .catch((error) => { reject("setNewPositions : ", error) })
+    })
+    .catch((error) => { reject("setNewPositions : ", error) })
+  })
+}
+
+const deleteInPlayCards = ([inPlayCards, gameState, currentWinningCard]) => {
+  return Promise.all([
+    inPlayCards,
+    gameState,
+    currentWinningCard,
+    gameCards.deleteInPlayCards(gameState.game_id)
+  ])
+}
+
+const resetLeadingCard = ([inPlayCards, gameState, currentWinningCard]) => {
+  return Promise.all([
+    inPlayCards,
+    gameState,
+    currentWinningCard,
+    flows.setLeadingSuit(gameState.game_id, -1)
+  ])
+}
+
+/*************** Score **************** */
 /* helpers */
 /******************2.0***************** */
 
@@ -234,5 +299,9 @@ module.exports = {
     putCardInPlay,
     endTurn,
     getSuitName,
-    getCurrentTurnPlayerUsername
+    getCurrentTurnPlayerUsername,
+    scoreGame,
+    setNewPosition,
+    deleteInPlayCards,
+    resetLeadingCard
 }

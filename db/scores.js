@@ -1,17 +1,21 @@
 const db = require('./index');
-const playerTable = require('./game_players');
+const gamePlayers = require('./game_players');
 
 const getScores = (gameId) => { 
-  db.one(`SELECT points_a, points_b FROM socres WHERE game_id = '${gameId}'`)
+  return new Promise(function(resolve, reject) { 
+    db.one(`SELECT * FROM scores WHERE game_id = ${gameId}`)
     .then(results => {
-      let scores = {
-        team1: results.points_a,
-        team2: results.points_b
-      }
-      // console.log(scores);
-      return scores;
+      // let scores = {
+      //   team1: results.points_a,
+      //   team2: results.points_b
+      // }
+      resolve(results);
     })
-    .catch(error => { console.log(error) }); 
+    .catch(error => { 
+      // console.log('getScores: ', error)
+      reject('getScores: ', error)
+    });
+  }) 
 };
 
 const getBooks = (gameId) => {};
@@ -20,7 +24,27 @@ const getBags = (gameId) => {};
 
 const addBet = (gameId, team) => {};
 
-const addBook = (gameId, team) => {};
+const addBook = (gameId, playerId) => {
+  return new Promise(function(resolve, reject) { 
+    Promise.all([
+      getScores(gameId),
+      gamePlayers.getPlayer(gameId, playerId)
+    ])
+    .then(([scores, player]) => {
+      if(playerId.position == 1 || playerId.position == 3) { 
+        /* team 1 */
+        db.none(`UPDATE scores SET books_a=${scores.books_a + 1}`)
+      } else {
+        /* team2 */
+        db.none(`UPDATE scores SET books_b=${scores.books_a + 1}`)
+      }
+      resolve('done')
+    })
+    .catch(error => { 
+      reject('addBook : ', error);
+    })
+  })
+};
 
 const addScore = (gameId, team) => {};
 
@@ -38,5 +62,6 @@ const initScore = (game_id) => {
 }
 
 module.exports = {
-  initScore
+  initScore,
+  addBook
 }

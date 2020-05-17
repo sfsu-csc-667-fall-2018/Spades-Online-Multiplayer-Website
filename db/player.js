@@ -20,8 +20,13 @@ const findUserId = (id) => {
     return db.one(`SELECT * FROM player WHERE id = '${id}'`);
 };
 
+const getPlayerUsername = (playerId) => {
+    return db.oneOrNone(`SELECT (username) FROM player WHERE id=${playerId}`)
+}
+
 module.exports = {
     createUser,
     findUsername,
-    findUserId
+    findUserId,
+    getPlayerUsername
 };

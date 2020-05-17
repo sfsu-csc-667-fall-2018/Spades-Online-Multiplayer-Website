@@ -93,3 +93,8 @@ gameSocket.on('game scored', (gameId) => {
   $('.in_play_cards').empty()
   gameSocket.emit('ready', gameId)
 });
+
+gameSocket.on('game message', (message) => {
+  $('.game_message').empty()
+  $('.game_message').append(`<h1>${message}</h1>`)
+})

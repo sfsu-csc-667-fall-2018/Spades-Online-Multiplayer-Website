@@ -6,6 +6,7 @@ const gameSocket = io.of('/game');
 const gameLogic = require('./game_logic');
 const game = require('../../db/game');
 const jrob = require('../../db/jrob');
+const gamePlayer = require('../../db/player')
 const gamePlayers = require('../../db/game_players');
 
 router.get('/', isAuthenticated, (request, response) => {
@@ -65,11 +66,11 @@ gameSocket.on('connection', socket => {
         jrob.getInPlayCards(gameId)
           .then((inPlayCards) => {
             gameSocket
-              .to(gameId)
-              .emit('update game', {
-                states,
-                inPlayCards
-              }) 
+            .to(gameId)
+            .emit('update game', {
+              states,
+              inPlayCards
+            }) 
           })
       })
       .catch(error => {
@@ -94,11 +95,11 @@ gameSocket.on('connection', socket => {
             currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
           }
           gameSocket
-            .to(gameId)
-            .emit('game state', gameStateForClient) 
+          .to(gameId)
+          .emit('game state', gameStateForClient) 
           gameSocket
-            .to(gameId)
-            .emit('game score', gameScore)    
+          .to(gameId)
+          .emit('game score', gameScore)    
         })
       } else {
         let gameStateForClient = {
@@ -106,8 +107,8 @@ gameSocket.on('connection', socket => {
           currentTurnPlayerUsername: "WAITING FOR GAME TO START"
         }
         gameSocket
-          .to(gameId)
-          .emit('game state', gameStateForClient)
+        .to(gameId)
+        .emit('game state', gameStateForClient)
       }
     })
   })
@@ -128,8 +129,25 @@ gameSocket.on('connection', socket => {
     .then(gameLogic.resetLeadingCard)
     .then(([inPlayCards, gameState, currentWinningCard]) => {
       gameSocket
+      .to(gameId)
+      .emit('game scored', gameId)
+
+      return Promise.all([
+        inPlayCards, 
+        gameState, 
+        currentWinningCard
+      ])
+    })
+    .then(([inPlayCards, gameState, currentWinningCard]) => {
+      gamePlayer.getPlayerUsername(currentWinningCard.player_id)
+      .then((winningPlayer) => {
+        // console.log('winningplayer', winningPlayer)
+        // console.log('winning card ', currentWinningCard)
+        let message = `'${winningPlayer.username}' won the book with '${currentWinningCard.name}'!`
+        gameSocket
         .to(gameId)
-        .emit('game scored', gameId)
+        .emit('game message', message)
+      })
     })
     .catch((error) => {
       console.log('***', error, '***')

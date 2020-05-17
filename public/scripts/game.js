@@ -85,10 +85,6 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
-  if(inPlayCards.length == 4) {
-    $('.score_game').append('<a class="button">Score</a>')
-  }
-
   /* ready gametable for all players */
   gameSocket.emit('ready', gameId);
 });
@@ -96,5 +92,4 @@ gameSocket.on('update game', (data) => {
 gameSocket.on('game scored', (gameId) => {
   $('.in_play_cards').empty()
   gameSocket.emit('ready', gameId)
-  $('.score_game').empty()
 });

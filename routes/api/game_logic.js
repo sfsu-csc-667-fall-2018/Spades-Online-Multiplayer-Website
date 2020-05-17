@@ -201,6 +201,19 @@ const endTurn = ([gameState, playerState, cardInfo]) => {
     cardInfo
   ])
 }
+
+const checkIfInPlayCardsFull = ([gameState, playerState, cardInfo]) => {
+  return new Promise(function(resolve, reject) { 
+    jrob.getInPlayCards(gameState.game_id)
+    .then((inPlayCards) => {
+      if(inPlayCards.length != 4) {
+        resolve([gameState, playerState, cardInfo])
+      } else {
+        reject("Already 4 cards in Play")
+      }
+    })    
+  })
+}
 /* play card */
 
 /* helpers */
@@ -223,6 +236,16 @@ const getCurrentTurnPlayerUsername = (gameState, gamePlayers) => {
 }
 
 /*************** Score **************** */
+const checkIfReadyToScore = ([inPlayCards, gameState]) => {
+  return new Promise(function(resolve, reject) { 
+    if(inPlayCards.length == 4) {
+      resolve([inPlayCards, gameState])
+    } else {
+      reject("Not Enough Cards to Score")
+    }
+  })
+}
+
 /* need to implement spades logic */
 const scoreGame = ([inPlayCards, gameState]) => {
   let currentWinningCard = {
@@ -303,5 +326,7 @@ module.exports = {
     scoreGame,
     setNewPosition,
     deleteInPlayCards,
-    resetLeadingCard
+    resetLeadingCard,
+    checkIfInPlayCardsFull,
+    checkIfReadyToScore
 }

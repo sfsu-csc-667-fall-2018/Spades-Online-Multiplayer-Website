@@ -51,6 +51,7 @@ gameSocket.on('connection', socket => {
       jrob.getPlayerState(gameId, playerId),
       jrob.getCardInfo(cardId)
     ])
+      .then(gameLogic.checkIfInPlayCardsFull)
       .then(gameLogic.checkIfPlayersTurn)
       .then(gameLogic.checkIfCardsLegal)
       .then(gameLogic.putCardInPlay)
@@ -119,7 +120,8 @@ gameSocket.on('connection', socket => {
       jrob.getInPlayCards(gameId),
       jrob.getGameState(gameId)
     ])
-    /* need to add check here for 4 cards inPlay */    
+    /* need to add check here for 4 cards inPlay */  
+    .then(gameLogic.checkIfReadyToScore)  
     .then(gameLogic.scoreGame)
     .then(gameLogic.setNewPosition)
     .then(gameLogic.deleteInPlayCards)
@@ -130,7 +132,7 @@ gameSocket.on('connection', socket => {
         .emit('game scored', gameId)
     })
     .catch((error) => {
-      console.log('socket.on(\'score game\') : ', error)
+      console.log('***', error, '***')
     })
   })
 });

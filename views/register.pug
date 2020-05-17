@@ -1,10 +1,15 @@
 extends layout
 
 block content
-  body(class='background')
+  body(class='card-panel grey lighten-1')
     div(class='row')
-      div(class='col s12 m4 offset-m4')
+      div(class='col s12 m4 offset-m7')
 
+
+      div(class='row')
+        div(class='col s12 m6 offset-m4')
+          div(class='background')
+          
     div(class='row')
       div(class='col s12 m4 offset-m4')
       form(action='/login', method='post')
@@ -26,12 +31,12 @@ block content
               input#pw.form-control(type='password' placeholder='password' name='password')
             div.form-group
               input#pw2.form-control(type='password' placeholder='confirm password' name='confirm')
-            
-          
+
+
             div(class='reg-link')
               div(class='form-field')
-                a(href= '/login') 
+                a(href= '/login')
                   h6 Back to login...
-            
-            
+
+
             button(class='btn-large waves-effect waves-dark' type='submit') Submit

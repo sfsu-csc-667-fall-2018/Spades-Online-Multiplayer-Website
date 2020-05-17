@@ -1,0 +1,22 @@
+.Team {
+  text-align: center;
+}
+
+.Box {
+  text-align: left;
+  background-color: lightblue;
+  border-radius: 40px;
+  width: 200px;
+  padding: 15px;
+  margin-bottom: 20px;
+  margin-left: -10px;
+}
+
+.Title {
+  text-align: left;
+  margin-left: 40px;
+}
+
+.App-link {
+  color: #61dafb;
+}

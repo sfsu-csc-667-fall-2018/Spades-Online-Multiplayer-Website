@@ -26,5 +26,17 @@ margin-left: 20px;
 
 
 .background{
-  background: url(images/test-spades.jpg);
+  background: url(images/testt.png);
+  height: 100px;
+  width: 80%;
+  padding-top: 70%;
+  padding-right: 80%;
+  resize: none;
+  resize: inherit;
+
+
+}
+
+.viewBorder{
+  border: 2px solid black;
 }

@@ -57,7 +57,6 @@ gameSocket.on('game score', (score) => {
   $('.team1').append(`<li>Books: ${score.books_a} </li>`)
   $('.team1').append(`<li>Bets:  ${score.bets_a}  </li>`)
 
-
   /* team 2 */
   $('.team2').empty()
   $('.team2').append(`<li>Score: ${score.points_b}</li>`)
@@ -86,11 +85,16 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
+  if(inPlayCards.length == 4) {
+    $('.score_game').append('<a class="button">Score</a>')
+  }
+
   /* ready gametable for all players */
   gameSocket.emit('ready', gameId);
 });
 
 gameSocket.on('game scored', (gameId) => {
   $('.in_play_cards').empty()
-  gameSocket.emit('ready', gameId);
+  gameSocket.emit('ready', gameId)
+  $('.score_game').empty()
 });

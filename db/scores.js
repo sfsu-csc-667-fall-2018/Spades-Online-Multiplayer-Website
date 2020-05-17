@@ -36,7 +36,7 @@ const addBook = (gameId, playerId) => {
         db.none(`UPDATE scores SET books_a=${scores.books_a + 1}`)
       } else {
         /* team2 */
-        db.none(`UPDATE scores SET books_b=${scores.books_a + 1}`)
+        db.none(`UPDATE scores SET books_b=${scores.books_b + 1}`)
       }
       resolve('done')
     })

@@ -42,12 +42,10 @@ router.get('/:game_id', isAuthenticated, (request, response) => {
 gameSocket.on('connection', socket => {
   console.log('Connected to game socket');
   
-  
+  /* does all card play related backend */
   socket.on('play card', (data) => {
     const { gameId, playerId, cardId } = data 
-
     socket.join(gameId);
-
     Promise.all([
       jrob.getGameState(gameId),
       jrob.getPlayerState(gameId, playerId),
@@ -63,7 +61,6 @@ gameSocket.on('connection', socket => {
           gameState: gameState,
           playerState: playerState,
         }
-
         jrob.getInPlayCards(gameId)
           .then((inPlayCards) => {
             gameSocket
@@ -79,10 +76,9 @@ gameSocket.on('connection', socket => {
       })
   })
 
+  /* displays leading_suit & current players turn & scores */ 
   socket.on('ready', (gameId) => {
-
     socket.join(gameId);
-
     jrob.getPlayers(gameId)
     .then((gamePlayers) => {
       if(gamePlayers.length == 4) {
@@ -98,8 +94,7 @@ gameSocket.on('connection', socket => {
           }
           gameSocket
             .to(gameId)
-            .emit('game state', gameStateForClient)
-          
+            .emit('game state', gameStateForClient) 
           gameSocket
             .to(gameId)
             .emit('game score', gameScore)    
@@ -109,7 +104,6 @@ gameSocket.on('connection', socket => {
           leadingSuit: "WAITING FOR GAME TO START",
           currentTurnPlayerUsername: "WAITING FOR GAME TO START"
         }
-
         gameSocket
           .to(gameId)
           .emit('game state', gameStateForClient)
@@ -117,6 +111,7 @@ gameSocket.on('connection', socket => {
     })
   })
 
+  /* does all score game related backend */
   socket.on('score game', (data) => {
     const gameId = data.gameId
     socket.join(gameId);
@@ -129,10 +124,7 @@ gameSocket.on('connection', socket => {
     .then(gameLogic.setNewPosition)
     .then(gameLogic.deleteInPlayCards)
     .then(gameLogic.resetLeadingCard)
-    // .then(gameLogic.)
     .then(([inPlayCards, gameState, currentWinningCard]) => {
-    //   console.log('inPlayCards :', inPlayCards)
-    //   console.log('gameState :', gameState)  
       gameSocket
         .to(gameId)
         .emit('game scored', gameId)
@@ -140,9 +132,7 @@ gameSocket.on('connection', socket => {
     .catch((error) => {
       console.log('socket.on(\'score game\') : ', error)
     })
-
   })
-
 });
 
 

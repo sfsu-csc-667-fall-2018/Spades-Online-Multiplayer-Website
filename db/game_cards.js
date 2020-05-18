@@ -78,6 +78,10 @@ const setCardToInPlay = (game_id, card_id) => {
 const deleteInPlayCards = (gameId) => {
     return db.none(`DELETE FROM game_cards WHERE game_id=${gameId} AND card_order=0`)
 }
+
+const getDeckCount = (gameId) => {
+    return db.one(`SELECT COUNT (*) FROM game_cards WHERE game_id=${gameId}`)
+}
 /******************2.0********************** */
 
 module.exports = {
@@ -91,5 +95,6 @@ module.exports = {
     getGameCards,
     deckReady,
     setCardToInPlay,
-    deleteInPlayCards
+    deleteInPlayCards,
+    getDeckCount
 };

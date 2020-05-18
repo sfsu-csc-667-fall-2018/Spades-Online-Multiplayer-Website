@@ -63,5 +63,6 @@ const initScore = (game_id) => {
 
 module.exports = {
   initScore,
-  addBook
+  addBook,
+  getScores
 }

@@ -85,6 +85,8 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
+  $('.game_message').empty()
+
   /* ready gametable for all players */
   gameSocket.emit('ready', gameId);
 });

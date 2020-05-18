@@ -139,14 +139,29 @@ gameSocket.on('connection', socket => {
       ])
     })
     .then(([inPlayCards, gameState, currentWinningCard]) => {
-      gamePlayer.getPlayerUsername(currentWinningCard.player_id)
-      .then((winningPlayer) => {
-        // console.log('winningplayer', winningPlayer)
-        // console.log('winning card ', currentWinningCard)
-        let message = `'${winningPlayer.username}' won the book with '${currentWinningCard.name}'!`
-        gameSocket
-        .to(gameId)
-        .emit('game message', message)
+      gameLogic.checkIfGameOver(gameId)
+      .then((isOver) => {
+        console.log('isOver : ', isOver)
+        if(isOver) {
+          gameLogic.getGameWinner(gameId)
+          .then((winningTeam) => {
+            console.log('winner : ', winningTeam)
+            let message = `Team ${winningTeam} won the game!`
+            gameSocket
+            .to(gameId)
+            .emit('game message', message)
+          })
+        } else {
+          gamePlayer.getPlayerUsername(currentWinningCard.player_id)
+          .then((winningPlayer) => {
+            // console.log('winningplayer', winningPlayer)
+            // console.log('winning card ', currentWinningCard)
+            let message = `'${winningPlayer.username}' won the book with '${currentWinningCard.name}'!`
+            gameSocket
+            .to(gameId)
+            .emit('game message', message)
+          })
+        }
       })
     })
     .catch((error) => {

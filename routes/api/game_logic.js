@@ -308,6 +308,32 @@ const resetLeadingCard = ([inPlayCards, gameState, currentWinningCard]) => {
   ])
 }
 
+const checkIfGameOver = (gameId) => {
+  return new Promise(function(resolve, reject) { 
+    gameCards.getDeckCount(gameId)
+    .then((result) => {
+      console.log('count : ', result)
+      if(result.count == 0) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
+
+const getGameWinner = (gameId) => {
+  return new Promise(function(resolve, reject) { 
+    scores.getScores(gameId)
+    .then((gameScore) => {
+      if(gameScore.books_a > gameScore.books_b) {
+        resolve(1)
+      } else {
+        resolve(2)
+      }
+    })
+  })
+}
 /*************** Score **************** */
 /* helpers */
 /******************2.0***************** */
@@ -328,5 +354,7 @@ module.exports = {
     deleteInPlayCards,
     resetLeadingCard,
     checkIfInPlayCardsFull,
-    checkIfReadyToScore
+    checkIfReadyToScore,
+    checkIfGameOver,
+    getGameWinner
 }

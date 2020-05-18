@@ -36,7 +36,7 @@ const getGameState = gameId =>
 const getPlayerState = (gameId, playerId) =>
   Promise.all([
     db.one(PLAYER_STATE, [gameId, playerId]),
-    db.many(PLAYER_CARDS, [gameId, playerId])
+    db.manyOrNone(PLAYER_CARDS, [gameId, playerId])
   ])
     .then(([playerInfo, cards]) => ({
       id: playerInfo.player_id,

@@ -1,23 +1,47 @@
 extends layout
 
 block content
-  h1 GameRoom: #{game_id} Player1: #{user.username} 
-  p Game played here + chatroom
+  body(class='game-background')
+    div(class='row')
+      
+      div(class='card-panel teal lighten-1')
+         h1(align='center') [YOUR TEAMMATE]
+      br
+      br
+      br
 
-  section.section.chat-container
-    .container
-      .columns
-        .box.column.is-8.is-offset-2
-          h2.title Chat box
-          .chat-messages.has-text-left
-            ul#messages
-          form(id='chat-form')
-            .field.has-addons
-              input(id='room_id', type='hidden', value=game_id)
-              input(id='name', type='hidden', value=user.username)
-              p.control.is-expanded
-                input(id='message', type='text', class='input' placeholder='Message')
-              p.control
-                input(type='submit', class='button is-success' value='Send')
+      div(class='card-panel teal lighten-1')
+         h1(align='center') [GAME AREA]
+      br
+      br
+      br
+      
+      div(class='card-panel teal lighten-1')
+        h1(align='center') [YOUR CARDS HERE]
+
+
+  div(class='fixed-action-btn')
+    a(class='btn-floating btn-large red' onclick='toggleMenu()')
+      i(class='large material-icons') +
+  
+    div(id='toggle' class='col s6') 
+      div(class='card-panel grey lighten-4') 
+        h3(class='lobby-text') Chat:
+        .chat-messages.has-text-left
+          ul#messages
+        form(id='chat-form')
+          .field.has-addons
+            input(id='room_id', type='hidden', value=0)
+            //-input(id='name', type='hidden', value=user.username)
+            p.control.is-expanded
+              input(id='message', type='text', class='input' placeholder='Message')
+            p.control
+              input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
+
+
 
   script(src='/scripts/chat.js')
+  script(src='/scripts/game.js')
+  script(src='/scripts/lobby.js')
+
+      

@@ -14,14 +14,18 @@ lobbySocket.on('display games', currentGames => {
 
     console.log("NUMPLAYERS: ", num_players)
     
-    const str = 'Name: ' + game_name + ' Players: ' + num_players;
+    const str = 'Name: ' + game_name + ' Players: ' + num_players + '/4';
 
     if(num_players < 4){
       const form = $( 
         `<form method="POST" action="/lobby/joinGame">
-          <label>"${str}"</label>
-          <input type="hidden" name="game_id" value="${game_id}"></input>
-          <input type="submit" value="Join Game">
+          <div align="left">
+            <br>
+            <input class="btn-small waves-effect waves-dark" type="submit" value="Join" style="float: none; "> 
+            <label>${str}</label>
+            <input type="hidden" name="game_id" value="${game_id}"></input> 
+            
+          </div>
         </form>`
       );
 

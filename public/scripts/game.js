@@ -8,7 +8,6 @@ const playerId = document.querySelector('#pagePlayerId').value
 const gameStateListing = document.querySelector('#game-state-listing')
 const errorDisplay = document.querySelector('#error')
 
-/* play card buttons */
 document.querySelector('.cards').addEventListener('click', event => {
   const { cardId } = event.target.dataset
 
@@ -21,18 +20,8 @@ document.querySelector('.cards').addEventListener('click', event => {
   gameSocket.emit('play card', data)
 })
 
-/* score game button */
-document.querySelector('.score_game').addEventListener('click', event => {
-  
-  const data = {
-    gameId: gameId
-  }
-
-  gameSocket.emit('score game', data)
-})
-
 $(window).on('load', () => {
-  gameSocket.emit('ready', gameId); 
+  gameSocket.emit('ready', gameId); // 
 });
 
 /* display leading suit & current player's turn */
@@ -56,6 +45,7 @@ gameSocket.on('game score', (score) => {
   $('.team1').append(`<li>Bags:  ${score.bags_a}  </li>`)
   $('.team1').append(`<li>Books: ${score.books_a} </li>`)
   $('.team1').append(`<li>Bets:  ${score.bets_a}  </li>`)
+
 
   /* team 2 */
   $('.team2').empty()
@@ -85,18 +75,16 @@ gameSocket.on('update game', (data) => {
       .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
-  $('.game_message').empty()
-
-  /* ready gametable for all players */
   gameSocket.emit('ready', gameId);
+
 });
 
-gameSocket.on('game scored', (gameId) => {
-  $('.in_play_cards').empty()
-  gameSocket.emit('ready', gameId)
-});
+function toggleMenu() {
+  var x = document.getElementById("toggle");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
 
-gameSocket.on('game message', (message) => {
-  $('.game_message').empty()
-  $('.game_message').append(`<h1>${message}</h1>`)
-})

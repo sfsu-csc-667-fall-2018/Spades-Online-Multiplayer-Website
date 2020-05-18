@@ -1,38 +1,51 @@
 extends layout
 
 block content
-  h1 Game Lobby
+  body(class='background')
 
-  p lobby for waiting to join + chat room
-  p User: #{user.username} Id: #{user.id}
 
-  span
-    a(href='/lobby/logout') Log Out
 
-  .container
-    .box
-      h2.title Current Games
-        ul#games
+  div(class='row right-align')
+    a( href='/lobby/logout') Log Out
+
+  div(class='card')
+    div(class='card-panel teal lighten-3')
+      h3(class="") LOBBY
+      h6 Logged in as: #{user.username}
+
+  div(class='row')
+    div(class='col s6') 
+      div(class='card-panel grey lighten-4') 
+        p(class='lobby-text') Create new game:
+        form(action='/lobby/creategame', method='POST')
+          div(class='font-color')
+            input(name='gameName', type='text', placeholder='New Game Name')
+            br
+            br
+            div(class='lobby-button')
+              button(class='btn-small waves-effect waves-dark' type='submit') SUBMIT
+      div(class='card-panel grey lighten-4') 
+        p(class='lobby-text') Available Games:
       
-      form(action='/lobby/creategame', method='POST')
-        input(name='gameName', type='text', placeholder='Game Name')
-        input(type='submit', id='create_game', value='Create Game')
+        ul(class='lobby-text')#games 
+    div(class='col s6') 
+      div(class='card-panel grey lighten-4') 
+        h3(class='lobby-text') Chat:
+        .chat-messages.has-text-left
+          ul#messages
+        form(id='chat-form')
+          .field.has-addons
+            input(id='room_id', type='hidden', value=0)
+            input(id='name', type='hidden', value=user.username)
+            p.control.is-expanded
+              input(id='message', type='text', class='input' placeholder='Message')
+            p.control
+              input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
+      
+      
+      
 
-  section.section.chat-container
-    .container
-      .columns
-        .box.column.is-8.is-offset-2
-          h2.title Chat box
-          .chat-messages.has-text-left
-            ul#messages
-          form(id='chat-form')
-            .field.has-addons
-              input(id='room_id', type='hidden', value=0)
-              input(id='name', type='hidden', value=user.username)
-              p.control.is-expanded
-                input(id='message', type='text', class='input' placeholder='Message')
-              p.control
-                input(type='submit', class='button is-success' value='Send')
+
 
   script(src='/scripts/chat.js')
   script(src='/scripts/lobby.js')

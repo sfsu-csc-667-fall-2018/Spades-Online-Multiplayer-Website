@@ -1,22 +1,49 @@
 extends layout
 
 block content
+  body(class='background')
 
-  h1 Welcome to Spades Server
 
-  div
-    h1 Login
-    
+
+  div(class='row')
+    div(class='col s12 m4 offset-m4')
     form(action='/login', method='post')
-      div 
-        label Username:
-        input(type='Username', name='username')
-      div
-        label Password:
-        input(type='Password', name='password')
-      div 
-        button(type='submit') Submit
+      div(class='card')
+        div(class='card-panel teal lighten-3')
+          h3(class="") LOG IN
+
+        div(class='card-content')
+
+          div(class='form-field')
+            label(for="username") Username:
+            input(type="text", name="username")
+          br
+
+        div(class='card-content')
+          div(class='form-field')
+            label(for="password") Password:
+            input(type="text", name="password")
+        
+
+        div(class='card-content')
+          div(class='form-field')
+            a(href= '/register') 
+              h6 Sign up
+
+
+
+        div(class='login-button')
+          button(class='btn-large waves-effect waves-dark' type='submit') SUBMIT
+
+
+        br
+        br
+        
     
-    div
-      a(href = '/register') Register for an account here! 
+  
+  
+  
+  
+
+
 

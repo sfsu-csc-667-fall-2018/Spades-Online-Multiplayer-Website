@@ -31,7 +31,8 @@ const addBook = (gameId, playerId) => {
       gamePlayers.getPlayer(gameId, playerId)
     ])
     .then(([scores, player]) => {
-      if(playerId.position == 1 || playerId.position == 3) { 
+
+      if(player.position == 1 || player.position == 3) { 
         /* team 1 */
         db.none(`UPDATE scores SET books_a=${scores.books_a + 1}`)
       } else {

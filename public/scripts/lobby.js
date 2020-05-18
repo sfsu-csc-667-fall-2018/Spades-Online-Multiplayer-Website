@@ -28,11 +28,21 @@ lobbySocket.on('display games', currentGames => {
           </div>
         </form>`
       );
-
       $('#games').append(form);
-
     } else {
-      $('#games').append( $( '<span>' ).text( str + ' Game Full!' ) );
+      const form = $( 
+        `<form method="POST" action="/lobby/joinGame">
+          <div align="left">
+            <br>
+            <input class="btn-small waves-effect waves-dark" type="submit" value="Join" style="float: none; " disabled> 
+            <label>${str}</label>
+            <input type="hidden" name="game_id" value="${game_id}"></input> 
+            
+          </div>
+        </form>`
+      );
+      $('#games').append(form);
     }
+    
   }  
 });

@@ -19,6 +19,8 @@ body {
 margin-left: 20px;
 }
 
+
+
 .reg-link {
   margin-top: 40px;
   margin-left: 0px;
@@ -26,5 +28,32 @@ margin-left: 20px;
 
 
 .background{
-  background: url(images/test-spades.jpg);
+  background: url(images/spades_01.jpg);
+}
+
+.game-background{
+  background: url(images/green.jpg);
+}
+
+.logo{
+  background: url(images/spades-logo.png);
+  height: 100px;
+  width: 40%;
+  min-width: 40%;
+  min-height: 100px;
+  padding-top: 45%;
+  padding-right: 70%;
+  padding-bottom: 30%;
+  resize: none;
+  display: inline-block;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+.font-color{
+  color: black;
+}
+
+.lobby-text{
+  font: 22px "Lucida Grande", Helvetica, Arial, sans-serif;
 }

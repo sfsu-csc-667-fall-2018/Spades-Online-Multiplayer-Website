@@ -28,11 +28,12 @@ margin-left: 20px;
 .background{
   background: url(images/testt.png);
   height: 100px;
-  width: 80%;
-  padding-top: 70%;
-  padding-right: 80%;
+  width: 40%;
+  padding-top: 45%;
+  padding-right: 50%;
+  padding-bottom: 1px;
   resize: none;
-  resize: inherit;
+  display: inline-block;
 
 
 }

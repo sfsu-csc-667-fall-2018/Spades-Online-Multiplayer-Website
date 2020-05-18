@@ -1,45 +1,46 @@
 extends layout
 
 block content
- body(class='background')
-  div(class='game-background')
-    div(class='row')
-
-      div(class='card-panel teal lighten-1')
-         h1(align='center') [Cards In Play]
-      br
-      br
-      br
+  body(class='background')
 
 
 
-      br
-      br
-      br
+  div(class='row')
+    div(class='col s12 m4 offset-m4')
+    form(action='/login', method='post')
+      div(class='card')
+        div(class='card-panel teal lighten-3')
+          h3(class="") LOG IN
 
-      div(class='card-panel teal lighten-1')
-        h1(align='center') [YOUR CARDS HERE]
+        div(class='card-content')
 
-  div(class='fixed-action-btn')
-    a(class='btn-floating btn-large red' onclick='toggleMenu()')
-      i(class='large material-icons') +
+          div(class='form-field')
+            label(for="username") Username:
+            input(type="text", name="username")
+          br
 
-  div(id='toggle' class='col s6')
-    div(class='card-panel grey lighten-4')
-      h3(class='lobby-text') Chat:
-      .chat-messages.has-text-left
-        ul#messages
-      form(id='chat-form')
-        .field.has-addons
-          input(id='room_id', type='hidden', value=0)
-          //input(id='name', type='hidden', value=user.username)
-          p.control.is-expanded
-            input(id='message', type='text', class='input' placeholder='Message')
-          p.control
-            input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
+        div(class='card-content')
+          div(class='form-field')
+            label(for="password") Password:
+            input(type="text", name="password")
+        
+
+        div(class='card-content')
+          div(class='form-field')
+            a(href= '/register') 
+              h6 Sign up
 
 
 
-  script(src='/scripts/chat.js')
-  script(src='/scripts/game.js')
-  script(src='/scripts/lobby.js')
+        div(class='login-button')
+          button(class='btn-large waves-effect waves-dark' type='submit') SUBMIT
+
+
+        br
+        br
+        
+    
+  
+  
+  
+  

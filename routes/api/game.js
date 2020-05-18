@@ -121,7 +121,6 @@ gameSocket.on('connection', socket => {
       jrob.getInPlayCards(gameId),
       jrob.getGameState(gameId)
     ])
-    /* need to add check here for 4 cards inPlay */  
     .then(gameLogic.checkIfReadyToScore)  
     .then(gameLogic.scoreGame)
     .then(gameLogic.setNewPosition)

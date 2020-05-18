@@ -13,7 +13,7 @@ const createUser = (first_name, last_name, username, email, password) => {
 
 //find player by username/id
 const findUsername = (username) => {
-    return db.one(`SELECT * FROM player WHERE username = '${username}'`);
+    return db.oneOrNone(`SELECT * FROM player WHERE username = '${username}'`);
 };
 
 const findUserId = (id) => {

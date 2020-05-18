@@ -57,3 +57,10 @@ margin-left: 20px;
 .lobby-text{
   font: 22px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
+.card-back{
+  background: url(images/card-back.jpg);
+  padding-right: 5%;
+  padding-top: 50%;
+  resize: inherit;
+}

@@ -253,12 +253,37 @@ const scoreGame = ([inPlayCards, gameState]) => {
     value: 0
   };
   let checkCard;
-  
-  for(let i = 0; i < inPlayCards.length; i++) {
-    checkCard = inPlayCards[i];
-    if(checkCard.suit == gameState.leading_suit) {
-      if(checkCard.value > currentWinningCard.value) {
+
+  /* 
+    if(leadinSuit == spades)
+      regular scoring
+    else 
+      if we find a spade
+        setLeadingsuit to spade
+        
+  */
+  // console.log(gameState, inPlayCards)
+  if(gameState.leading_suit != 1){
+    /* spade is not leading suit */
+    for(let i = 0; i < inPlayCards.length; i++) {
+      checkCard = inPlayCards[i];
+      if(checkCard.suit == gameState.leading_suit) {
+        if(checkCard.value > currentWinningCard.value) {
+          currentWinningCard = checkCard;
+        }
+      } else if(checkCard.suit == 1) {
         currentWinningCard = checkCard;
+        gameState.leading_suit = 1;
+      }
+    }
+  } else {
+    /* spades is leading suit */
+    for(let i = 0; i < inPlayCards.length; i++) {
+      checkCard = inPlayCards[i];
+      if(checkCard.suit == gameState.leading_suit) {
+        if(checkCard.value > currentWinningCard.value) {
+          currentWinningCard = checkCard;
+        }
       }
     }
   }

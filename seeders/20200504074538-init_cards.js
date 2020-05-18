@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('cards', [
-        { id:  1, suit: 1, value: 1,  name: 'Ace of Spades',     image: 'spades_1.png'   },
+        { id:  1, suit: 1, value: 14,  name: 'Ace of Spades',     image: 'spades_1.png'   },
         { id:  2, suit: 1, value: 2,  name: '2 of Spades',       image: 'spades_2.png'   },
         { id:  3, suit: 1, value: 3,  name: '3 of Spades',       image: 'spades_3.png'   },
         { id:  4, suit: 1, value: 4,  name: '4 of Spades',       image: 'spades_4.png'   },
@@ -16,7 +16,7 @@ module.exports = {
         { id: 11, suit: 1, value: 11, name: 'Jack of Spades',    image: 'spades_11.png'  },
         { id: 12, suit: 1, value: 12, name: 'Queen of Spades',   image: 'spades_12.png'  },
         { id: 13, suit: 1, value: 13, name: 'King of Spades',    image: 'spades_13.png'  },
-        { id: 14, suit: 2, value: 1,  name: 'Ace of Diamonds',   image: 'diamonds_1.png' },
+        { id: 14, suit: 2, value: 14,  name: 'Ace of Diamonds',   image: 'diamonds_1.png' },
         { id: 15, suit: 2, value: 2,  name: '2 of Diamonds',     image: 'diamonds_2.png' },
         { id: 16, suit: 2, value: 3,  name: '3 of Diamonds',     image: 'diamonds_3.png' },
         { id: 17, suit: 2, value: 4,  name: '4 of Diamonds',     image: 'diamonds_4.png' },
@@ -29,7 +29,7 @@ module.exports = {
         { id: 24, suit: 2, value: 11, name: 'Jack of Diamonds',  image: 'diamonds_11.png'},
         { id: 25, suit: 2, value: 12, name: 'Queen of Diamonds', image: 'diamonds_12.png'},
         { id: 26, suit: 2, value: 13, name: 'King of Diamonds',  image: 'diamonds_13.png'},
-        { id: 27, suit: 3, value: 1,  name: 'Ace of Clubs',      image: 'clubs_1.png'    },
+        { id: 27, suit: 3, value: 14,  name: 'Ace of Clubs',      image: 'clubs_1.png'    },
         { id: 28, suit: 3, value: 2,  name: '2 of Clubs',        image: 'clubs_2.png'    },
         { id: 29, suit: 3, value: 3,  name: '3 of Clubs',        image: 'clubs_3.png'    },
         { id: 30, suit: 3, value: 4,  name: '4 of Clubs',        image: 'clubs_4.png'    },
@@ -42,7 +42,7 @@ module.exports = {
         { id: 37, suit: 3, value: 11, name: 'Jack of Clubs',     image: 'clubs_11.png'   },
         { id: 38, suit: 3, value: 12, name: 'Queen of Clubs',    image: 'clubs_12.png'   },
         { id: 39, suit: 3, value: 13, name: 'King of Clubs',     image: 'clubs_13.png'   },
-        { id: 40, suit: 4, value: 1,  name: 'Ace of Hearts',     image: 'hearts_1.png'   },
+        { id: 40, suit: 4, value: 14,  name: 'Ace of Hearts',     image: 'hearts_1.png'   },
         { id: 41, suit: 4, value: 2,  name: '2 of Hearts',       image: 'hearts_2.png'   },
         { id: 42, suit: 4, value: 3,  name: '3 of Hearts',       image: 'hearts_3.png'   },
         { id: 43, suit: 4, value: 4,  name: '4 of Hearts',       image: 'hearts_4.png'   },

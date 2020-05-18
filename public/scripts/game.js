@@ -75,14 +75,14 @@ gameSocket.on('update game', (data) => {
   $('.in_play_cards').empty()
   inPlayCards.forEach(gameCard => {
     $('.in_play_cards')
-      .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
+      .append(`<a class="game-card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
   /* redraw players hand */
   $('.cards').empty()
   states.playerState.cards.forEach(gameCard => {
     $('.cards')
-      .append(`<a class="card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
+      .append(`<a class="game-card card-${gameCard.suit}-${gameCard.value}" title="${gameCard.name}" data-card-id="${gameCard.id}"></a>`)
   });
 
   $('.game_message').empty()

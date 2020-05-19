@@ -70,12 +70,16 @@ margin-left: 20px;
   height: 25vh;
 }
 
+.fixed-height_2{
+  height: 15vh;
+}
+
 .end-game-btn{
   margin-left: 88%;
 }
 
 .game-card {
-  margin-top: 10%;
+  margin-top: 20px;
 }
 
 .game-score {

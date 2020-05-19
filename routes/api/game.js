@@ -156,7 +156,7 @@ gameSocket.on('connection', socket => {
           .then((winningPlayer) => {
             // console.log('winningplayer', winningPlayer)
             // console.log('winning card ', currentWinningCard)
-            let message = `'${winningPlayer.username}' won the book with '${currentWinningCard.name}'!`
+            let message = `'${winningPlayer.username}' won the round with a '${currentWinningCard.name}'!`
             gameSocket
             .to(gameId)
             .emit('game message', message)

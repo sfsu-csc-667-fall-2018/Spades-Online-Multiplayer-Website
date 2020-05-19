@@ -6,12 +6,7 @@ block content
   input#pagePlayerName(type='hidden' value=username)
   body(class='background')
     div(class='row')
-
-      div.score_game(class='col s2 btn-small waves-effect waves-dark')
-        .a Score Game
-
-
-      button(class='col s2 offset-s8 btn-small waves-effect waves-dark' type='submit') End Game
+      button(class='col s2  btn-small waves-effect waves-dark' type='submit') End Game
     div(class='row')
       div(class='card-panel teal lighten-2')
         h3(align='center') Welcome player "#{username}"
@@ -31,7 +26,14 @@ block content
               div.team2
       
       br
+
+      div.game_message(class="center")
       
+      br
+
+      div.score_game(class='col s2 btn-small waves-effect waves-dark')
+        .a Score Game
+
       //-h4 Cards on Table
       div.gameContainer(class='fixed-height_2 teal')
         div(class='container')
@@ -39,14 +41,12 @@ block content
             if inPlayCards
               each card in inPlayCards
                 a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+     
       br
-
-      div.player_message
-
       br
-
+     
       //- h4 Cards
-      div(class='fixed-height_2 teal lighten-2')
+      div.gameContainer(class='fixed-height_2 teal lighten-2')
         div.cards(class="center")
           if player.cards
             each card in player.cards

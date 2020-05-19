@@ -10,7 +10,6 @@ const errorDisplay = document.querySelector('#error')
 
 /* play card buttons */
 document.querySelector('.cards').addEventListener('click', event => {
-  console.log("CLICK")
   const { cardId } = event.target.dataset
 
   const data = {
@@ -85,7 +84,7 @@ gameSocket.on('game score', (score) => {
 
   /* team 2 */
   $('.team2').empty()
-  $('.team2').append(`<li>score: ${score.books_b} </li>`)
+  $('.team2').append(`<li>Score: ${score.books_b} </li>`)
 })
 
 
@@ -121,6 +120,6 @@ gameSocket.on('game scored', (gameId) => {
 
 gameSocket.on('game message', (message) => {
   $('.game_message').empty()
-  $('.game_message').append(`<h1>${message}</h1>`)
+  $('.game_message').append(`<div class="gameContainer fixed-height_2 indigo lighten-4"><h4>${message}</h4></div>`)
 })
 

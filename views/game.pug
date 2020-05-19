@@ -35,7 +35,7 @@ block content
       //-h4 Cards on Table
       div.gameContainer(class='fixed-height_2 teal')
         div(class='container')
-          div.cards
+          div.in_play_cards(class="center")
             if inPlayCards
               each card in inPlayCards
                 a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
@@ -47,7 +47,7 @@ block content
 
       //- h4 Cards
       div(class='fixed-height_2 teal lighten-2')
-        div.cards
+        div.cards(class="center")
           if player.cards
             each card in player.cards
               a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)

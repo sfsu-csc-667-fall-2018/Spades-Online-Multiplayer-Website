@@ -57,3 +57,19 @@ margin-left: 20px;
 .lobby-text{
   font: 22px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
+.game-info{
+  border: 2px solid black;
+}
+
+.fixed-height{
+  height: 50vh;
+}
+
+.fixed-height_2{
+  height: 25vh;
+}
+
+.end-game-btn{
+  margin-left: 88%;
+}

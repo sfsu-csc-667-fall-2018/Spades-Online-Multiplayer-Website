@@ -40,10 +40,10 @@ gameSocket.on('game state', (gameState) => {
   console.log('ready --> game state: ', gameState)
   /* Leading Suit */
   $('.leading_suit').empty()
-  $('.leading_suit').append(`<h3>Leading Suit: ${gameState.leadingSuit}</h3>`)  
+  $('.leading_suit').append(`<h6>Leading Suit: ${gameState.leadingSuit}</h6>`)  
 
   $('.current_turn').empty()
-  $('.current_turn').append(`<h3>Current Turn: ${gameState.currentTurnPlayerUsername}</h3>`)
+  $('.current_turn').append(`<h6>Current Turn: ${gameState.currentTurnPlayerUsername}</h6>`)
 })
 
 /* display scores info */
@@ -100,3 +100,12 @@ gameSocket.on('game message', (message) => {
   $('.game_message').empty()
   $('.game_message').append(`<h1>${message}</h1>`)
 })
+
+function toggleMenu() {
+  var x = document.getElementById("toggle");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}

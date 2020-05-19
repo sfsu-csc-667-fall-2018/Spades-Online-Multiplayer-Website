@@ -4,117 +4,134 @@ block content
   input#pageGameId(type='hidden' value=gameId)
   input#pagePlayerId(type='hidden' value=playerId)
   input#pagePlayerName(type='hidden' value=username)
+  body(class='background')
+    div(class='row')
+
+      div.score_game(class='col s2 btn-small waves-effect waves-dark')
+        .a Score Game
 
 
-  h3 Game #{gameId}, Player #{username} (#{playerId})
+      button(class='col s2 offset-s8 btn-small waves-effect waves-dark' type='submit') End Game
+    div(class='row')
+      div(class='card-panel teal lighten-2')
+        h3(align='center') Welcome player "#{username}" to game [#{gameId}]
+    
+        div(class=' game-info card-panel teal lighten-2')
+          div(class='row')
+            div.current_turn(class='col s6')
+            div.leading_suit(class='col s6')
 
-  
-  .container
-    .columns
-      .column Team 1
-        div.team1
-      .column Team 2
-        div.team2
 
-  div.game_message
 
-  div.current_turn
+      
+      
+      
+      //-h4 Cards on Table
+      div(class='fixed-height_2 teal')
+        div(class='card')
+          div.in_play_cards
+            if inPlayCards
+              each card in inPlayCards
+                a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 
-  div.leading_suit
 
-  div.score_game
-    .a(class='button') Score Game
+        
 
-  h4 Cards on Table
-  div.in_play_cards
-    if inPlayCards
-      each card in inPlayCards
-        a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+      div.player_message
 
-  div.player_message
 
-  h4 Cards
-  div.cards
-    if player.cards
-      each card in player.cards
-        a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+      //- h4 Cards
+      div(class='fixed-height_2 teal lighten-2')
+        div(class='card')
+          div.cards
+            if player.cards
+              each card in player.cards
+                a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 
-  h4 Players
-  ul
-    each player in players
-      li= JSON.stringify(player)
+      //- h4 Players
+      //- ul
+      //-   each player in players
+      //-     li= JSON.stringify(player)
 
-  h4 Error
-    if error
-      p#error= error
+      //- h4 Error
+      //-   if error
+      //-     p#error= error
 
-  h4 Game State
-  #game-state-listing
-    p= JSON.stringify(gameState)
+      //- h4 Game State
+      //- #game-state-listing
+      //-   p= JSON.stringify(gameState)
 
-  section.section.chat-container
-    .container
-      .columns
-        .box.column.is-8.is-offset-2
-          h2.title Chat box
+
+
+
+    div(class='fixed-action-btn')
+      a(class='btn-floating btn-large red' onclick='toggleMenu()')
+        i(class='large material-icons') +
+
+      div(id='toggle' class='col s6') 
+        div(class='card-panel grey lighten-4') 
+          h3(class='lobby-text') Chat:
           .chat-messages.has-text-left
             ul#messages
           form(id='chat-form')
             .field.has-addons
-              input(id='room_id', type='hidden', value=gameId)
-              input(id='name', type='hidden', value=username)
+              input(id='room_id', type='hidden', value=0)
+              //-input(id='name', type='hidden', value=user.username)
               p.control.is-expanded
                 input(id='message', type='text', class='input' placeholder='Message')
               p.control
-                input(type='submit', class='button is-success' value='Send')
+                input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
 
-  script(src='/scripts/chat.js')
-  script(src='/scripts/game.js')
 
-//- extends layout
 
-//- block content
-//-   body(class='game-background')
-//-     div(class='row')
+
+      script(src='/scripts/chat.js')
+      script(src='/scripts/game.js')
+
+    //- extends layout
+
+    //- block content
+    //-   body(class='game-background')
+    //-     div(class='row')
+          
+    //-       div(class='card-panel teal lighten-1')
+    //-          h1(align='center') [YOUR TEAMMATE]
+    //-       br
+    //-       br
+    //-       br
+
+    //-       div(class='card-panel teal lighten-1')
+    //-          h1(align='center') [GAME AREA]
+    //-       br
+    //-       br
+    //-       br
+          
+    //-       div(class='card-panel teal lighten-1')
+    //-         h1(align='center') [YOUR CARDS HERE]
+
+
+    //-   div(class='fixed-action-btn')
+    //-     a(class='btn-floating btn-large red' onclick='toggleMenu()')
+    //-       i(class='large material-icons') +
       
-//-       div(class='card-panel teal lighten-1')
-//-          h1(align='center') [YOUR TEAMMATE]
-//-       br
-//-       br
-//-       br
-
-//-       div(class='card-panel teal lighten-1')
-//-          h1(align='center') [GAME AREA]
-//-       br
-//-       br
-//-       br
-      
-//-       div(class='card-panel teal lighten-1')
-//-         h1(align='center') [YOUR CARDS HERE]
-
-
-//-   div(class='fixed-action-btn')
-//-     a(class='btn-floating btn-large red' onclick='toggleMenu()')
-//-       i(class='large material-icons') +
-  
-//-     div(id='toggle' class='col s6') 
-//-       div(class='card-panel grey lighten-4') 
-//-         h3(class='lobby-text') Chat:
-//-         .chat-messages.has-text-left
-//-           ul#messages
-//-         form(id='chat-form')
-//-           .field.has-addons
-//-             input(id='room_id', type='hidden', value=0)
-//-             //-input(id='name', type='hidden', value=user.username)
-//-             p.control.is-expanded
-//-               input(id='message', type='text', class='input' placeholder='Message')
-//-             p.control
-//-               input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
+    //-     div(id='toggle' class='col s6') 
+    //-       div(class='card-panel grey lighten-4') 
+    //-         h3(class='lobby-text') Chat:
+    //-         .chat-messages.has-text-left
+    //-           ul#messages
+    //-         form(id='chat-form')
+    //-           .field.has-addons
+    //-             input(id='room_id', type='hidden', value=0)
+    //-             //-input(id='name', type='hidden', value=user.username)
+    //-             p.control.is-expanded
+    //-               input(id='message', type='text', class='input' placeholder='Message')
+    //-             p.control
+    //-               input(class='btn-small waves-effect waves-dark', type='submit', value='Send')
 
 
 
-//-   script(src='/scripts/chat.js')
-//-   script(src='/scripts/game.js')
-//-   script(src='/scripts/lobby.js')
+      //- script(src='/scripts/chat.js')
+      //- script(src='/scripts/game.js')
+      //- script(src='/scripts/lobby.js')
 
-      
+          

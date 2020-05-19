@@ -42,8 +42,36 @@ gameSocket.on('game state', (gameState) => {
   $('.leading_suit').empty()
   $('.leading_suit').append(`<h3>Leading Suit: ${gameState.leadingSuit}</h3>`)  
 
+  /* current users turn */
   $('.current_turn').empty()
   $('.current_turn').append(`<h3>Current Turn: ${gameState.currentTurnPlayerUsername}</h3>`)
+
+  /* set up positions for players */
+  let bottomPosition;
+  for(let i = 0; i < gameState.gamePlayers.length; i++) {
+    if(playerId == gameState.gamePlayers[i].id) {
+      bottomPosition = i;
+      break;
+    }
+  }
+
+  let leftPosition = (bottomPosition + 1) % 4;
+  let topPosition = (bottomPosition + 2) % 4;
+  let rightPosition = (bottomPosition + 3) % 4;
+  console.log('bottom : ', bottomPosition)
+  console.log('left   : ', leftPosition)
+  console.log('top    : ', topPosition)
+  console.log('right  : ', rightPosition)
+  console.log('bottomPlayerName : ', gameState.gamePlayers[bottomPosition].username)
+  console.log('leftPlayerName   : ', gameState.gamePlayers[leftPosition].username)
+  console.log('topPlayerName    : ', gameState.gamePlayers[topPosition].username)
+  console.log('rightPlayerName  : ', gameState.gamePlayers[rightPosition].username)
+  console.log('bottomPlayerTeam : ', gameState.gamePlayers[bottomPosition].team)
+  console.log('leftPlayerTeam   : ', gameState.gamePlayers[leftPosition].team)
+  console.log('topPlayerTeam    : ', gameState.gamePlayers[topPosition].team)
+  console.log('rightPlayerTeam  : ', gameState.gamePlayers[rightPosition].team)
+
+
 })
 
 /* display scores info */
@@ -52,17 +80,11 @@ gameSocket.on('game score', (score) => {
 
   /* team 1 */
   $('.team1').empty()
-  $('.team1').append(`<li>Score: ${score.points_a}</li>`)
-  $('.team1').append(`<li>Bags:  ${score.bags_a}  </li>`)
-  $('.team1').append(`<li>Books: ${score.books_a} </li>`)
-  $('.team1').append(`<li>Bets:  ${score.bets_a}  </li>`)
+  $('.team1').append(`<li>Score: ${score.books_a} </li>`)
 
   /* team 2 */
   $('.team2').empty()
-  $('.team2').append(`<li>Score: ${score.points_b}</li>`)
-  $('.team2').append(`<li>Bags:  ${score.bags_b}  </li>`)
-  $('.team2').append(`<li>Books: ${score.books_b} </li>`)
-  $('.team2').append(`<li>Bets:  ${score.bets_b}  </li>`)
+  $('.team2').append(`<li>score: ${score.books_b} </li>`)
 })
 
 
@@ -100,3 +122,4 @@ gameSocket.on('game message', (message) => {
   $('.game_message').empty()
   $('.game_message').append(`<h1>${message}</h1>`)
 })
+

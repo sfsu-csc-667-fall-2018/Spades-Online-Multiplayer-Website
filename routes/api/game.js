@@ -92,7 +92,8 @@ gameSocket.on('connection', socket => {
         .then(([gameState, gameScore, gamePlayers]) => {
           let gameStateForClient = {
             leadingSuit: gameLogic.getSuitName(gameState.leading_suit),
-            currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers)
+            currentTurnPlayerUsername: gameLogic.getCurrentTurnPlayerUsername(gameState, gamePlayers),
+            gamePlayers: gamePlayers
           }
           gameSocket
           .to(gameId)

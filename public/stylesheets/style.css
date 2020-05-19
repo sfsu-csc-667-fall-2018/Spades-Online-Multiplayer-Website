@@ -73,3 +73,19 @@ margin-left: 20px;
 .end-game-btn{
   margin-left: 88%;
 }
+
+.game-card {
+  margin-top: 10%;
+}
+
+.game-score {
+  margin-top: 10%;
+}
+
+.gameContainer {
+  border-radius: 10px;
+}
+
+.font-size {
+  font: 36px "Lucida Grande", Helvetica, Arial, sans-serif;
+}

@@ -10,6 +10,7 @@ const errorDisplay = document.querySelector('#error')
 
 /* play card buttons */
 document.querySelector('.cards').addEventListener('click', event => {
+  console.log("CLICK")
   const { cardId } = event.target.dataset
 
   const data = {
@@ -40,11 +41,11 @@ gameSocket.on('game state', (gameState) => {
   console.log('ready --> game state: ', gameState)
   /* Leading Suit */
   $('.leading_suit').empty()
-  $('.leading_suit').append(`<h3>Leading Suit: ${gameState.leadingSuit}</h3>`)  
+  $('.leading_suit').append(`<h4>Leading Suit: ${gameState.leadingSuit}</h4>`)  
 
   /* current users turn */
   $('.current_turn').empty()
-  $('.current_turn').append(`<h3>Current Turn: ${gameState.currentTurnPlayerUsername}</h3>`)
+  $('.current_turn').append(`<h4>Current Turn: ${gameState.currentTurnPlayerUsername}</h4>`)
 
   /* set up positions for players */
   let bottomPosition;

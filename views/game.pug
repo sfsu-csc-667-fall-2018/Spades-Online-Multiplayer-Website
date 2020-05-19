@@ -14,61 +14,48 @@ block content
       button(class='col s2 offset-s8 btn-small waves-effect waves-dark' type='submit') End Game
     div(class='row')
       div(class='card-panel teal lighten-2')
-        h3(align='center') Welcome player "#{username}" to game [#{gameId}]
+        h3(align='center') Welcome player "#{username}"
     
-        div(class=' game-info card-panel teal lighten-2')
-          div(class='row')
-            div.current_turn(class='col s6')
-            div.leading_suit(class='col s6')
+        div(class=' game-info card-panel teal lighten-2 center')
+            div.current_turn
+            div.leading_suit
 
+      br
 
-
+      div.gameContainer(class='fixed-height_2 indigo lighten-4')
+        .container
+          .columns
+            .column(class="font-size") Team 1
+              div.team1
+            .column(class="font-size") Team 2
+              div.team2
       
-      
+      br
       
       //-h4 Cards on Table
-      div(class='fixed-height_2 teal')
-        div(class='card')
-          div.in_play_cards
+      div.gameContainer(class='fixed-height_2 teal')
+        div(class='container')
+          div.cards
             if inPlayCards
               each card in inPlayCards
                 a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
-
-
-        
+      br
 
       div.player_message
 
+      br
 
       //- h4 Cards
       div(class='fixed-height_2 teal lighten-2')
-        div(class='card')
-          div.cards
-            if player.cards
-              each card in player.cards
-                a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
+        div.cards
+          if player.cards
+            each card in player.cards
+              a.game-card(class=`card-${card.suit}-${card.value}` title=card.name data-card-id=card.id)
 
-      //- h4 Players
-      //- ul
-      //-   each player in players
-      //-     li= JSON.stringify(player)
+      br
+      
 
-      //- h4 Error
-      //-   if error
-      //-     p#error= error
-
-      //- h4 Game State
-      //- #game-state-listing
-      //-   p= JSON.stringify(gameState)
-
-
-
-
-    div(class='fixed-action-btn')
-      a(class='btn-floating btn-large red' onclick='toggleMenu()')
-        i(class='large material-icons') +
-
-      div(id='toggle' class='col s6') 
+      div(id='toggle' class='col s12') 
         div(class='card-panel grey lighten-4') 
           h3(class='lobby-text') Chat:
           .chat-messages.has-text-left
@@ -76,7 +63,7 @@ block content
           form(id='chat-form')
             .field.has-addons
               input(id='room_id', type='hidden', value=0)
-              //-input(id='name', type='hidden', value=user.username)
+              input(id='name', type='hidden', value=username)
               p.control.is-expanded
                 input(id='message', type='text', class='input' placeholder='Message')
               p.control

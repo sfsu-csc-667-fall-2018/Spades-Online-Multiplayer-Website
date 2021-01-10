@@ -8,6 +8,8 @@
 
 ## Preface
 
+Visit Website: https://spades-server.herokuapp.com
+
 This is a group project for a senior level San Francisco State University Computer Science course. This project was developed remotely in Spring 2020 during the COVID-19 pandemic. The team consisted of 4 students: 2 frontend developers and 2 backend developers.
 
 **Slack**, **Zoom**, and **GitHub** where used to communicate.

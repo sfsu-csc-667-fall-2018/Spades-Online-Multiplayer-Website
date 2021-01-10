@@ -1,12 +1,20 @@
 # Spades Server
 
+**Lobby**
+![Alt text](/images/lobby.png?raw=true "Lobby")
+
+**Gameplay**
+![Alt text](/images/playing.png?raw=true "Playing")
+
 ## Preface
 
 This is a group project for a senior level San Francisco State University Computer Science course. This project was developed remotely in Spring 2020 during the COVID-19 pandemic. The team consisted of 4 students: 2 frontend developers and 2 backend developers.
 
-Slack, Zoom, and GitHub where used to communicate.
+**Slack**, **Zoom**, and **GitHub** where used to communicate.
 
-Our team was given a few nonfunctional requirements and where then given the freedom to complete said requirements in any way we felt fit.
+Our team was given a few requirements and where then given the freedom to complete said requirements as we felt fit.
+
+**Noteworthy Technology**: ExpressJS, Socket.io, Postgres, Material Design
 
 ## Description
 
@@ -71,4 +79,15 @@ arbitrary number of simultaneous games
   * How do we access Heroku?
       
       * https://spades-server.herokuapp.com
+      
+## More Images
+
+**Register**
+![Alt text](/images/register.png?raw=true "register")
+
+**Login**
+![Alt text](/images/login.png?raw=true "login")
+
+**Game Start**
+![Alt text](/images/gamestart.png?raw=true "Gamestart")
 
